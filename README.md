@@ -55,6 +55,11 @@ docker-compose up
 
 ![image.png](https://cdn.nlark.com/yuque/0/2021/png/1077776/1614157707280-fc55e268-dc64-4a95-ade2-fb15da135562.png#align=left&display=inline&height=295&margin=%5Bobject%20Object%5D&name=image.png&originHeight=884&originWidth=3294&size=165697&status=done&style=none&width=1098)
 
+> 界面截图
+
+![image.png](https://cdn.nlark.com/yuque/0/2021/png/1077776/1614159853374-673e82af-a2f2-479d-9ef8-03da193ed801.png#align=left&display=inline&height=615&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1970&originWidth=1154&size=504847&status=done&style=none&width=360)
+![image.png](https://cdn.nlark.com/yuque/0/2021/png/1077776/1614159891066-ce68c4bf-60d7-49ae-864b-270e67a72a74.png#align=left&display=inline&height=613&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1964&originWidth=1154&size=691524&status=done&style=none&width=360)
+
 
 ### 添加Apple开发者账号
 
@@ -323,6 +328,7 @@ import sys
 sys.setdefaultencoding('utf-8')
 ```
 ![image.png](https://cdn.nlark.com/yuque/0/2020/png/1077776/1590652483792-7a374715-9187-41b0-a1ea-f37b3881ebfd.png#align=left&display=inline&height=315&margin=%5Bobject%20Object%5D&name=image.png&originHeight=630&originWidth=612&size=39613&status=done&style=none&width=306)
+
 验证是否成功：
 命令行输入`python -c "import sys; print sys.getdefaultencoding()"`
 ![image.png](https://cdn.nlark.com/yuque/0/2020/png/1077776/1590652388536-09409bb1-5ecf-4d5a-ad21-1e7544bcb5fd.png#align=left&display=inline&height=23&margin=%5Bobject%20Object%5D&name=image.png&originHeight=46&originWidth=867&size=7550&status=done&style=none&width=433.5)
