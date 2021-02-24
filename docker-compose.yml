@@ -1,0 +1,31 @@
+version: '3'
+services:
+  mysql-super-signature:
+    image: docker.io/mysql:5.7
+    container_name: mysql-super-signature
+    ports:
+      - "3336:3306"
+    command: [
+        '--character-set-server=utf8mb4',
+        '--collation-server=utf8mb4_unicode_ci'
+    ]
+    environment:
+      MYSQL_DATABASE: db_super_signature
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_ROOT_HOST: '%'
+
+  web:
+    build: .
+    image: super-signature:v2
+    ports:
+      - "10016:10016"
+    depends_on:
+      - mysql-super-signature
+
+# 《====使用docker创建数据库方式====》
+# 《====直接运行以下命令====》
+#  docker-compose up
+#  docker-compose up -d #后台运行
+#  docker ps -a 查询super-signature:v1的容器ID 例：2371573738c0
+#  启动web服务 docker start 2371573738c0
+#  浏览器访问 http://localhost:9999/swagger/index.html
