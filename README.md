@@ -166,7 +166,7 @@ if err != nil {
         <key>PayloadContent</key>
         <dict>
             <key>URL</key>
-            <string>https://qq.com</string> //回调接收UDID等信息的，借用这个回调地址讲udid传到服务器后台
+            <string>https://qq.com</string> //回调接收UDID等信息的，借用这个回调地址将udid传到服务器后台
             <key>DeviceAttributes</key>
             <array>
                 <string>UDID</string>
