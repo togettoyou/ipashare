@@ -86,12 +86,10 @@ docker-compose up
   ]
 }
 ```
-
 > 界面截图
 
-![image.png](https://cdn.nlark.com/yuque/0/2021/png/1077776/1614159853374-673e82af-a2f2-479d-9ef8-03da193ed801.png#align=left&display=inline&height=615&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1970&originWidth=1154&size=504847&status=done&style=none&width=360)
-
-![image.png](https://cdn.nlark.com/yuque/0/2021/png/1077776/1614159891066-ce68c4bf-60d7-49ae-864b-270e67a72a74.png#align=left&display=inline&height=613&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1964&originWidth=1154&size=691524&status=done&style=none&width=360)
+![image.png](https://cdn.nlark.com/yuque/0/2021/png/1077776/1614159853374-673e82af-a2f2-479d-9ef8-03da193ed801.png#align=left&display=inline&height=478&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1970&originWidth=1154&size=504847&status=done&style=none&width=280)
+![image.png](https://cdn.nlark.com/yuque/0/2021/png/1077776/1614159891066-ce68c4bf-60d7-49ae-864b-270e67a72a74.png#align=left&display=inline&height=477&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1964&originWidth=1154&size=691524&status=done&style=none&width=280)
 
 
 ### 添加Apple开发者账号
