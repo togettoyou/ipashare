@@ -1,5 +1,12 @@
 # README.md
 
+## 这是什么
+一个用go实现的iOS重签名模块，即市面上的iOS超级签名、蒲公英ios内测分发原理
+
+使用本模块可以进行基本的IPA安装包重签名分发
+
+实现功能：苹果开发者账号管理、IPA安装包管理
+
 ## 前提
 1.生成ios.csr和ios.key文件
 ```bash
@@ -42,6 +49,8 @@ docker-compose up
 详见`Dockerfile`和`docker-compose.yml`文件
 
 ## 原理
+[语雀浏览](https://www.yuque.com/togettoyou/cjqm/rbk50t)
+
 ### 基本流程
 1. 添加Apple开发者账号(绑定App Store Connect API)
 1. 根据描述文件获得用户设备的UDID
@@ -54,6 +63,29 @@ docker-compose up
 > API
 
 ![image.png](https://cdn.nlark.com/yuque/0/2021/png/1077776/1614157707280-fc55e268-dc64-4a95-ade2-fb15da135562.png#align=left&display=inline&height=295&margin=%5Bobject%20Object%5D&name=image.png&originHeight=884&originWidth=3294&size=165697&status=done&style=none&width=1098)
+
+`/api/v1/getAllPackage` 返回数据格式
+```json
+{
+  "code": 0,
+  "msg": "成功",
+  "data": [
+    {
+      "ID": 1,
+      "IconLink": "应用图标地址",
+      "BundleIdentifier": "应用包名",
+      "Name": "应用名称",
+      "Version": "应用版本号",
+      "BuildVersion": "应用BuildVersion",
+      "MiniVersion": "最低支持ios版本",
+      "Summary": "简介",
+      "AppLink": "应用下载地址，iPhone使用Safari浏览器访问即可下载",
+      "Size": "应用大小",
+      "Count": "累计下载量"
+    }
+  ]
+}
+```
 
 > 界面截图
 
