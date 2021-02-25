@@ -92,7 +92,9 @@ docker-compose up
 ![image.png](https://cdn.nlark.com/yuque/0/2021/png/1077776/1614159891066-ce68c4bf-60d7-49ae-864b-270e67a72a74.png#align=left&display=inline&height=477&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1964&originWidth=1154&size=691524&status=done&style=none&width=280)
 
 
-### 添加Apple开发者账号
+# 步骤：
+
+### 1. 添加Apple开发者账号
 
 > API接口文档：[https://developer.apple.com/documentation/appstoreconnectapi](https://developer.apple.com/documentation/appstoreconnectapi)
 
@@ -185,9 +187,9 @@ if err != nil {
 这样就可以直接借助App Store Connect API来完成添加udid、创建Certificates证书、创建BundleIds、创建Profile等来实现超级签名的核心功能。
 
 
-### 获取UDID
+### 2. 获取UDID
 
-#### 一、创建udid.mobileconfig文件
+#### 创建udid.mobileconfig文件
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
@@ -226,7 +228,7 @@ if err != nil {
 > iPhone使用Safari浏览器访问放在服务器上的mobileconfig文件，进行安装描述文件，安装完成后苹果会回调我们设置的url，就可以得到udid信息。设置的url是一个post接口，接收到udid信息处理完逻辑后，301重定向到我们需要跳转的网站，如果不301重定向，iPhone会显示安装失败！
 
 ![image.png](https://cdn.nlark.com/yuque/0/2020/png/1077776/1590130668052-c3862520-1e6c-4b1f-bf6e-2f57074ee225.png#align=left&display=inline&height=514&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1334&originWidth=750&size=122560&status=done&style=none&width=289)
-#### 二、解析苹果返回的Plist信息，提取UDID
+#### 解析苹果返回的Plist信息，提取UDID
 ```xml
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
@@ -244,7 +246,7 @@ if err != nil {
 ```
 只需要解析出udid，调用App Store Connect API将UDID添加到苹果开发者中心即可。
 
-### 重签名
+### 3. 重签名
 
 > 添加开发者账号之前在本地使用openssl生成后续所需要的key和csr文件
 
@@ -279,7 +281,7 @@ python setup.py install
 [isign.zip](https://www.yuque.com/attachments/yuque/0/2020/zip/1077776/1591342709219-ffa8ad4c-9f96-45c1-8b99-34965b58ec4c.zip?_lake_card=%7B%22uid%22%3A%221591342692957-0%22%2C%22src%22%3A%22https%3A%2F%2Fwww.yuque.com%2Fattachments%2Fyuque%2F0%2F2020%2Fzip%2F1077776%2F1591342709219-ffa8ad4c-9f96-45c1-8b99-34965b58ec4c.zip%22%2C%22name%22%3A%22isign.zip%22%2C%22size%22%3A34601410%2C%22type%22%3A%22application%2Fzip%22%2C%22ext%22%3A%22zip%22%2C%22progress%22%3A%7B%22percent%22%3A99%7D%2C%22status%22%3A%22done%22%2C%22percent%22%3A0%2C%22id%22%3A%22s3MfS%22%2C%22card%22%3A%22file%22%7D)
 
 
-### IPA分发
+### 4. IPA分发
 
 创建后缀为plist的文件，内容如下：
 ```xml
@@ -322,7 +324,7 @@ python setup.py install
 ![image.png](https://cdn.nlark.com/yuque/0/2020/png/1077776/1590131104699-a9a81563-5b48-44b4-ab25-9a76353195ae.png#align=left&display=inline&height=496&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1334&originWidth=750&size=196955&status=done&style=none&width=279)
 
 
-### 常见问题
+### 附：常见问题
 
 1. 使用进行重签名时，如下报错：
 ```shell
