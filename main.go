@@ -47,10 +47,10 @@ func main() {
 	log.Printf("[info] start https server listening %s", endPoint)
 
 	//启用https，需要将ssl.pem和ssl.key放置项目目录下
-	//if err := server.ListenAndServeTLS("./ssl.pem", "./ssl.key"); err != nil {
-	//	log.Printf("start https server failed %s", err)
-	//}
-	if err := server.ListenAndServe(); err != nil {
-		log.Printf("start http server failed %s", err)
+	if err := server.ListenAndServeTLS("./ssl.pem", "./ssl.key"); err != nil {
+		log.Printf("start https server failed %s", err)
 	}
+	//if err := server.ListenAndServe(); err != nil {
+	//	log.Printf("start http server failed %s", err)
+	//}
 }

@@ -18,7 +18,7 @@ func InitRouter() *gin.Engine {
 	r.Use(gin.Logger())
 	r.Use(Cors())
 	//启用https
-	//r.Use(TlsHandler())
+	r.Use(TlsHandler())
 	//swagger文档
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	//加载模板文件
