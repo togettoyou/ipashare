@@ -183,9 +183,9 @@ func creatUDIDMobileconfig(name string, id int) (string, error) {
         <key>PayloadVersion</key>
         <integer>1</integer>
         <key>PayloadUUID</key>
-        <string>52b2dc19-72be-4022-bdec-f1ea3c720d0a</string>
+        <string>c4df5a3a-81e1-430f-b163-d358bc199327</string>
         <key>PayloadIdentifier</key>
-        <string>com.yy.UDID-server</string>
+        <string>com.togettoyou.UDID-server</string>
         <key>PayloadDescription</key>
         <string>仅用于查询设备UDID安装APP</string>
         <key>PayloadType</key>

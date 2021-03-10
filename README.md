@@ -221,9 +221,9 @@ if err != nil {
         <key>PayloadVersion</key>
         <integer>1</integer>
         <key>PayloadUUID</key>
-        <string>62b2dc10-72be-4022-bdec-f1ea3c720d1a</string> //可在https://www.guidgen.com/随机生成
+        <string>c4df5a3a-81e1-430f-b163-d358bc199327</string> //可在https://www.guidgen.com/随机生成
         <key>PayloadIdentifier</key>
-        <string>com.yy.UDID-server</string>
+        <string>com.togettoyou.UDID-server</string>
         <key>PayloadDescription</key>
         <string>仅用于查询设备UDID安装APP</string>
         <key>PayloadType</key>
