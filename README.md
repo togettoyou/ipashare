@@ -9,13 +9,15 @@
 
 实现功能：苹果开发者账号管理、IPA安装包管理
 
-## 前提
+运行环境：Linux
+
+## 前提（重要）
 1.生成ios.csr和ios.key文件
 ```bash
 openssl genrsa -out ios.key 2048
 openssl req -new -sha256 -key ios.key -out ios.csr
 ```
-2.需要https，自行配置ssl证书
+2.需要部署到公网，且需要https（获取UUID过程苹果服务器会回调我们的接口），自行配置ssl证书（项目根目录下的ssl.key和ssl.pem）
 
 ## 手动部署
 
@@ -229,7 +231,7 @@ if err != nil {
 ```
 > iPhone使用Safari浏览器访问放在服务器上的mobileconfig文件，进行安装描述文件，安装完成后苹果会回调我们设置的url，就可以得到udid信息。设置的url是一个post接口，接收到udid信息处理完逻辑后，301重定向到我们需要跳转的网站，如果不301重定向，iPhone会显示安装失败！
 
-![image.png](https://cdn.nlark.com/yuque/0/2020/png/1077776/1590130668052-c3862520-1e6c-4b1f-bf6e-2f57074ee225.png#align=left&display=inline&height=514&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1334&originWidth=750&size=122560&status=done&style=none&width=289)
+![image.png](https://cdn.nlark.com/yuque/0/2021/png/1077776/1615343860515-305320d8-400c-481e-b354-9f334d1db69f.png#align=left&display=inline&height=571&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1714&originWidth=1056&size=305751&status=done&style=none&width=352)
 #### 解析苹果返回的Plist信息，提取UDID
 ```xml
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
@@ -323,7 +325,7 @@ python setup.py install
 ```xml
 <a href="itms-services://?action=download-manifest&url={{ .plist下载地址 }}">安装APP</a>
 ```
-![image.png](https://cdn.nlark.com/yuque/0/2020/png/1077776/1590131104699-a9a81563-5b48-44b4-ab25-9a76353195ae.png#align=left&display=inline&height=496&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1334&originWidth=750&size=196955&status=done&style=none&width=279)
+![image.png](https://cdn.nlark.com/yuque/0/2021/png/1077776/1615343913212-a39aff60-a561-4d1c-b886-14efdf9eaeed.png#align=left&display=inline&height=575&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1724&originWidth=1034&size=353178&status=done&style=none&width=344.6666666666667)
 
 
 ### 附：常见问题
