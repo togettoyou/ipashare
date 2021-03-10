@@ -231,7 +231,7 @@ if err != nil {
 ```
 > iPhone使用Safari浏览器访问放在服务器上的mobileconfig文件，进行安装描述文件，安装完成后苹果会回调我们设置的url，就可以得到udid信息。设置的url是一个post接口，接收到udid信息处理完逻辑后，301重定向到我们需要跳转的网站，如果不301重定向，iPhone会显示安装失败！
 
-![image.png](https://cdn.nlark.com/yuque/0/2021/png/1077776/1615343860515-305320d8-400c-481e-b354-9f334d1db69f.png#align=left&display=inline&height=571&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1714&originWidth=1056&size=305751&status=done&style=none&width=352)
+![image.png](https://cdn.nlark.com/yuque/0/2021/png/1077776/1615343860515-305320d8-400c-481e-b354-9f334d1db69f.png)
 #### 解析苹果返回的Plist信息，提取UDID
 ```xml
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
