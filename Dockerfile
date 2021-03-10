@@ -2,7 +2,7 @@ FROM golang:1.14
 
 RUN apt update \
     && apt-get -y install zip python-setuptools \
-    && curl https://bootstrap.pypa.io/2.7/get-pip.py -o get-pip.py \
+    && curl https://bootstrap.pypa.io/pip/2.7/get-pip.py -o get-pip.py \
     && python get-pip.py \
     && pip install cryptography
 

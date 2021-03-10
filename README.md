@@ -19,6 +19,8 @@ openssl req -new -sha256 -key ios.key -out ios.csr
 ```
 2.需要部署到公网，且需要https（获取UUID过程苹果服务器会回调我们的接口），自行配置ssl证书（项目根目录下的ssl.key和ssl.pem）
 
+3.更改app.ini配置文件域名等信息
+
 ## 手动部署
 
 ```bash
