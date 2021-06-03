@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 启动服务名
-SERVER_NAME="super-signature"
+SERVER_NAME="app"
 BASE_DIR=$PWD
 INTERVAL=2
 

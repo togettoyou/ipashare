@@ -2,7 +2,7 @@
 .PHONY: all docs linux linux-docs run gotool clean help
 
 # 生成的二进制文件名
-BINARY_NAME="super-signature"
+BINARY_NAME="app"
 TARGET=$(out)
 
 # 编译添加版本信息

@@ -9,6 +9,7 @@ import (
 	"super-signature/util/conf"
 	"super-signature/util/logger"
 	"super-signature/util/tools"
+	"time"
 )
 
 type Model struct {
@@ -43,6 +44,7 @@ var tablePrefix = "sys_"
 
 func Setup() {
 	var err error
+reC:
 	db, err = gorm.Open(
 		mysql.New(mysql.Config{
 			DSN:                       conf.Config.Mysql.Dsn,
@@ -61,7 +63,8 @@ func Setup() {
 		})
 	if err != nil {
 		zap.L().Error(err.Error())
-		return
+		time.Sleep(3 * time.Second)
+		goto reC
 	}
 	connectionPool()
 	autoMigrate(&AppleAccount{}, &AppleDevice{}, &ApplePackage{}, &Download{})

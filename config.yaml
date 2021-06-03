@@ -16,7 +16,7 @@ server:
 # 日志配置
 logConfig:
   # 日志记录模式 fatal,panic,dpanic,error,warn,info,debug
-  level: info
+  level: debug
   # 日志是否记录到文件 true,false
   isFile: false
   # 普通日志文件存放位置，当 isFile 为 true 时生效
@@ -34,7 +34,7 @@ logConfig:
 # 配置内容参考: https://gorm.io/zh_CN/docs/connecting_to_the_database.html
 mysql:
   # 连接驱动
-  dsn: root:123456@tcp(192.168.19.145:3306)/db_super_signature?charset=utf8mb4&parseTime=True&loc=Local
+  dsn: root:123456@tcp(mysql-super-signature:3306)/db_super_signature?charset=utf8mb4&parseTime=True&loc=Local
   # 空闲连接池中连接的最大数量
   maxIdle: 10
   # 打开数据库连接的最大数量
@@ -42,7 +42,7 @@ mysql:
   # 连接可复用的最大时间/单位分钟
   maxLifetime: 60
   # 数据库日志模式 silent,error,warn,info
-  logMode: error
+  logMode: info
 
 # 苹果IPA配置
 applePath:
