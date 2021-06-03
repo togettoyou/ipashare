@@ -37,11 +37,16 @@ docker-compose up
 部署截图：
 
 仅作为例子，我的部署环境为本地虚机，https 域名使用内网穿透方式实现。
+
 ![image.png](https://cdn.nlark.com/yuque/0/2021/png/1077776/1622719557784-d384350b-d581-4784-b655-235f901ca571.png#clientId=uc4af6cdf-c3d2-4&from=paste&height=602&id=fnZsv&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1204&originWidth=1604&originalType=binary&size=128584&status=done&style=none&taskId=u01cf6afb-61d5-4cbe-b4f2-6a7670beac7&width=802)
+
 更改 config.yaml 域名，启动服务：
+
 ![image.png](https://cdn.nlark.com/yuque/0/2021/png/1077776/1622719420286-2f0d32cb-0c48-48fb-a65a-c243643ef659.png#clientId=uc4af6cdf-c3d2-4&from=paste&height=716&id=ue315c056&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1432&originWidth=2353&originalType=binary&size=222303&status=done&style=none&taskId=u5e46eac2-7afe-4217-9224-45fcb15d221&width=1176.5)
 ![image.png](https://cdn.nlark.com/yuque/0/2021/png/1077776/1622719722870-c1123242-92b7-4b03-a581-a06234b31892.png#clientId=uc4af6cdf-c3d2-4&from=paste&height=718&id=ucf800682&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1436&originWidth=2353&originalType=binary&size=395443&status=done&style=none&taskId=u2c2233e2-4124-47f2-80ac-9a4e5bafefd&width=1176.5)
+
 访问 [https://isign.cn.utools.club/swagger/index.html](https://isign.cn.utools.club/swagger/index.html)
+
 ![image.png](https://cdn.nlark.com/yuque/0/2021/png/1077776/1622719814015-5552a7a4-496a-4271-b43f-7f78592176d1.png#clientId=uc4af6cdf-c3d2-4&from=paste&height=827&id=u84b71819&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1654&originWidth=2880&originalType=binary&size=275056&status=done&style=none&taskId=ua10a445e-d046-46a0-b6ef-617fde81539&width=1440)
 
 ## 手动部署（需手动部署 isign 环境，略）
@@ -253,7 +258,7 @@ return err
 
 
 
-![](https://cdn.nlark.com/yuque/0/2021/png/1077776/1615343860515-305320d8-400c-481e-b354-9f334d1db69f.png#id=BDeCv&originHeight=1714&originWidth=1056&originalType=binary&status=done&style=none)
+![](https://cdn.nlark.com/yuque/0/2021/png/1077776/1615343860515-305320d8-400c-481e-b354-9f334d1db69f.png)
 
 #### 解析苹果返回的Plist信息，提取UDID
 
