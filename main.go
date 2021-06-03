@@ -92,24 +92,13 @@ func startServer() {
 		}
 	}()
 	if router.HasDocs() {
-		if conf.Config.Server.EnableHttps {
-			fmt.Printf(`swagger 文档地址 : https://%s%s/swagger/index.html
+		fmt.Printf(`swagger 文档地址 : %s/swagger/index.html
    ____   ____             ____   ____   ____             ______ ______________  __ ___________ 
   / ___\ /  _ \   ______  /  _ \ /    \_/ __ \   ______  /  ___// __ \_  __ \  \/ // __ \_  __ \
  / /_/  >  <_> ) /_____/ (  <_> )   |  \  ___/  /_____/  \___ \\  ___/|  | \/\   /\  ___/|  | \/
  \___  / \____/           \____/|___|  /\___  >         /____  >\___  >__|    \_/  \___  >__|   
 /_____/                              \/     \/               \/     \/                 \/       
 
-`, tools.GetCurrentIP().String(), httpPort)
-		} else {
-			fmt.Printf(`swagger 文档地址 : http://%s%s/swagger/index.html
-   ____   ____             ____   ____   ____             ______ ______________  __ ___________ 
-  / ___\ /  _ \   ______  /  _ \ /    \_/ __ \   ______  /  ___// __ \_  __ \  \/ // __ \_  __ \
- / /_/  >  <_> ) /_____/ (  <_> )   |  \  ___/  /_____/  \___ \\  ___/|  | \/\   /\  ___/|  | \/
- \___  / \____/           \____/|___|  /\___  >         /____  >\___  >__|    \_/  \___  >__|   
-/_____/                              \/     \/               \/     \/                 \/       
-
-`, tools.GetCurrentIP().String(), httpPort)
-		}
+`, conf.Config.ApplePath.URL)
 	}
 }
