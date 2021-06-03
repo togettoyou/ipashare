@@ -11,6 +11,7 @@ definitions:
 info:
   contact: {}
   description: iOS超级签名API接口文档
+  license: {}
   title: iOS超级签名
   version: "1.0"
 paths:

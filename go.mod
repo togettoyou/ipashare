@@ -18,10 +18,9 @@ require (
 	github.com/spf13/pflag v1.0.5
 	github.com/spf13/viper v1.7.1
 	github.com/swaggo/gin-swagger v1.3.0
-	github.com/swaggo/swag v1.7.0
+	github.com/swaggo/swag v1.6.7
 	github.com/valyala/fasthttp v1.26.0
 	go.uber.org/zap v1.16.0
-	gopkg.in/natefinch/lumberjack.v2 v2.0.0 // indirect
 	gorm.io/driver/mysql v1.0.4
 	gorm.io/gorm v1.20.12
 	howett.net/plist v0.0.0-20200419221736-3b63eb3a43b5

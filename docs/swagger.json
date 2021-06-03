@@ -4,6 +4,7 @@
         "description": "iOS超级签名API接口文档",
         "title": "iOS超级签名",
         "contact": {},
+        "license": {},
         "version": "1.0"
     },
     "paths": {

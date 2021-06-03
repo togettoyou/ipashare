@@ -27,8 +27,9 @@ services:
       - ./config.yaml:/root/togettoyou/super-signature/config.yaml
       - ./ios.csr:/root/togettoyou/super-signature/ios.csr
       - ./ios.key:/root/togettoyou/super-signature/ios.key
-      - ./ssl.key:/root/togettoyou/super-signature/ssl.key
-      - ./ssl.pem:/root/togettoyou/super-signature/ssl.pem
+      - ./server.crt:/root/togettoyou/super-signature/server.crt
+      - ./server.csr:/root/togettoyou/super-signature/server.csr
+      - ./server.key:/root/togettoyou/super-signature/server.key
 
 #  docker-compose up
 #  浏览器访问 http://localhost:8888/swagger/index.html

@@ -81,12 +81,12 @@ func startServer() {
 		MaxHeaderBytes: 1 << 20,
 	}
 	go func() {
-		if err := server.ListenAndServe(); err != nil {
+		if err := server.ListenAndServeTLS("./server.crt", "./server.key"); err != nil {
 			panic(err)
 		}
 	}()
 	if router.HasDocs() {
-		fmt.Printf(`swagger 文档地址 : http://%s%s/swagger/index.html
+		fmt.Printf(`swagger 文档地址 : https://%s%s/swagger/index.html
    ____   ____             ____   ____   ____             ______ ______________  __ ___________ 
   / ___\ /  _ \   ______  /  _ \ /    \_/ __ \   ______  /  ___// __ \_  __ \  \/ // __ \_  __ \
  / /_/  >  <_> ) /_____/ (  <_> )   |  \  ___/  /_____/  \___ \\  ___/|  | \/\   /\  ___/|  | \/
