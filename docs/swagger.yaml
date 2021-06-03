@@ -1,5 +1,5 @@
 definitions:
-  app.Response:
+  handler.Response:
     properties:
       code:
         type: integer
@@ -11,12 +11,13 @@ definitions:
 info:
   contact: {}
   description: iOS超级签名API接口文档
-  license: {}
   title: iOS超级签名
   version: "1.0"
 paths:
   /api/v1/deleteAppleAccount:
     post:
+      consumes:
+      - application/x-www-form-urlencoded
       parameters:
       - description: iss
         in: formData
@@ -29,14 +30,16 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/app.Response'
+            $ref: '#/definitions/handler.Response'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/app.Response'
+            $ref: '#/definitions/handler.Response'
       summary: 删除指定苹果开发者账号
   /api/v1/deletePackage:
     post:
+      consumes:
+      - application/x-www-form-urlencoded
       parameters:
       - description: id
         in: formData
@@ -49,11 +52,11 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/app.Response'
+            $ref: '#/definitions/handler.Response'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/app.Response'
+            $ref: '#/definitions/handler.Response'
       summary: 删除指定IPA
   /api/v1/getAllPackage:
     get:
@@ -63,11 +66,11 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/app.Response'
+            $ref: '#/definitions/handler.Response'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/app.Response'
+            $ref: '#/definitions/handler.Response'
       summary: 获取所有IPA
   /api/v1/test:
     get:
@@ -77,14 +80,16 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/app.Response'
+            $ref: '#/definitions/handler.Response'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/app.Response'
+            $ref: '#/definitions/handler.Response'
       summary: 测试得到一个可用的苹果开发者账号
   /api/v1/uploadAppleAccount:
     post:
+      consumes:
+      - multipart/form-data
       parameters:
       - description: p8file
         in: formData
@@ -107,14 +112,16 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/app.Response'
+            $ref: '#/definitions/handler.Response'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/app.Response'
+            $ref: '#/definitions/handler.Response'
       summary: 上传苹果开发者账号信息
   /api/v1/uploadPackage:
     post:
+      consumes:
+      - multipart/form-data
       parameters:
       - description: ipaFile
         in: formData
@@ -132,10 +139,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/app.Response'
+            $ref: '#/definitions/handler.Response'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/app.Response'
+            $ref: '#/definitions/handler.Response'
       summary: 上传IPA
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
 swagger: "2.0"

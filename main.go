@@ -1,56 +1,98 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"log"
+	"github.com/spf13/pflag"
+	"go.uber.org/zap"
 	"net/http"
+	"os"
 	"super-signature/cron"
-	_ "super-signature/docs"
-	"super-signature/models"
-	"super-signature/pkg/setting"
-	"super-signature/routers"
+	"super-signature/model"
+	"super-signature/router"
+	"super-signature/util"
+	"super-signature/util/conf"
+	"super-signature/util/logger"
+	"super-signature/util/tools"
+	"super-signature/util/validator"
+	"super-signature/util/version"
 	"time"
 )
 
-func init() {
-	setting.Setup()
-	models.Setup()
+func setup() {
+	conf.Setup()
+	logger.Setup()
+	validator.Setup()
+	model.Setup()
 	go cron.Init()
 }
+
+var (
+	v      = pflag.BoolP("version", "v", false, "显示版本信息")
+	config = pflag.StringP("config", "c", "config.yaml", "指定配置文件路径")
+)
 
 // @title iOS超级签名
 // @version 1.0
 // @description iOS超级签名API接口文档
+// @securityDefinitions.apikey ApiKeyAuth
+// @in header
+// @name Authorization
 func main() {
-	gin.SetMode(setting.ServerSetting.RunMode)
-	routersInit := routers.InitRouter()
-	readTimeout := setting.ServerSetting.ReadTimeout
-	writeTimeout := setting.ServerSetting.WriteTimeout
-	endPoint := fmt.Sprintf(":%d", setting.ServerSetting.HttpPort)
-	maxHeaderBytes := 1 << 20
+	pflag.Parse()
+	if *v {
+		info := version.Get()
+		marshalled, err := json.MarshalIndent(&info, "", "  ")
+		if err != nil {
+			fmt.Printf("%v\n", err)
+			os.Exit(1)
+		}
+		fmt.Println(string(marshalled))
+		return
+	}
+	conf.DefaultConfigFile = *config
+	setup()
+	defer func() {
+		zap.L().Sync()
+		zap.S().Sync()
+	}()
+	startServer()
+	reload := make(chan int, 1)
+	conf.OnConfigChange(func() { reload <- 1 })
+	for {
+		select {
+		case <-reload:
+			util.Reset()
+		}
+	}
+}
 
+func startServer() {
+	time.Local = time.FixedZone("CST", 8*3600)
+	zap.L().Info(time.Now().Format(tools.TimeFormat))
+	gin.SetMode(conf.Config.Server.RunMode)
+	httpPort := fmt.Sprintf(":%d", conf.Config.Server.HttpPort)
 	server := &http.Server{
-		Addr:           endPoint,
-		Handler:        routersInit,
-		ReadTimeout:    readTimeout,
-		WriteTimeout:   writeTimeout,
-		MaxHeaderBytes: maxHeaderBytes,
+		Addr:           httpPort,
+		Handler:        router.InitRouter(),
+		ReadTimeout:    conf.Config.Server.ReadTimeout,
+		WriteTimeout:   conf.Config.Server.WriteTimeout,
+		MaxHeaderBytes: 1 << 20,
 	}
+	go func() {
+		if err := server.ListenAndServe(); err != nil {
+			panic(err)
+		}
+	}()
+	if router.HasDocs() {
+		fmt.Printf(`swagger 文档地址 : http://%s%s/swagger/index.html
+   ____   ____             ____   ____   ____             ______ ______________  __ ___________ 
+  / ___\ /  _ \   ______  /  _ \ /    \_/ __ \   ______  /  ___// __ \_  __ \  \/ // __ \_  __ \
+ / /_/  >  <_> ) /_____/ (  <_> )   |  \  ___/  /_____/  \___ \\  ___/|  | \/\   /\  ___/|  | \/
+ \___  / \____/           \____/|___|  /\___  >         /____  >\___  >__|    \_/  \___  >__|   
+/_____/                              \/     \/               \/     \/                 \/       
 
-	log.Printf("[info]  Set Time Zone to Asia/Chongqing")
-	timeLocal, err := time.LoadLocation("Asia/Chongqing")
-	if err != nil {
-		log.Printf("[error] Set Time Zone to Asia/Chongqing failed %s", err)
+`, tools.GetCurrentIP().String(), httpPort)
 	}
-	time.Local = timeLocal
-	log.Printf("[info] start https server listening %s", endPoint)
-
-	//启用https，需要将ssl.pem和ssl.key放置项目目录下
-	if err := server.ListenAndServeTLS("./ssl.pem", "./ssl.key"); err != nil {
-		log.Printf("start https server failed %s", err)
-	}
-	//if err := server.ListenAndServe(); err != nil {
-	//	log.Printf("start http server failed %s", err)
-	//}
 }

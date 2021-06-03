@@ -1,13 +1,12 @@
 package package_service
 
 import (
-	"errors"
 	"fmt"
-	"log"
 	"os"
-	"super-signature/models"
-	"super-signature/pkg/setting"
-	"super-signature/pkg/util"
+	"super-signature/model"
+	"super-signature/util/conf"
+	"super-signature/util/errno"
+	"super-signature/util/tools"
 )
 
 type ApplePackage struct {
@@ -24,24 +23,24 @@ type ApplePackage struct {
 	Count            int
 }
 
-//获取所有ipa下载地址
+// GetAllIPA 获取所有ipa下载地址
 func GetAllIPA() ([]ApplePackage, error) {
 	var applePackages []ApplePackage
-	applePackageList, err := models.GetAllApplePackage()
+	applePackageList, err := model.GetAllApplePackage()
 	if err != nil {
 		return nil, err
 	}
 	for _, v := range applePackageList {
 		applePackages = append(applePackages, ApplePackage{
 			ID:               v.ID,
-			IconLink:         setting.URLSetting.URL + "/api/v1/download?id=" + v.IconLink,
+			IconLink:         conf.Config.ApplePath.URL + "/api/v1/download?id=" + v.IconLink,
 			BundleIdentifier: v.BundleIdentifier,
 			Name:             v.Name,
 			Version:          v.Version,
 			BuildVersion:     v.BuildVersion,
 			MiniVersion:      v.MiniVersion,
 			Summary:          v.Summary,
-			AppLink:          setting.URLSetting.URL + "/api/v1/download?id=" + v.MobileConfigLink,
+			AppLink:          conf.Config.ApplePath.URL + "/api/v1/download?id=" + v.MobileConfigLink,
 			Size:             v.Size,
 			Count:            v.Count,
 		})
@@ -49,17 +48,16 @@ func GetAllIPA() ([]ApplePackage, error) {
 	return applePackages, nil
 }
 
-//删除指定ipa
+// DeleteIPAById 删除指定ipa
 func DeleteIPAById(id string) error {
-	applePackage, err := models.GetApplePackageByID(id)
+	applePackage, err := model.GetApplePackageByID(id)
 	if err != nil {
 		return err
 	}
 	if applePackage == nil {
-		return errors.New("IPA包不存在")
+		return errno.ErrNotIPA
 	}
-	log.Println("------开始删除ipa------")
-	err = models.DeleteApplePackageByID(id)
+	err = model.DeleteApplePackageByID(id)
 	if err != nil {
 		return err
 	}
@@ -69,8 +67,7 @@ func DeleteIPAById(id string) error {
 		return err
 	}
 	//删除icon
-	log.Println("删除icon...")
-	iconPath, err := models.GetDownloadPathByID(applePackage.IconLink)
+	iconPath, err := model.GetDownloadPathByID(applePackage.IconLink)
 	if err != nil {
 		return err
 	}
@@ -78,13 +75,12 @@ func DeleteIPAById(id string) error {
 	if err != nil {
 		return err
 	}
-	err = models.DeleteDownloadPathByID(applePackage.IconLink)
+	err = model.DeleteDownloadPathByID(applePackage.IconLink)
 	if err != nil {
 		return err
 	}
 	//删除描述文件
-	log.Println("删除描述文件...")
-	mobileConfigPath, err := models.GetDownloadPathByID(applePackage.MobileConfigLink)
+	mobileConfigPath, err := model.GetDownloadPathByID(applePackage.MobileConfigLink)
 	if err != nil {
 		return err
 	}
@@ -92,26 +88,26 @@ func DeleteIPAById(id string) error {
 	if err != nil {
 		return err
 	}
-	err = models.DeleteDownloadPathByID(applePackage.MobileConfigLink)
+	err = model.DeleteDownloadPathByID(applePackage.MobileConfigLink)
 	if err != nil {
 		return err
 	}
 	return nil
 }
 
-//解析IPA
+// AnalyzeIPA 解析IPA
 func AnalyzeIPA(name, ipaPath, summary string) (*ApplePackage, error) {
 	//获取IPA信息
-	appInfo, err := util.NewAppParser(setting.PathSetting.UploadPath+name+".png", ipaPath)
+	appInfo, err := tools.NewAppParser(conf.Config.ApplePath.UploadPath+name+".png", ipaPath)
 	if err != nil {
 		return nil, err
 	}
-	IconPathID, err := models.InsertDownloadPath(appInfo.IconPath)
+	IconPathID, err := model.InsertDownloadPath(appInfo.IconPath)
 	if err != nil {
 		return nil, err
 	}
 	//插入到数据库
-	applePackage := models.ApplePackage{
+	applePackage := model.ApplePackage{
 		BundleIdentifier: appInfo.Info.CFBundleIdentifier,
 		Name:             appInfo.Info.CFBundleName,
 		IconLink:         IconPathID,
@@ -121,7 +117,7 @@ func AnalyzeIPA(name, ipaPath, summary string) (*ApplePackage, error) {
 		Summary:          summary,
 		MobileConfigLink: "",
 		IPAPath:          ipaPath,
-		Size:             util.Decimal(float64(appInfo.Size) / 1000000),
+		Size:             tools.Decimal(float64(appInfo.Size) / 1000000),
 		Count:            0,
 	}
 	err = applePackage.InsertApplePackage()
@@ -133,7 +129,7 @@ func AnalyzeIPA(name, ipaPath, summary string) (*ApplePackage, error) {
 	if err != nil {
 		return nil, err
 	}
-	mobileconfigID, err := models.InsertDownloadPath(mobileconfig)
+	mobileconfigID, err := model.InsertDownloadPath(mobileconfig)
 	if err != nil {
 		return nil, err
 	}
@@ -145,14 +141,14 @@ func AnalyzeIPA(name, ipaPath, summary string) (*ApplePackage, error) {
 	}
 	return &ApplePackage{
 		ID:               applePackage.ID,
-		IconLink:         setting.URLSetting.URL + "/api/v1/download?id=" + applePackage.IconLink,
+		IconLink:         conf.Config.ApplePath.URL + "/api/v1/download?id=" + applePackage.IconLink,
 		BundleIdentifier: applePackage.BundleIdentifier,
 		Name:             applePackage.Name,
 		Version:          applePackage.Version,
 		BuildVersion:     applePackage.BuildVersion,
 		MiniVersion:      applePackage.MiniVersion,
 		Summary:          applePackage.Summary,
-		AppLink:          setting.URLSetting.URL + "/api/v1/download?id=" + applePackage.MobileConfigLink,
+		AppLink:          conf.Config.ApplePath.URL + "/api/v1/download?id=" + applePackage.MobileConfigLink,
 		Size:             applePackage.Size,
 		Count:            applePackage.Count,
 	}, nil
@@ -191,9 +187,9 @@ func creatUDIDMobileconfig(name string, id int) (string, error) {
         <key>PayloadType</key>
         <string>Profile Service</string>
     </dict>
-</plist>`, setting.URLSetting.URL, id)
-	var path = setting.PathSetting.UploadPath + name + ".mobileconfig"
-	err := util.CreateFile(xml, path)
+</plist>`, conf.Config.ApplePath.URL, id)
+	var path = conf.Config.ApplePath.UploadPath + name + ".mobileconfig"
+	err := tools.CreateFile(xml, path)
 	if err != nil {
 		return "", err
 	}
