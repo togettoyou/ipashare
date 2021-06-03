@@ -16,16 +16,20 @@ services:
 
   web:
     build: .
-    image: super-signature:v2
-    ports:
-      - "10016:10016"
+    image: super-signature:v3
     depends_on:
       - mysql-super-signature
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./ios:/root/togettoyou/super-signature/ios
+      - ./router/templates:/root/togettoyou/super-signature/router/templates
+      - ./config.yaml:/root/togettoyou/super-signature/config.yaml
+      - ./ios.csr:/root/togettoyou/super-signature/ios.csr
+      - ./ios.key:/root/togettoyou/super-signature/ios.key
+      - ./server.crt:/root/togettoyou/super-signature/server.crt
+      - ./server.csr:/root/togettoyou/super-signature/server.csr
+      - ./server.key:/root/togettoyou/super-signature/server.key
 
-# 《====使用docker创建数据库方式====》
-# 《====直接运行以下命令====》
 #  docker-compose up
-#  docker-compose up -d #后台运行
-#  docker ps -a 查询super-signature:v1的容器ID 例：2371573738c0
-#  启动web服务 docker start 2371573738c0
-#  浏览器访问 http://localhost:9999/swagger/index.html
+#  浏览器访问 http://localhost:8888/swagger/index.html

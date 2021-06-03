@@ -10,6 +10,9 @@
     "paths": {
         "/api/v1/deleteAppleAccount": {
             "post": {
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
                 "produces": [
                     "application/json"
                 ],
@@ -27,13 +30,13 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/app.Response"
+                            "$ref": "#/definitions/handler.Response"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/app.Response"
+                            "$ref": "#/definitions/handler.Response"
                         }
                     }
                 }
@@ -41,6 +44,9 @@
         },
         "/api/v1/deletePackage": {
             "post": {
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
                 "produces": [
                     "application/json"
                 ],
@@ -58,13 +64,13 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/app.Response"
+                            "$ref": "#/definitions/handler.Response"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/app.Response"
+                            "$ref": "#/definitions/handler.Response"
                         }
                     }
                 }
@@ -80,13 +86,13 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/app.Response"
+                            "$ref": "#/definitions/handler.Response"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/app.Response"
+                            "$ref": "#/definitions/handler.Response"
                         }
                     }
                 }
@@ -102,13 +108,13 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/app.Response"
+                            "$ref": "#/definitions/handler.Response"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/app.Response"
+                            "$ref": "#/definitions/handler.Response"
                         }
                     }
                 }
@@ -116,6 +122,9 @@
         },
         "/api/v1/uploadAppleAccount": {
             "post": {
+                "consumes": [
+                    "multipart/form-data"
+                ],
                 "produces": [
                     "application/json"
                 ],
@@ -147,13 +156,13 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/app.Response"
+                            "$ref": "#/definitions/handler.Response"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/app.Response"
+                            "$ref": "#/definitions/handler.Response"
                         }
                     }
                 }
@@ -161,6 +170,9 @@
         },
         "/api/v1/uploadPackage": {
             "post": {
+                "consumes": [
+                    "multipart/form-data"
+                ],
                 "produces": [
                     "application/json"
                 ],
@@ -185,13 +197,13 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/app.Response"
+                            "$ref": "#/definitions/handler.Response"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/app.Response"
+                            "$ref": "#/definitions/handler.Response"
                         }
                     }
                 }
@@ -199,7 +211,7 @@
         }
     },
     "definitions": {
-        "app.Response": {
+        "handler.Response": {
             "type": "object",
             "properties": {
                 "code": {
@@ -212,6 +224,13 @@
                     "type": "string"
                 }
             }
+        }
+    },
+    "securityDefinitions": {
+        "ApiKeyAuth": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
         }
     }
 }
