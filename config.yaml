@@ -12,6 +12,8 @@ server:
   writeTimeout: 60
   # 端口
   httpPort: 8888
+  # 启用 https
+  enableHttps: false
 
 # 日志配置
 logConfig:

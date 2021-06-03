@@ -26,6 +26,7 @@ type server struct {
 	ReadTimeout  time.Duration `yaml:"readTimeout"`
 	WriteTimeout time.Duration `yaml:"writeTimeout"`
 	HttpPort     int           `yaml:"httpPort"`
+	EnableHttps  bool          `yaml:"enableHttps"`
 }
 
 type logConfig struct {

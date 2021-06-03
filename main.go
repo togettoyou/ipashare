@@ -81,12 +81,19 @@ func startServer() {
 		MaxHeaderBytes: 1 << 20,
 	}
 	go func() {
-		if err := server.ListenAndServeTLS("./server.crt", "./server.key"); err != nil {
-			panic(err)
+		if conf.Config.Server.EnableHttps {
+			if err := server.ListenAndServeTLS("./server.crt", "./server.key"); err != nil {
+				panic(err)
+			}
+		} else {
+			if err := server.ListenAndServe(); err != nil {
+				panic(err)
+			}
 		}
 	}()
 	if router.HasDocs() {
-		fmt.Printf(`swagger 文档地址 : https://%s%s/swagger/index.html
+		if conf.Config.Server.EnableHttps {
+			fmt.Printf(`swagger 文档地址 : https://%s%s/swagger/index.html
    ____   ____             ____   ____   ____             ______ ______________  __ ___________ 
   / ___\ /  _ \   ______  /  _ \ /    \_/ __ \   ______  /  ___// __ \_  __ \  \/ // __ \_  __ \
  / /_/  >  <_> ) /_____/ (  <_> )   |  \  ___/  /_____/  \___ \\  ___/|  | \/\   /\  ___/|  | \/
@@ -94,5 +101,15 @@ func startServer() {
 /_____/                              \/     \/               \/     \/                 \/       
 
 `, tools.GetCurrentIP().String(), httpPort)
+		} else {
+			fmt.Printf(`swagger 文档地址 : http://%s%s/swagger/index.html
+   ____   ____             ____   ____   ____             ______ ______________  __ ___________ 
+  / ___\ /  _ \   ______  /  _ \ /    \_/ __ \   ______  /  ___// __ \_  __ \  \/ // __ \_  __ \
+ / /_/  >  <_> ) /_____/ (  <_> )   |  \  ___/  /_____/  \___ \\  ___/|  | \/\   /\  ___/|  | \/
+ \___  / \____/           \____/|___|  /\___  >         /____  >\___  >__|    \_/  \___  >__|   
+/_____/                              \/     \/               \/     \/                 \/       
+
+`, tools.GetCurrentIP().String(), httpPort)
+		}
 	}
 }
