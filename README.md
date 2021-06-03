@@ -11,51 +11,43 @@
 
 运行环境：Linux
 
-## 前提（重要）
-1.生成ios.csr和ios.key文件
+## 前提（重要，重要，重要）
+1.生成 ios.csr 和 ios.key 文件
+
 ```bash
 openssl genrsa -out ios.key 2048
 openssl req -new -sha256 -key ios.key -out ios.csr
 ```
-2.需要部署到公网，且需要https（获取UUID过程苹果服务器会回调我们的接口），自行配置ssl证书（项目根目录下的ssl.key和ssl.pem）
+2.需要 https（获取UUID过程苹果服务器会回调我们的接口），可直接通过 config.yaml 开启 enableHttps （需要配置ssl证书），或通过 nginx 等网关代理形式部署证书。
 
-3.更改app.ini配置文件域名等信息
+3.更改 config.yaml 配置 mysql.dsn，applePath.url 等信息
 
-## 手动部署
+## 使用docker一键部署（建议）
 
-```bash
-git clone https://github.com/togettoyou/super-signature.git
-# 进入项目isign目录下
-cd super-signature/isign
-# 更改Python默认编码
-cp ./sitecustomize.py /usr/lib/python2.7/sitecustomize.py
-# 验证(输出utf-8即更改成功)
-python -c "import sys; print sys.getdefaultencoding()"
-# 安装isign
-tar xvf isign.tar.gz
-cd isign
-./version.sh
-python setup.py build
-python setup.py install
-# 验证
-isign -h
-# 开启go mod
-go env -w GO111MODULE=on
-# 回到项目目录(记得更改app.ini配置信息)
-cd super-signature
-go run main.go
-# 浏览器访问 http://localhost:10016/swagger/index.html
-```
-
-## 使用docker部署
 ```bash
 docker-compose up
+# 会拉取 isign 签名环境，自动创建数据库，编译运行
 ```
 
 详见`Dockerfile`和`docker-compose.yml`文件
 
-## 原理
-[语雀浏览](https://www.yuque.com/togettoyou/cjqm/rbk50t)
+## 手动部署（需手动部署 isign 环境，略）
+
+```bash
+# 部署isign环境略，验证安装是否成功
+isign -h
+
+git clone https://github.com/togettoyou/super-signature.git
+cd super-signature
+# 配置 config.yaml
+go run main.go
+# 浏览器访问 http://localhost:8888/swagger/index.html
+```
+
+
+
+## 原理文档说明
+建议：[语雀浏览](https://www.yuque.com/togettoyou/cjqm/rbk50t)
 
 ### 基本流程
 1. 添加Apple开发者账号(绑定App Store Connect API)
