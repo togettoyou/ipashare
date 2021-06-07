@@ -12,6 +12,9 @@
 
 运行环境：Linux
 
+## 代码架构使用
+https://github.com/togettoyou/go-one-server
+
 ## 前提（重要，重要，重要）
 
 1.生成替换 ios.csr 和 ios.key 文件
