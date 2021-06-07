@@ -61,6 +61,15 @@ paths:
       summary: 删除指定IPA
   /api/v1/getAllPackage:
     get:
+      parameters:
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 页面大小
+        in: query
+        name: page_size
+        type: integer
       produces:
       - application/json
       responses:

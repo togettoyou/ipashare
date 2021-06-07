@@ -12,15 +12,26 @@ import (
 	"super-signature/util/errno"
 )
 
+type PaginationQueryBody struct {
+	Page     int `json:"page" form:"page"`
+	PageSize int `json:"page_size" form:"page_size"`
+}
+
 // GetAllPackage
 // @Summary 获取所有IPA
 // @Produce  json
+// @Param page query int false "页码"
+// @Param page_size query int false "页面大小"
 // @Success 200 {object} handler.Response
 // @Failure 500 {object} handler.Response
 // @Router /api/v1/getAllPackage [get]
 func GetAllPackage(c *gin.Context) {
 	g := Gin{Ctx: c}
-	applePackages, err := package_service.GetAllIPA()
+	var body PaginationQueryBody
+	if !g.ParseQueryRequest(&body) {
+		return
+	}
+	applePackages, err := package_service.GetAllIPA(body.PageSize, body.Page)
 	if g.HasError(err) {
 		return
 	}

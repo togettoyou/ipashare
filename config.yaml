@@ -49,7 +49,7 @@ mysql:
 # 苹果IPA配置
 applePath:
   # 苹果回调域名，需 https
-  url: https://qq.com
+  url: https://isign.cn.utools.club
   # 开发者账号资料保存路径
   appleAccountPath: ./ios/appleAccount/
   # 上传的IPA保存路径(保存原始ipa、mobileconfig、png文件)

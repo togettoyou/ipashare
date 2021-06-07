@@ -24,28 +24,18 @@ type ApplePackage struct {
 }
 
 // GetAllIPA 获取所有ipa下载地址
-func GetAllIPA() ([]ApplePackage, error) {
-	var applePackages []ApplePackage
-	applePackageList, err := model.GetAllApplePackage()
+func GetAllIPA(pageSize, page int) (*model.PaginationQ, error) {
+	applePackageList, err := model.GetAllApplePackage(pageSize, page)
 	if err != nil {
 		return nil, err
 	}
-	for _, v := range applePackageList {
-		applePackages = append(applePackages, ApplePackage{
-			ID:               v.ID,
-			IconLink:         conf.Config.ApplePath.URL + "/api/v1/download?id=" + v.IconLink,
-			BundleIdentifier: v.BundleIdentifier,
-			Name:             v.Name,
-			Version:          v.Version,
-			BuildVersion:     v.BuildVersion,
-			MiniVersion:      v.MiniVersion,
-			Summary:          v.Summary,
-			AppLink:          conf.Config.ApplePath.URL + "/api/v1/download?id=" + v.MobileConfigLink,
-			Size:             v.Size,
-			Count:            v.Count,
-		})
+	if data, ok := applePackageList.Data.([]*model.ApplePackage); ok {
+		for _, v := range data {
+			v.IconLink = conf.Config.ApplePath.URL + "/api/v1/download?id=" + v.IconLink
+			v.AppLink = conf.Config.ApplePath.URL + "/api/v1/download?id=" + v.MobileConfigLink
+		}
 	}
-	return applePackages, nil
+	return applePackageList, nil
 }
 
 // DeleteIPAById 删除指定ipa

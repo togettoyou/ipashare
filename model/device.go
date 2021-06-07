@@ -7,11 +7,11 @@ import (
 
 // AppleDevice 定义表模型-苹果设备表
 type AppleDevice struct {
-	ID         int       `gorm:"primary_key;AUTO_INCREMENT" comment:"自增ID"`
-	AccountIss string    `gorm:"not null;column:account_iss;type:varchar(100)" comment:"绑定的开发者账号Iss"`
-	Udid       string    `gorm:"not null;column:udid;type:varchar(100)" comment:"UDID设备标识"`
-	DeviceId   string    `gorm:"not null;column:deviceId;type:varchar(100)" comment:"设备在开发者后台的id"`
-	CreatedAt  time.Time `gorm:"not null" comment:"创建时间"`
+	ID         int       `gorm:"primary_key;AUTO_INCREMENT;comment:自增ID"`
+	AccountIss string    `gorm:"not null;column:account_iss;type:varchar(100);comment:绑定的开发者账号Iss"`
+	Udid       string    `gorm:"not null;column:udid;type:varchar(100);comment:UDID设备标识"`
+	DeviceId   string    `gorm:"not null;column:deviceId;type:varchar(100);comment:设备在开发者后台的id"`
+	CreatedAt  time.Time `gorm:"not null;comment:创建时间"`
 }
 
 func (a AppleDevice) TableName() string {
