@@ -1,7 +1,7 @@
 FROM golang:1.14 AS builder
-COPY . /root/togettoyou/super-signature
 ENV GO111MODULE=on
-ENV GOPROXY="https://goproxy.io"
+ENV GOPROXY https://goproxy.cn,direct
+COPY . /root/togettoyou/super-signature
 WORKDIR /root/togettoyou/super-signature
 RUN make docs
 
