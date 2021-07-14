@@ -23,6 +23,7 @@ services:
       - "8888:8888"
     volumes:
       - ./conf:/root/togettoyou/super-signature/conf
+      - ./log:/root/togettoyou/super-signature/log
       - ./ios:/root/togettoyou/super-signature/ios
       - ./router/templates:/root/togettoyou/super-signature/router/templates
       - ./ios.csr:/root/togettoyou/super-signature/ios.csr
