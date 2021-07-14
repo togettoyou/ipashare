@@ -30,7 +30,7 @@ func setup() {
 
 var (
 	v      = pflag.BoolP("version", "v", false, "显示版本信息")
-	config = pflag.StringP("config", "c", "config.yaml", "指定配置文件路径")
+	config = pflag.StringP("config", "c", "conf/config.yaml", "指定配置文件路径")
 )
 
 // @title iOS超级签名

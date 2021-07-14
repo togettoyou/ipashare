@@ -18,7 +18,7 @@ server:
 # 日志配置
 logConfig:
   # 日志记录模式 fatal,panic,dpanic,error,warn,info,debug
-  level: debug
+  level: info
   # 日志是否记录到文件 true,false
   isFile: false
   # 普通日志文件存放位置，当 isFile 为 true 时生效

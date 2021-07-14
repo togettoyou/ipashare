@@ -6,7 +6,8 @@ WORKDIR /root/togettoyou/super-signature
 RUN make docs
 
 FROM togettoyou/isign:latest
-COPY --from=builder /root/togettoyou/super-signature/app /root/togettoyou/super-signature/
+COPY --from=builder /root/togettoyou/super-signature/super-signature-app /root/togettoyou/super-signature/
+COPY --from=builder /root/togettoyou/super-signature/conf/ /root/togettoyou/super-signature/conf/
 WORKDIR /root/togettoyou/super-signature
 EXPOSE 8888
-ENTRYPOINT ["./app"]
+ENTRYPOINT ["./super-signature-app"]

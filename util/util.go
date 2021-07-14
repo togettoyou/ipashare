@@ -10,11 +10,11 @@ import (
 
 // Reset 重设配置
 func Reset() {
+	zap.L().Info("Hot reload config.")
 	conf.Reset()
 	logger.Reset()
 	model.Reset()
 	resetGinMode()
-	zap.L().Info("Hot reload config.")
 }
 
 const (

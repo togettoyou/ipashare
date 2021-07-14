@@ -22,9 +22,9 @@ services:
     ports:
       - "8888:8888"
     volumes:
+      - ./conf:/root/togettoyou/super-signature/conf
       - ./ios:/root/togettoyou/super-signature/ios
       - ./router/templates:/root/togettoyou/super-signature/router/templates
-      - ./config.yaml:/root/togettoyou/super-signature/config.yaml
       - ./ios.csr:/root/togettoyou/super-signature/ios.csr
       - ./ios.key:/root/togettoyou/super-signature/ios.key
       - ./server.crt:/root/togettoyou/super-signature/server.crt
