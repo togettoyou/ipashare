@@ -15,6 +15,7 @@ type config struct {
 	LogConfig logConfig `yaml:"logConfig"`
 	Mysql     mysql     `yaml:"mysql"`
 	ApplePath applePath `yaml:"applePath"`
+	AppleConf appleConf `yaml:"appleConf"`
 }
 
 type app struct {
@@ -52,6 +53,10 @@ type applePath struct {
 	AppleAccountPath      string `yaml:"appleAccountPath"`
 	UploadPath            string `yaml:"uploadPath"`
 	TemporaryDownloadPath string `yaml:"temporaryDownloadPath"`
+}
+
+type appleConf struct {
+	DeleteAllCertificates bool `yaml:"deleteAllCertificates"`
 }
 
 type csr struct {

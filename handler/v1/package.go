@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	uuid "github.com/satori/go.uuid"
+	"mime/multipart"
 	"os"
 	"strings"
 	. "super-signature/handler"
@@ -60,6 +61,11 @@ func DeletePackage(c *gin.Context) {
 	g.OkWithMsgResponse("删除成功")
 }
 
+type BindFile struct {
+	Summary string                `form:"summary" binding:"required"`
+	IPAFile *multipart.FileHeader `form:"ipaFile" binding:"required"`
+}
+
 // UploadPackage
 // @Summary 上传IPA
 // @Accept multipart/form-data
@@ -71,28 +77,23 @@ func DeletePackage(c *gin.Context) {
 // @Router /api/v1/uploadPackage [post]
 func UploadPackage(c *gin.Context) {
 	g := Gin{Ctx: c}
-	//IPA
-	ipaFile, err := c.FormFile("ipaFile")
-	if g.HasError(err) {
+	var bindFile BindFile
+	if g.HasError(c.ShouldBind(&bindFile)) {
 		return
 	}
-	if !strings.HasSuffix(ipaFile.Filename, ".ipa") {
+	file := bindFile.IPAFile
+	if !strings.HasSuffix(file.Filename, ".ipa") {
 		g.SendNoDataResponse(errno.ErrUploadIPA)
 		return
 	}
 	//保存到服务器
 	var name = uuid.Must(uuid.NewV4(), nil)
 	var ipaPath = conf.Config.ApplePath.UploadPath + fmt.Sprintf("%s.ipa", name)
-	err = c.SaveUploadedFile(ipaFile, ipaPath)
+	err := c.SaveUploadedFile(file, ipaPath)
 	if g.HasError(err) {
 		return
 	}
-	summary := c.PostForm("summary")
-	if summary == "" {
-		g.SendNoDataResponse(errno.ErrValidation)
-		return
-	}
-	appInfo, err := package_service.AnalyzeIPA(fmt.Sprintf("%s", name), ipaPath, summary)
+	appInfo, err := package_service.AnalyzeIPA(fmt.Sprintf("%s", name), ipaPath, bindFile.Summary)
 	if g.HasError(err) {
 		os.Remove(ipaPath)
 		return

@@ -67,10 +67,7 @@ func NewAppParser(iconPath, ipaPath string) (*AppInfo, error) {
 		if err != nil {
 			return nil, err
 		}
-		err = parseIpaIcon(iconPath, iosIconFile)
-		if err != nil {
-			return nil, err
-		}
+		_ = parseIpaIcon(iconPath, iosIconFile)
 		info.Info = *p
 		info.IconPath = iconPath
 		info.Size = stat.Size()

@@ -65,7 +65,7 @@ func (gl GormLogger) Trace(ctx context.Context, begin time.Time, fc func() (stri
 			gl.ZapLogger.Warn(msg, zap.String("tips", slowLog), zap.Duration("elapsed", elapsed), zap.Int64("rows", rows), zap.String("sql", sql))
 		case gl.LogLevel == gormlogger.Info:
 			sql, rows := fc()
-			gl.ZapLogger.Debug(msg, zap.Duration("elapsed", elapsed), zap.Int64("rows", rows), zap.String("sql", sql))
+			gl.ZapLogger.Info(msg, zap.Duration("elapsed", elapsed), zap.Int64("rows", rows), zap.String("sql", sql))
 		}
 	}
 }

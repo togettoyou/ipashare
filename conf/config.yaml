@@ -8,8 +8,8 @@ server:
   # 开发模式 debug,release,test
   runMode: release
   # 超时时间/单位s
-  readTimeout: 60
-  writeTimeout: 60
+  readTimeout: 0
+  writeTimeout: 0
   # 端口
   httpPort: 8888
   # 启用 https
@@ -56,3 +56,8 @@ applePath:
   uploadPath: ./ios/upload/
   # 提供下载的IPA临时路径(提供下载的ipa和plist文件)
   temporaryDownloadPath: ./ios/temporaryDownload/
+
+# 苹果账号配置
+appleConf:
+  # 添加开发者账号时是否删除账号下所有的 Certificates
+  deleteAllCertificates: false
