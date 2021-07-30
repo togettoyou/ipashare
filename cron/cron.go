@@ -24,7 +24,7 @@ func Init() {
 
 func GoRun() {
 	zap.L().Debug("----开始清理无用文件----")
-	err := tools.RunCmd(fmt.Sprintf(
+	err := tools.Command("/bin/bash", "-c", fmt.Sprintf(
 		`find %s -mtime +1 -name "*.*" -exec rm -rf {} \;`,
 		conf.Config.ApplePath.TemporaryDownloadPath))
 	if err != nil {

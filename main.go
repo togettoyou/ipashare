@@ -11,7 +11,6 @@ import (
 	"super-signature/cron"
 	"super-signature/model"
 	"super-signature/router"
-	"super-signature/util"
 	"super-signature/util/conf"
 	"super-signature/util/logger"
 	"super-signature/util/tools"
@@ -21,7 +20,7 @@ import (
 )
 
 func setup() {
-	conf.Setup()
+	conf.Setup(*url, *mode)
 	logger.Setup()
 	validator.Setup()
 	model.Setup()
@@ -29,8 +28,12 @@ func setup() {
 }
 
 var (
-	v      = pflag.BoolP("version", "v", false, "显示版本信息")
-	config = pflag.StringP("config", "c", "conf/config.yaml", "指定配置文件路径")
+	v    = pflag.BoolP("version", "v", false, "显示版本信息")
+	mode = pflag.StringP("mode", "m", "debug", "运行模式 debug or release")
+	url  = pflag.StringP("url", "u", "https://isign.cn.utools.club", "服务域名(https)")
+	port = pflag.Int64P("port", "p", 80, "服务使用端口")
+	crt  = pflag.StringP("crt", "c", "", "ssl公钥(crt文件)(服务开启https时使用，默认为空)")
+	key  = pflag.StringP("key", "k", "", "ssl私钥(key文件)(服务开启https时使用，默认为空)")
 )
 
 // @title iOS超级签名
@@ -51,38 +54,30 @@ func main() {
 		fmt.Println(string(marshalled))
 		return
 	}
-	conf.DefaultConfigFile = *config
+	gin.SetMode(*mode)
 	setup()
 	defer func() {
 		zap.L().Sync()
 		zap.S().Sync()
 	}()
 	startServer()
-	reload := make(chan int, 1)
-	conf.OnConfigChange(func() { reload <- 1 })
-	for {
-		select {
-		case <-reload:
-			util.Reset()
-		}
-	}
+	select {}
 }
 
 func startServer() {
 	time.Local = time.FixedZone("CST", 8*3600)
 	zap.L().Info(time.Now().Format(tools.TimeFormat))
-	gin.SetMode(conf.Config.Server.RunMode)
-	httpPort := fmt.Sprintf(":%d", conf.Config.Server.HttpPort)
+	httpPort := fmt.Sprintf(":%d", *port)
 	server := &http.Server{
 		Addr:           httpPort,
 		Handler:        router.InitRouter(),
-		ReadTimeout:    conf.Config.Server.ReadTimeout,
-		WriteTimeout:   conf.Config.Server.WriteTimeout,
+		ReadTimeout:    0,
+		WriteTimeout:   0,
 		MaxHeaderBytes: 1 << 20,
 	}
 	go func() {
-		if conf.Config.Server.EnableHttps {
-			if err := server.ListenAndServeTLS("./server.crt", "./server.key"); err != nil {
+		if *crt != "" && *key != "" {
+			if err := server.ListenAndServeTLS(*crt, *key); err != nil {
 				panic(err)
 			}
 		} else {
@@ -91,14 +86,12 @@ func startServer() {
 			}
 		}
 	}()
-	if router.HasDocs() {
-		fmt.Printf(`swagger 文档地址 : %s/swagger/index.html
+	fmt.Printf(`swagger 文档地址 : %s/swagger/index.html
    ____   ____             ____   ____   ____             ______ ______________  __ ___________ 
   / ___\ /  _ \   ______  /  _ \ /    \_/ __ \   ______  /  ___// __ \_  __ \  \/ // __ \_  __ \
  / /_/  >  <_> ) /_____/ (  <_> )   |  \  ___/  /_____/  \___ \\  ___/|  | \/\   /\  ___/|  | \/
  \___  / \____/           \____/|___|  /\___  >         /____  >\___  >__|    \_/  \___  >__|   
 /_____/                              \/     \/               \/     \/                 \/       
 
-`, conf.Config.ApplePath.URL)
-	}
+`, *url)
 }

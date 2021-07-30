@@ -13,11 +13,6 @@ var (
 	ErrBind       = &Errno{Code: 20002, Message: "参数绑定异常"}
 	ErrUnknown    = &Errno{Code: 20003, Message: "未知错误"}
 
-	ErrNotLogin     = &Errno{Code: 20101, Message: "请登录"}
-	ErrTokenExpired = &Errno{Code: 20102, Message: "令牌已过期"}
-	ErrTokenInvalid = &Errno{Code: 20103, Message: "令牌无效"}
-	ErrTokenFailure = &Errno{Code: 20104, Message: "令牌验证失败"}
-
 	ErrUploadP8  = &Errno{Code: 20201, Message: "请上传p8文件类型"}
 	ErrUploadIPA = &Errno{Code: 20202, Message: "请上传IPA文件类型"}
 	ErrUploadIss = &Errno{Code: 20203, Message: "iss 不能为空"}
@@ -28,4 +23,5 @@ var (
 	ErrDeviceInsufficient = &Errno{Code: 20303, Message: "可用设备已不足"}
 	ErrNotFile            = &Errno{Code: 20304, Message: "文件不存在"}
 	ErrNotIPA             = &Errno{Code: 20305, Message: "IPA包不存在"}
+	ErrSignIPA            = &Errno{Code: 20305, Message: "等待签名失败"}
 )

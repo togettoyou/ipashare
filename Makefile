@@ -1,5 +1,5 @@
 # 定义伪目标。不创建目标文件，而是去执行这个目标下面的命令。
-.PHONY: all docs linux linux-docs run gotool clean help
+.PHONY: all linux run gotool clean help
 
 # 生成的二进制文件名
 BINARY_NAME="super-signature-app"
@@ -16,21 +16,11 @@ ldflags="-w -X ${versionDir}.gitTag=${gitTag} -X ${versionDir}.buildDate=${build
 
 # 执行make命令时所执行的所有命令
 all: clean
-	CGO_ENABLED=0 go build -v -ldflags ${ldflags} -o ${BINARY_NAME} .
-
-docs: clean
-	CGO_ENABLED=0 go build -tags "docs" -v -ldflags ${ldflags} -o ${BINARY_NAME} .
+	go build -v -ldflags ${ldflags} -o ${BINARY_NAME} .
 
 # 交叉编译linux amd64版本
 linux: clean
-	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -v -ldflags ${ldflags} -o ${BINARY_NAME} .
-
-linux-docs: clean
-	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -tags "docs" -v -ldflags ${ldflags} -o ${BINARY_NAME} .
-
-# 运行项目
-run:
-	go run -tags "docs" main.go $(TARGET)
+	GOOS=linux GOARCH=amd64 go build -v -ldflags ${ldflags} -o ${BINARY_NAME} .
 
 # gotool工具
 gotool:
@@ -45,10 +35,7 @@ clean:
 
 # 帮助
 help:
-	@echo "make - 编译生成当前平台可运行的二进制文件(不带swagger文档)"
-	@echo "make docs - 编译生成当前平台可运行的二进制文件(带swagger文档)"
-	@echo "make linux - 交叉编译生成linux amd64可运行的二进制文件(不带swagger文档)"
-	@echo "make linux-docs - 交叉编译生成linux amd64可运行的二进制文件(带swagger文档)"
-	@echo "make run - 直接运行 Go 代码(带swagger文档)\nmake run out='-c config.yaml' - 指定配置文件"
+	@echo "make - 编译生成当前平台可运行的二进制文件"
+	@echo "make linux - 交叉编译生成linux amd64可运行的二进制文件"
 	@echo "make gotool - 运行 Go 工具 'fmt' and 'vet'"
 	@echo "make clean - 清理编译生成的二进制文件"

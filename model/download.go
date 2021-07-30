@@ -9,8 +9,8 @@ import (
 
 // Download 定义表模型-苹果IPA包表
 type Download struct {
-	DownloadID string    `gorm:"primary_key;column:download_id;type:varchar(100);comment:下载id"`
-	Path       string    `gorm:"not null;column:path;type:varchar(2000);comment:文件路径"`
+	DownloadID string    `gorm:"primary_key;column:download_id;comment:下载id"`
+	Path       string    `gorm:"not null;column:path;comment:文件路径"`
 	CreatedAt  time.Time `gorm:"not null;comment:创建时间"`
 }
 

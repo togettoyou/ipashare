@@ -3,15 +3,12 @@ package router
 import (
 	"github.com/gin-contrib/pprof"
 	"github.com/gin-gonic/gin"
+	ginSwagger "github.com/swaggo/gin-swagger"
+	"github.com/swaggo/gin-swagger/swaggerFiles"
+	_ "super-signature/docs"
 	v1 "super-signature/handler/v1"
 	"super-signature/router/middleware"
 )
-
-var swagHandler gin.HandlerFunc
-
-func HasDocs() bool {
-	return swagHandler != nil
-}
 
 func InitRouter() *gin.Engine {
 	r := gin.New()
@@ -21,10 +18,8 @@ func InitRouter() *gin.Engine {
 	//开启性能分析
 	//实际可以根据需要使用pprof.RouteRegister()控制访问权限
 	pprof.Register(r)
-	//swagger文档，根据build tag控制编译减少二进制文件大小
-	if HasDocs() {
-		r.GET("/swagger/*any", swagHandler)
-	}
+	//swagger文档
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	//加载模板文件
 	r.LoadHTMLGlob("router/templates/*")
 	//api路由分组v1版本

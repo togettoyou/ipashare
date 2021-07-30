@@ -32,12 +32,10 @@ func AddAppleAccount(iss string, kid string, p8 string, csr string) (int, error)
 	if devicesResponseList.Meta.Paging.Total >= 100 {
 		return 0, errno.ErrDeviceInsufficient
 	}
-	if conf.Config.AppleConf.DeleteAllCertificates {
-		// 删除账号下所有的Certificates
-		err = authorize.DeleteAllCertificates()
-		if err != nil {
-			return 0, err
-		}
+	// 删除账号下所有的Certificates
+	err = authorize.DeleteAllCertificates()
+	if err != nil {
+		return 0, err
 	}
 	// 判断账号是否存在bundleIds为*的数据
 	bundleIds, err := authorize.GetBundleIdsByIdentifier("*")
@@ -65,11 +63,12 @@ func AddAppleAccount(iss string, kid string, p8 string, csr string) (int, error)
 	}
 	// 根据cerFile调用openssl生成pem
 	var pemPath = fmt.Sprintf("%s%s/pem.pem", conf.Config.ApplePath.AppleAccountPath, iss)
-	err = tools.RunCmd(
-		fmt.Sprintf(
-			"openssl x509 -in %s -inform DER -outform PEM -out %s",
-			cerPath,
-			pemPath),
+	err = tools.Command(
+		"openssl", "x509",
+		"-in", cerPath,
+		"-inform", "DER",
+		"-outform", "PEM",
+		"-out", pemPath,
 	)
 	if err != nil {
 		return 0, err
@@ -132,13 +131,9 @@ func DeleteAppleAccountByIss(iss string) error {
 		return err
 	}
 	//清除开发者账户中心cer证书
-	err = apple.Authorize{
+	return apple.Authorize{
 		P8:  appleAccount.P8,
 		Iss: appleAccount.Iss,
 		Kid: appleAccount.Kid,
 	}.DeleteCertificatesByCerId(appleAccount.CerId)
-	if err != nil {
-		return err
-	}
-	return nil
 }

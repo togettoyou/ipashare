@@ -7,14 +7,14 @@ import (
 
 // AppleAccount 定义表模型-苹果开发者账号表
 type AppleAccount struct {
-	Iss       string    `gorm:"primary_key;column:iss;type:varchar(100);comment:Issuer ID"`
-	Kid       string    `gorm:"not null;column:kid;type:varchar(50);comment:密钥ID"`
-	CerId     string    `gorm:"not null;column:cerId;type:varchar(2000);comment:本机导出的csr文件内容"`
-	P8        string    `gorm:"not null;column:p8;type:varchar(500);comment:API密钥P8文件内容"`
-	CerPath   string    `gorm:"not null;column:cer_path;type:varchar(500);comment:Cer文件地址"`
-	PemPath   string    `gorm:"not null;column:pem_path;type:varchar(500);comment:根据Cer文件生成的Pem文件地址"`
-	BundleIds string    `gorm:"not null;column:bundleIds;type:varchar(50);comment:开发者后台的通配证书id"`
-	Count     int       `gorm:"not null;column:count;type:int(10) unsigned;comment:当前设备量"`
+	Iss       string    `gorm:"primary_key;column:iss;comment:Issuer ID"`
+	Kid       string    `gorm:"not null;column:kid;comment:密钥ID"`
+	CerId     string    `gorm:"not null;column:cerId;comment:本机导出的csr文件内容"`
+	P8        string    `gorm:"not null;column:p8;comment:API密钥P8文件内容"`
+	CerPath   string    `gorm:"not null;column:cer_path;comment:Cer文件地址"`
+	PemPath   string    `gorm:"not null;column:pem_path;comment:根据Cer文件生成的Pem文件地址"`
+	BundleIds string    `gorm:"not null;column:bundleIds;comment:开发者后台的通配证书id"`
+	Count     int       `gorm:"not null;column:count;comment:当前设备量"`
 	CreatedAt time.Time `gorm:"not null;comment:创建时间"`
 }
 

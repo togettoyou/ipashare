@@ -59,17 +59,37 @@ func GetApp(c *gin.Context) {
 		g.SendNoDataResponse(errno.ErrValidation)
 		return
 	}
-	_, err := download_service.GetPathByID(plistID)
-	if g.HasError(err) {
+	value, ok := conf.Config.IPASign.Load(plistID)
+	if !ok {
+		// 后台签名进行中
+		c.HTML(http.StatusOK, "msg.tmpl", gin.H{
+			"msg": "正在后台签名中，请耐心等待。本页面 5 秒自动刷新一次",
+		})
 		return
 	}
-	applePackage, err := udid_service.GetApplePackageByID(packageId)
-	if g.HasError(err) {
+	msg, ok := value.([]string)
+	if !ok {
+		g.SendNoDataResponse(errno.ErrSignIPA)
 		return
 	}
-	c.HTML(http.StatusOK, "index.tmpl", gin.H{
-		"plistPath": fmt.Sprintf("%s/api/v1/download?id=%s", conf.Config.ApplePath.URL, plistID),
-		"name":      applePackage.Name,
-		"summary":   applePackage.Summary,
-	})
+	switch msg[0] {
+	case "success":
+		_, err := download_service.GetPathByID(plistID)
+		if g.HasError(err) {
+			return
+		}
+		applePackage, err := udid_service.GetApplePackageByID(packageId)
+		if g.HasError(err) {
+			return
+		}
+		c.HTML(http.StatusOK, "index.tmpl", gin.H{
+			"plistPath": fmt.Sprintf("%s/api/v1/download?id=%s", conf.Config.ApplePath.URL, plistID),
+			"name":      applePackage.Name,
+			"summary":   applePackage.Summary,
+		})
+	case "fail":
+		c.HTML(http.StatusOK, "err.tmpl", gin.H{
+			"msg": msg[1],
+		})
+	}
 }

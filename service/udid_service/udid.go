@@ -160,16 +160,7 @@ func signature(appleAccount model.AppleAccount, devicesId string, applePackage m
 	if err != nil {
 		return "", err
 	}
-	var ipaPath = conf.Config.ApplePath.TemporaryDownloadPath + fileName + ".ipa"
-	// 拿到账号下对应的pem证书、保存的key私钥、获取到的描述文件mobileprovision对IPA签名
-	err = tools.RunCmd(fmt.Sprintf("isign -c %s -k %s -p %s  -o %s %s",
-		appleAccount.PemPath, conf.CSRSetting.KeyPath,
-		mobileprovisionPath, ipaPath,
-		applePackage.IPAPath))
-	if err != nil {
-		zap.L().Error(err.Error())
-		return "", err
-	}
+	ipaPath := conf.Config.ApplePath.TemporaryDownloadPath + fileName + ".ipa"
 	ipaID, err := model.InsertDownloadPath(ipaPath)
 	if err != nil {
 		return "", err
@@ -220,6 +211,23 @@ func signature(appleAccount model.AppleAccount, devicesId string, applePackage m
 	if err != nil {
 		return "", err
 	}
+	// 拿到账号下对应的pem证书、保存的key私钥、获取到的描述文件mobileprovision对IPA签名
+	go func() {
+		zap.S().Info(ipaPath, "正在签名中")
+		err = tools.Command("zsign", "-c", appleAccount.PemPath,
+			"-k", conf.CSRSetting.KeyPath,
+			"-m", mobileprovisionPath,
+			"-o", ipaPath,
+			"-z", "9",
+			applePackage.IPAPath)
+		if err != nil {
+			zap.S().Error("签名失败", err.Error())
+			conf.Config.IPASign.Store(plistID, []string{"fail", err.Error()})
+			return
+		}
+		conf.Config.IPASign.Store(plistID, []string{"success"})
+		zap.S().Info(ipaPath, "签名成功")
+	}()
 	return fmt.Sprintf("%s/api/v1/getApp?plistID=%s&packageId=%d", conf.Config.ApplePath.URL, plistID, applePackage.ID), nil
 }
 
