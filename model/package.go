@@ -74,7 +74,7 @@ func GetAllApplePackage(pageSize, page int) (*PaginationQ, error) {
 		total            int64
 	)
 	if err = db.Model(&ApplePackage{}).
-		Scopes(Count(&total)).
+		//Scopes(Count(&total)).
 		Scopes(Paginate(&page, &pageSize)).
 		Find(&applePackageList).Error; err != nil {
 		if err == gorm.ErrRecordNotFound {

@@ -12,14 +12,82 @@
 
 一个用go实现的iOS重签名应用，即市面上的iOS超级签名、蒲公英ios内测分发原理
 
-使用本模块可以进行基本的IPA安装包重签名分发
+使用本应用可以进行基本的IPA安装包重签名分发
 
 实现功能：苹果开发者账号管理、IPA安装包管理
 
-运行环境：Linux
+运行环境：Docker
 
-## 代码架构使用
+## 运行
 
-https://github.com/togettoyou/go-one-server
+```shell
+docker run --rm togettoyou/super-signature:latest -h
+```
 
-# 此版本正在适配zsign，旧版本isign请使用此分支 https://github.com/togettoyou/super-signature/tree/isign
+```shell
+docker run --name super-signature \
+  -v $PWD/ios:/root/super-signature/ios \
+  -v $PWD/db:/root/super-signature/db \
+  -p 8888:8888 \
+  togettoyou/super-signature:latest \
+  --url=https://isign.cn.utools.club
+```
+
+https 证书部署可以使用 nginx 等网关，或支持 https 的内网穿透
+
+访问你的域名 https://isign.cn.utools.club/swagger/index.html
+
+![image.png](https://cdn.nlark.com/yuque/0/2021/png/1077776/1622719814015-5552a7a4-496a-4271-b43f-7f78592176d1.png#clientId=uc4af6cdf-c3d2-4&from=paste&height=827&id=u84b71819&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1654&originWidth=2880&originalType=binary&size=275056&status=done&style=none&taskId=ua10a445e-d046-46a0-b6ef-617fde81539&width=1440#id=PdB8i&originHeight=1654&originWidth=2880&originalType=binary&ratio=1&status=done&style=none)
+
+## 注意
+
+此版本使用的 zsign ，如需使用 isign 请切换至 [isign 分支](https://github.com/togettoyou/super-signature/tree/isign)
+
+## 使用说明
+
+1、 上传苹果开发者账号信息
+
+登陆 [https://appstoreconnect.apple.com/access/api](https://appstoreconnect.apple.com/access/api) 获取p8(下载的API密钥文件内容)，kid (
+密钥ID)，Iss (Issuer ID)：
+
+![](https://cdn.nlark.com/yuque/0/2021/png/1077776/1614157937920-e048fc1b-b8ef-4b08-a559-bcf0a9b72c39.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_14%2Ctext_Z2l0aHViL3RvZ2V0dG95b3U%3D%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10#from=url&id=ipJUH&margin=%5Bobject%20Object%5D&originHeight=970&originWidth=3284&originalType=binary&ratio=2&status=done&style=none)
+
+上传：
+
+![image.png](https://cdn.nlark.com/yuque/0/2021/png/1077776/1623042480919-37ecee18-c7e7-4e17-91ac-c2ad8b7e117a.png#clientId=uab37fe2a-4554-4&from=paste&height=821&id=u8d372f30&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1641&originWidth=2880&originalType=binary&ratio=2&size=239573&status=done&style=none&taskId=ueb474557-a63b-43a0-97c2-b066502a2a4&width=1440)
+
+2、 上传IPA
+
+![image.png](https://cdn.nlark.com/yuque/0/2021/png/1077776/1623042643053-67a10d99-3359-4ebb-9ee4-b36d7ea48bdb.png#clientId=uab37fe2a-4554-4&from=paste&height=822&id=udac83704&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1644&originWidth=2880&originalType=binary&ratio=2&size=240127&status=done&style=none&taskId=ub147db0c-bab9-4419-abef-6de3e71fb46&width=1440)
+
+3、 iPhone 使用 Safari 浏览器打开 AppLink 链接
+
+`/api/v1/getAllPackage` 返回数据格式
+
+```json
+{
+  "code": 0,
+  "msg": "成功",
+  "data": [
+    {
+      "ID": 1,
+      "IconLink": "应用图标地址",
+      "BundleIdentifier": "应用包名",
+      "Name": "应用名称",
+      "Version": "应用版本号",
+      "BuildVersion": "应用BuildVersion",
+      "MiniVersion": "最低支持ios版本",
+      "Summary": "简介",
+      "AppLink": "应用下载地址，iPhone使用Safari浏览器访问即可下载",
+      "Size": "应用大小",
+      "Count": "累计下载量"
+    }
+  ]
+}
+```
+
+![](https://cdn.nlark.com/yuque/0/2021/png/1077776/1614159853374-673e82af-a2f2-479d-9ef8-03da193ed801.png#from=url&id=yGJKs&margin=%5Bobject%20Object%5D&originHeight=1970&originWidth=1154&originalType=binary&ratio=2&status=done&style=none)
+
+## 详细原理说明
+
+[语雀浏览](https://www.yuque.com/togettoyou/cjqm/rbk50t)
