@@ -1,5 +1,5 @@
 FROM centos:7 AS builder
-RUN yum install -y wget git make \
+RUN yum install -y wget git make gcc \
     && wget https://studygolang.com/dl/golang/go1.16.6.linux-amd64.tar.gz \
     && tar -zxvf go1.16.6.linux-amd64.tar.gz -C /usr/local/
 ENV GOROOT=/usr/local/go
