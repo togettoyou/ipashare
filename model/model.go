@@ -29,6 +29,7 @@ func level() gormlogger.LogLevel {
 }
 
 func Setup() {
+	_ = tools.MkdirAll("./db/")
 	var err error
 	db, err = gorm.Open(
 		sqlite.Open("./db/super-signature.db"),
