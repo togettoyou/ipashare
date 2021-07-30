@@ -22,4 +22,4 @@
 
 https://github.com/togettoyou/go-one-server
 
-# 此版本正在适配zsign，旧版本isign使用请此分支 https://github.com/togettoyou/super-signature/tree/isign
+# 此版本正在适配zsign，旧版本isign请使用此分支 https://github.com/togettoyou/super-signature/tree/isign

@@ -33,7 +33,7 @@ var (
 )
 
 // Setup 读取配置文件设置
-func Setup(url, mode string) {
+func Setup(url, mode, iosCsr, iosKey string) {
 	Config = config{
 		IPASign: sync.Map{},
 		Model:   mode,
@@ -44,8 +44,8 @@ func Setup(url, mode string) {
 			TemporaryDownloadPath: "./ios/temporaryDownload/",
 		}}
 	CSRSetting = csr{
-		KeyPath: "./conf/ios.key",
-		CsrPath: "./conf/ios.csr",
+		KeyPath: iosKey,
+		CsrPath: iosCsr,
 	}
 	setConfig()
 }
@@ -57,12 +57,12 @@ func setConfig() {
 	createPath(Config.ApplePath.TemporaryDownloadPath)
 	keyData, err := ioutil.ReadFile(CSRSetting.KeyPath)
 	if err != nil {
-		zap.S().Errorf("setting.Setup, fail to read '%s' %s", CSRSetting.KeyPath, err.Error())
+		panic(err)
 	}
 	CSRSetting.Key = string(keyData)
 	csrData, err := ioutil.ReadFile(CSRSetting.CsrPath)
 	if err != nil {
-		zap.S().Errorf("setting.Setup, fail to read '%s' %s", CSRSetting.CsrPath, err.Error())
+		panic(err)
 	}
 	CSRSetting.Csr = string(csrData)
 }
