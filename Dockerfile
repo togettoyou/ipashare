@@ -1,8 +1,10 @@
 FROM centos:7 AS builder
-RUN rpm --import https://mirror.go-repo.io/centos/RPM-GPG-KEY-GO-REPO \
-    && curl -s https://mirror.go-repo.io/centos/go-repo.repo | tee /etc/yum.repos.d/go-repo.repo \
-    && yum install -y git make golang \
-    && go env -w GO111MODULE=on \
+RUN yum install -y wget git make \
+    && wget https://studygolang.com/dl/golang/go1.16.6.linux-amd64.tar.gz \
+    && tar -zxvf go1.16.6.linux-amd64.tar.gz -C /usr/local/
+ENV GOROOT=/usr/local/go
+ENV PATH=$PATH:$GOROOT/bin
+RUN go env -w GO111MODULE=on \
     && go env -w GOPROXY=https://goproxy.cn,direct
 COPY . /root/super-signature
 WORKDIR /root/super-signature
