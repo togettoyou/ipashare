@@ -29,13 +29,13 @@ func setup() {
 
 var (
 	v      = pflag.BoolP("version", "v", false, "显示版本信息")
-	mode   = pflag.StringP("mode", "m", "debug", "运行模式 debug or release")
-	url    = pflag.StringP("url", "u", "https://localhost", "服务域名(https)")
-	port   = pflag.Int64P("port", "p", 8888, "服务使用端口")
-	crt    = pflag.StringP("crt", "c", "", "ssl公钥(crt文件)(服务开启https时使用，默认为空)")
-	key    = pflag.StringP("key", "k", "", "ssl私钥(key文件)(服务开启https时使用，默认为空)")
-	iosCsr = pflag.StringP("iosCsr", "s", "./conf/ios.csr", "ios证书公钥(csr文件)(使用openssl生成)")
-	iosKey = pflag.StringP("iosKey", "y", "./conf/ios.key", "ios证书私钥(key文件)(使用openssl生成)")
+	mode   = pflag.StringP("mode", "", "debug", "运行模式 debug or release")
+	url    = pflag.StringP("url", "", "https://localhost", "服务域名(https)")
+	port   = pflag.Int64P("port", "", 8888, "服务使用端口")
+	crt    = pflag.StringP("crt", "", "", "ssl公钥(crt文件)(服务开启https时使用，默认为空)")
+	key    = pflag.StringP("key", "", "", "ssl私钥(key文件)(服务开启https时使用，默认为空)")
+	iosCsr = pflag.StringP("iosCsr", "", "./conf/ios.csr", "ios证书公钥(csr文件)(使用openssl生成)")
+	iosKey = pflag.StringP("iosKey", "", "./conf/ios.key", "ios证书私钥(key文件)(使用openssl生成)")
 )
 
 // @title iOS超级签名
