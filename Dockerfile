@@ -12,8 +12,6 @@ RUN make
 
 FROM centos:7
 COPY --from=builder /root/super-signature/super-signature-app /root/super-signature/
-COPY router/templates/ /root/super-signature/router/templates/
-COPY conf/ /root/super-signature/conf/
 COPY zsign/zsign /usr/local/bin/
 RUN yum install -y openssl openssl-devel \
     && chmod +x /usr/local/bin/zsign

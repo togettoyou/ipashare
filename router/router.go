@@ -1,14 +1,19 @@
 package router
 
 import (
+	"embed"
 	"github.com/gin-contrib/pprof"
 	"github.com/gin-gonic/gin"
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"github.com/swaggo/gin-swagger/swaggerFiles"
+	"html/template"
 	_ "super-signature/docs"
 	v1 "super-signature/handler/v1"
 	"super-signature/router/middleware"
 )
+
+//go:embed templates
+var templates embed.FS
 
 func InitRouter() *gin.Engine {
 	r := gin.New()
@@ -21,7 +26,12 @@ func InitRouter() *gin.Engine {
 	//swagger文档
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	//加载模板文件
-	r.LoadHTMLGlob("router/templates/*")
+	t, err := template.ParseFS(templates, "templates/*.tmpl")
+	if err != nil {
+		panic(err)
+	}
+	r.SetHTMLTemplate(t)
+	//r.LoadHTMLGlob("router/templates/*")
 	//api路由分组v1版本
 	apiV1 := r.Group("/api/v1")
 	initAppleRouter(apiV1)

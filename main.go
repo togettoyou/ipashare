@@ -34,8 +34,8 @@ var (
 	port   = pflag.Int64P("port", "", 8888, "服务使用端口")
 	crt    = pflag.StringP("crt", "", "", "ssl公钥(crt文件)(服务开启https时使用，默认为空)")
 	key    = pflag.StringP("key", "", "", "ssl私钥(key文件)(服务开启https时使用，默认为空)")
-	iosCsr = pflag.StringP("iosCsr", "", "./conf/ios.csr", "ios证书公钥(csr文件)(使用openssl生成)")
-	iosKey = pflag.StringP("iosKey", "", "./conf/ios.key", "ios证书私钥(key文件)(使用openssl生成)")
+	iosCsr = pflag.StringP("iosCsr", "", "", "ios证书公钥(csr文件)(使用openssl生成)")
+	iosKey = pflag.StringP("iosKey", "", "", "ios证书私钥(key文件)(使用openssl生成)")
 )
 
 // @title iOS超级签名

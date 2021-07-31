@@ -10,15 +10,15 @@
 
 ## 这是什么
 
-一个用go实现的iOS重签名应用，即市面上的iOS超级签名、蒲公英ios内测分发原理
+一个用 go 实现的 iOS 重签名应用，即市面上的 iOS 超级签名、蒲公英 iOS 内测分发
 
-使用本应用可以进行基本的IPA安装包重签名分发
+使用本应用可以进行 IPA 重签名分发
 
 实现功能：苹果开发者账号管理、IPA安装包管理
 
-运行环境：Docker
+运行环境：Docker 或 centos 7
 
-## 运行
+## Docker 运行
 
 ```shell
 docker run --rm togettoyou/super-signature:latest -h
@@ -33,7 +33,21 @@ docker run --name super-signature \
   --url=https://isign.cn.utools.club
 ```
 
-https 证书部署可以使用 nginx 等网关，或支持 https 的内网穿透
+## centos 7 运行
+
+```shell
+git clone https://github.com/togettoyou/super-signature.git
+cd super-signature
+# go 1.16+
+make
+yum install -y openssl openssl-devel
+cp zsign/zsign /usr/local/bin/
+chmod +x /usr/local/bin/zsign
+./super-signature-app -h
+./super-signature-app --url=https://isign.cn.utools.club
+```
+
+ssl 证书部署可以使用 nginx 等网关，或支持 https 的内网穿透等方式
 
 访问你的域名 https://isign.cn.utools.club/swagger/index.html
 
@@ -62,7 +76,7 @@ https 证书部署可以使用 nginx 等网关，或支持 https 的内网穿透
 
 3、 iPhone 使用 Safari 浏览器打开 AppLink 链接
 
-`/api/v1/getAllPackage` 返回数据格式
+`/api/v1/getAllPackage` 返回数据格式说明
 
 ```json
 {
