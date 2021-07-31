@@ -55,7 +55,8 @@ ssl 证书部署可以使用 nginx 等网关，或支持 https 的内网穿透�
 
 ## 注意
 
-此版本使用的 zsign ，如需使用 isign 请切换至 [isign 分支](https://github.com/togettoyou/super-signature/tree/isign)
+此版本使用的 [zsign](https://github.com/zhlynn/zsign) ，如需使用 isign
+请切换至 [isign 分支](https://github.com/togettoyou/super-signature/tree/isign)
 
 ## 使用说明
 
