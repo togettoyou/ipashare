@@ -21,16 +21,41 @@
 ## Docker 运行
 
 ```shell
+# 查看帮助
 docker run --rm togettoyou/super-signature:latest -h
+# 版本
+docker run --rm togettoyou/super-signature:latest -v
 ```
 
 ```shell
+# http 方式部署，ssl 证书部署可以自行使用 nginx 等网关，或支持 https 的内网穿透等方式
+mkdir super-signature
+cd super-signature
 docker run --name super-signature \
   -v $PWD/ios:/root/super-signature/ios \
   -v $PWD/db:/root/super-signature/db \
   -p 8888:8888 \
   togettoyou/super-signature:latest \
   --url=https://isign.cn.utools.club
+# 运行后会挂载容器内 ios目录(存放账号和ipa文件) 和 db目录(存放sqlite文件) 到当前目录下
+```
+
+```shell
+# https 方式部署
+mkdir super-signature
+cd super-signature
+mkdir ssl
+# 自行向服务厂商申请域名的 ssl 证书后拷贝 server.crt 和 server.key 到 ssl 目录
+docker run --name super-signature \
+  -v $PWD/ios:/root/super-signature/ios \
+  -v $PWD/db:/root/super-signature/db \
+  -v $PWD/ssl:/root/super-signature/ssl \
+  -p 443:443 \
+  togettoyou/super-signature:latest \
+  --url=https://你的域名 \
+  --port=443 \
+  --crt=ssl/server.crt \
+  --key=ssl/server.key
 ```
 
 ## centos 7 运行
@@ -40,14 +65,15 @@ git clone https://github.com/togettoyou/super-signature.git
 cd super-signature
 # go 1.16+
 make
-yum install -y openssl openssl-devel
+yum install -y openssl openssl-devel unzip zip
 cp zsign/zsign /usr/local/bin/
 chmod +x /usr/local/bin/zsign
 ./super-signature-app -h
+# http
 ./super-signature-app --url=https://isign.cn.utools.club
+# https
+./super-signature-app --url=https://isign.cn.utools.club --port=443 --crt=ssl/server.crt --key=ssl/server.key
 ```
-
-ssl 证书部署可以使用 nginx 等网关，或支持 https 的内网穿透等方式
 
 访问你的域名 https://isign.cn.utools.club/swagger/index.html
 
