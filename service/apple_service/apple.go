@@ -33,10 +33,10 @@ func AddAppleAccount(iss string, kid string, p8 string, csr string) (int, error)
 		return 0, errno.ErrDeviceInsufficient
 	}
 	// 删除账号下所有的Certificates
-	err = authorize.DeleteAllCertificates()
-	if err != nil {
-		return 0, err
-	}
+	//err = authorize.DeleteAllCertificates()
+	//if err != nil {
+	//	return 0, err
+	//}
 	// 判断账号是否存在bundleIds为*的数据
 	bundleIds, err := authorize.GetBundleIdsByIdentifier("*")
 	if err != nil {
