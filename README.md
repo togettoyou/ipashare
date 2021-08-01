@@ -72,10 +72,10 @@ docker run --name super-signature \
   --port=443 \
   --crt=ssl/server.crt \
   --key=ssl/server.key \
-  --enableOSS true \
-  --ossEndpoint oss-cn-xxx.aliyuncs.com \
-  --ossAccessKeyId XXXXXXXXXXXXXXXXX \
-  --ossAccessKeySecret XXXXXXXXXXXXXXXXXXXX
+  --enableOSS=true \
+  --ossEndpoint=oss-cn-xxx.aliyuncs.com \
+  --ossAccessKeyId=XXXXXXXXXXXXXXXXX \
+  --ossAccessKeySecret=XXXXXXXXXXXXXXXXXXXX
 ```
 
 ## 使用 centos 7 自行编译运行
