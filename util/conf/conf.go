@@ -9,9 +9,13 @@ import (
 )
 
 type config struct {
-	IPASign   sync.Map
-	Model     string
-	ApplePath applePath
+	IPASign            sync.Map
+	Model              string
+	EnableOSS          bool
+	OSSEndpoint        string
+	OSSAccessKeyId     string
+	OSSAccessKeySecret string
+	ApplePath          applePath
 }
 
 type applePath struct {
@@ -80,10 +84,14 @@ r+IOMYXHzUNgEOO9L0w7g8MvQSwQHaPYHOwLDn+7uNa3fQqzjLkISr78yIcIGUma
 )
 
 // Setup 读取配置文件设置
-func Setup(url, mode, iosCsr, iosKey string) {
+func Setup(url, mode, iosCsr, iosKey, ossEndpoint, ossAccessKeyId, ossAccessKeySecret string, enableOSS bool) {
 	Config = config{
-		IPASign: sync.Map{},
-		Model:   mode,
+		IPASign:            sync.Map{},
+		Model:              mode,
+		EnableOSS:          enableOSS,
+		OSSEndpoint:        ossEndpoint,
+		OSSAccessKeyId:     ossAccessKeyId,
+		OSSAccessKeySecret: ossAccessKeySecret,
 		ApplePath: applePath{
 			URL:                   url,
 			AppleAccountPath:      "./ios/appleAccount/",

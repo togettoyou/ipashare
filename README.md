@@ -58,7 +58,27 @@ docker run --name super-signature \
   --key=ssl/server.key
 ```
 
-## centos 7 运行
+## 可支持阿里云 OSS 作为 IPA 下载服务
+
+```shell
+# 使用 enableOSS 开启 oss 支持
+docker run --name super-signature \
+  -v $PWD/ios:/root/super-signature/ios \
+  -v $PWD/db:/root/super-signature/db \
+  -v $PWD/ssl:/root/super-signature/ssl \
+  -p 443:443 \
+  togettoyou/super-signature:latest \
+  --url=https://你的域名 \
+  --port=443 \
+  --crt=ssl/server.crt \
+  --key=ssl/server.key \
+  --enableOSS true \
+  --ossEndpoint oss-cn-xxx.aliyuncs.com \
+  --ossAccessKeyId XXXXXXXXXXXXXXXXX \
+  --ossAccessKeySecret XXXXXXXXXXXXXXXXXXXX
+```
+
+## 使用 centos 7 自行编译运行
 
 ```shell
 git clone https://github.com/togettoyou/super-signature.git
@@ -74,6 +94,8 @@ chmod +x /usr/local/bin/zsign
 # https
 ./super-signature-app --url=https://isign.cn.utools.club --port=443 --crt=ssl/server.crt --key=ssl/server.key
 ```
+
+## 查看效果
 
 访问你的域名 https://isign.cn.utools.club/swagger/index.html
 

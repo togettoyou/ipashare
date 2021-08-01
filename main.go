@@ -11,6 +11,7 @@ import (
 	"super-signature/cron"
 	"super-signature/model"
 	"super-signature/router"
+	"super-signature/util/ali"
 	"super-signature/util/conf"
 	"super-signature/util/logger"
 	"super-signature/util/tools"
@@ -20,7 +21,8 @@ import (
 )
 
 func setup() {
-	conf.Setup(*url, *mode, *iosCsr, *iosKey)
+	conf.Setup(*url, *mode, *iosCsr, *iosKey, *ossEndpoint, *ossAccessKeyId, *ossAccessKeySecret, *enableOSS)
+	ali.Verify()
 	logger.Setup()
 	validator.Setup()
 	model.Setup()
@@ -28,14 +30,18 @@ func setup() {
 }
 
 var (
-	v      = pflag.BoolP("version", "v", false, "显示版本信息")
-	mode   = pflag.StringP("mode", "", "debug", "运行模式 debug or release")
-	url    = pflag.StringP("url", "", "https://localhost", "服务域名(https)")
-	port   = pflag.Int64P("port", "", 8888, "服务使用端口")
-	crt    = pflag.StringP("crt", "", "", "ssl公钥(crt文件)(服务开启https时使用，默认为空)")
-	key    = pflag.StringP("key", "", "", "ssl私钥(key文件)(服务开启https时使用，默认为空)")
-	iosCsr = pflag.StringP("iosCsr", "", "", "ios证书公钥(csr文件)(使用openssl生成)")
-	iosKey = pflag.StringP("iosKey", "", "", "ios证书私钥(key文件)(使用openssl生成)")
+	v                  = pflag.BoolP("version", "v", false, "显示版本信息")
+	mode               = pflag.StringP("mode", "", "debug", "运行模式 debug or release")
+	url                = pflag.StringP("url", "", "https://localhost", "服务域名(https)")
+	port               = pflag.Int64P("port", "", 8888, "服务使用端口")
+	crt                = pflag.StringP("crt", "", "", "ssl公钥(crt文件)(服务开启https时使用，默认为空)")
+	key                = pflag.StringP("key", "", "", "ssl私钥(key文件)(服务开启https时使用，默认为空)")
+	iosCsr             = pflag.StringP("iosCsr", "", "", "ios证书公钥(csr文件)(使用openssl生成)")
+	iosKey             = pflag.StringP("iosKey", "", "", "ios证书私钥(key文件)(使用openssl生成)")
+	enableOSS          = pflag.BoolP("enableOSS", "", false, "(可选)启用阿里云oss")
+	ossEndpoint        = pflag.StringP("ossEndpoint", "", "", "(可选)阿里云oss Endpoint")
+	ossAccessKeyId     = pflag.StringP("ossAccessKeyId", "", "", "(可选)阿里云oss AccessKeyId")
+	ossAccessKeySecret = pflag.StringP("ossAccessKeySecret", "", "", "(可选)阿里云oss AccessKeySecret")
 )
 
 // @title iOS超级签名

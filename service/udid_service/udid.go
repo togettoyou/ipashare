@@ -4,7 +4,9 @@ import (
 	"fmt"
 	uuid "github.com/satori/go.uuid"
 	"go.uber.org/zap"
+	"os"
 	"super-signature/model"
+	"super-signature/util/ali"
 	"super-signature/util/apple"
 	"super-signature/util/conf"
 	"super-signature/util/errno"
@@ -161,10 +163,19 @@ func signature(appleAccount model.AppleAccount, devicesId string, applePackage m
 		return "", err
 	}
 	ipaPath := conf.Config.ApplePath.TemporaryDownloadPath + fileName + ".ipa"
-	ipaID, err := model.InsertDownloadPath(ipaPath)
-	if err != nil {
-		return "", err
+
+	ipaDownloadHost := ""
+	// 开启 oss
+	if conf.Config.EnableOSS {
+		ipaDownloadHost = ali.GetHost(fileName + ".ipa")
+	} else {
+		ipaID, err := model.InsertDownloadPath(ipaPath)
+		if err != nil {
+			return "", err
+		}
+		ipaDownloadHost = conf.Config.ApplePath.URL + "/api/v1/download?id=" + ipaID
 	}
+
 	// 生成IPA下载plist
 	var plistContent = fmt.Sprintf(`<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
@@ -196,7 +207,7 @@ func signature(appleAccount model.AppleAccount, devicesId string, applePackage m
                 </dict>
         </array>
 </dict>
-</plist>`, conf.Config.ApplePath.URL+"/api/v1/download?id="+ipaID, applePackage.BundleIdentifier, applePackage.Version)
+</plist>`, ipaDownloadHost, applePackage.BundleIdentifier, applePackage.Version)
 	var plistPath = conf.Config.ApplePath.TemporaryDownloadPath + fileName + ".plist"
 	err = tools.CreateFile(plistContent, plistPath)
 	if err != nil {
@@ -212,22 +223,36 @@ func signature(appleAccount model.AppleAccount, devicesId string, applePackage m
 		return "", err
 	}
 	// 拿到账号下对应的pem证书、保存的key私钥、获取到的描述文件mobileprovision对IPA签名
-	go func() {
-		zap.S().Info(ipaPath, "正在签名中")
-		err = tools.Command("zsign", "-c", appleAccount.PemPath,
+	go func(fileName, newIPAPath, pemPath, mobileprovisionPath, LocalIPAPath, plistID string) {
+		defer func() {
+			if err := recover(); err != nil {
+				zap.S().Error("签名失败", err)
+			}
+		}()
+		zap.S().Info(newIPAPath, "正在签名中")
+		err = tools.Command("zsign", "-c", pemPath,
 			"-k", conf.CSRSetting.KeyPath,
 			"-m", mobileprovisionPath,
-			"-o", ipaPath,
+			"-o", newIPAPath,
 			"-z", "9",
-			applePackage.IPAPath)
+			LocalIPAPath)
 		if err != nil {
 			zap.S().Error("签名失败", err.Error())
 			conf.Config.IPASign.Store(plistID, []string{"fail", err.Error()})
 			return
 		}
+		if conf.Config.EnableOSS {
+			err := ali.UploadFile(fileName+".ipa", newIPAPath)
+			if err != nil {
+				zap.S().Error("oss上传失败", err.Error())
+				conf.Config.IPASign.Store(plistID, []string{"fail", err.Error()})
+				return
+			}
+			_ = os.Remove(newIPAPath)
+		}
 		conf.Config.IPASign.Store(plistID, []string{"success"})
-		zap.S().Info(ipaPath, "签名成功")
-	}()
+		zap.S().Info(newIPAPath, "签名成功")
+	}(fileName, ipaPath, appleAccount.PemPath, mobileprovisionPath, applePackage.IPAPath, plistID)
 	return fmt.Sprintf("%s/api/v1/getApp?plistID=%s&packageId=%d", conf.Config.ApplePath.URL, plistID, applePackage.ID), nil
 }
 
