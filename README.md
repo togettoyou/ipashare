@@ -40,7 +40,7 @@ docker run --name super-signature \
   -v $PWD/db:/root/super-signature/db \
   -p 8888:8888 \
   togettoyou/super-signature:latest \
-  --url=https://isign.cn.utools.club
+  --url=https://你的域名
 # 运行后会挂载容器内 ios目录(存放账号和ipa文件) 和 db目录(存放sqlite文件) 到当前目录下
 ```
 
@@ -94,14 +94,14 @@ cp zsign/zsign /usr/local/bin/
 chmod +x /usr/local/bin/zsign
 ./super-signature-app -h
 # http
-./super-signature-app --url=https://isign.cn.utools.club
+./super-signature-app --url=https://你的域名
 # https
-./super-signature-app --url=https://isign.cn.utools.club --port=443 --crt=ssl/server.crt --key=ssl/server.key
+./super-signature-app --url=https://你的域名 --port=443 --crt=ssl/server.crt --key=ssl/server.key
 ```
 
 ## 查看效果
 
-访问你的域名 https://isign.cn.utools.club/swagger/index.html
+访问你的域名 https://你的域名/swagger/index.html
 
 ![image.png](https://cdn.nlark.com/yuque/0/2021/png/1077776/1622719814015-5552a7a4-496a-4271-b43f-7f78592176d1.png#clientId=uc4af6cdf-c3d2-4&from=paste&height=827&id=u84b71819&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1654&originWidth=2880&originalType=binary&size=275056&status=done&style=none&taskId=ua10a445e-d046-46a0-b6ef-617fde81539&width=1440#id=PdB8i&originHeight=1654&originWidth=2880&originalType=binary&ratio=1&status=done&style=none)
 
