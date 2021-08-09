@@ -22,6 +22,8 @@
 
 运行环境：Docker 或 centos 7
 
+核心签名使用 [zsign](https://github.com/zhlynn/zsign) ，感谢
+
 ## Docker 运行
 
 ```shell
@@ -105,10 +107,6 @@ chmod +x /usr/local/bin/zsign
 
 ![image.png](https://cdn.nlark.com/yuque/0/2021/png/1077776/1622719814015-5552a7a4-496a-4271-b43f-7f78592176d1.png#clientId=uc4af6cdf-c3d2-4&from=paste&height=827&id=u84b71819&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1654&originWidth=2880&originalType=binary&size=275056&status=done&style=none&taskId=ua10a445e-d046-46a0-b6ef-617fde81539&width=1440#id=PdB8i&originHeight=1654&originWidth=2880&originalType=binary&ratio=1&status=done&style=none)
 
-## 注意
-
-此版本使用的 [zsign](https://github.com/zhlynn/zsign) ，如需使用 isign
-请切换至 [isign 分支](https://github.com/togettoyou/super-signature/tree/isign)
 
 ## 使用说明
 
@@ -153,7 +151,7 @@ chmod +x /usr/local/bin/zsign
 }
 ```
 
-![](https://cdn.nlark.com/yuque/0/2021/png/1077776/1614159853374-673e82af-a2f2-479d-9ef8-03da193ed801.png#from=url&id=yGJKs&margin=%5Bobject%20Object%5D&originHeight=1970&originWidth=1154&originalType=binary&ratio=2&status=done&style=none)
+<img src="https://cdn.nlark.com/yuque/0/2021/png/1077776/1614159853374-673e82af-a2f2-479d-9ef8-03da193ed801.png#from=url&id=yGJKs&margin=%5Bobject%20Object%5D&originHeight=1970&originWidth=1154&originalType=binary&ratio=2&status=done&style=none" width="50%" height="50%">
 
 ## 详细原理说明
 
