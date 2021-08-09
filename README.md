@@ -8,9 +8,13 @@
 
 <a href="https://www.jetbrains.com/?from=togettoyou" target="_blank"><img src="https://user-images.githubusercontent.com/55381228/127271051-14879011-41dd-4d1b-88a2-1591925b51de.png" width="250" align="middle"/></a>
 
+## 初衷
+
+提供给个人开发者测试分发自己的应用，苹果个人开发者账号名下有 100 台测试设备可以绑定进行测试分发 APP，本应用只是方便开发者分享自己的应用
+
 ## 这是什么
 
-一个用 go 实现的 iOS 重签名应用，即市面上的 iOS 超级签名、蒲公英 iOS 内测分发
+一个用 go 实现的 iOS 签名分发应用
 
 使用本应用可以进行 IPA 重签名分发
 
