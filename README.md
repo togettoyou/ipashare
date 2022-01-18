@@ -8,9 +8,9 @@
 
 <a href="https://www.jetbrains.com/?from=togettoyou" target="_blank"><img src="https://user-images.githubusercontent.com/55381228/127271051-14879011-41dd-4d1b-88a2-1591925b51de.png" width="250" align="middle"/></a>
 
-## 初衷
+## 用途
 
-提供给个人开发者测试分发自己的应用，苹果个人开发者账号名下有 100 台测试设备可以绑定进行测试分发 APP，本应用只是方便开发者分享自己的应用
+仅提供给个人开发者测试分发自己的应用，苹果个人开发者账号名下有 100 台测试设备可以绑定进行测试分发 APP，本应用仅允许开发者用于分享自己的应用，不可用作其它用途。
 
 ## 这是什么
 
@@ -153,6 +153,3 @@ chmod +x /usr/local/bin/zsign
 
 <img src="https://cdn.nlark.com/yuque/0/2021/png/1077776/1614159853374-673e82af-a2f2-479d-9ef8-03da193ed801.png#from=url&id=yGJKs&margin=%5Bobject%20Object%5D&originHeight=1970&originWidth=1154&originalType=binary&ratio=2&status=done&style=none" width="50%" height="50%">
 
-## 详细原理说明
-
-[语雀浏览](https://www.yuque.com/togettoyou/cjqm/rbk50t)
