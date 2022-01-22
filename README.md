@@ -12,6 +12,14 @@
 
 仅提供给个人开发者测试分发自己的应用，苹果个人开发者账号名下有 100 台测试设备可以绑定进行测试分发 APP，本应用仅允许开发者用于分享自己的应用，不可用作其它用途。
 
+## 声明
+
+本应用功能仅是调用 [zsign](https://github.com/zhlynn/zsign) 和 [App Store Connect API](https://developer.apple.com/documentation/appstoreconnectapi) 实现，如有侵权，请与我联系，会及时处理。
+
+严禁使用本软件进行盈利、损坏官方、散落任何违法信息等行为。
+
+本人不再对此软件进行维护。
+
 ## 这是什么
 
 一个用 go 实现的 iOS 签名分发应用
