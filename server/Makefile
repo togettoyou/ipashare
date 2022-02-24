@@ -9,27 +9,19 @@ MOD_NAME="supersign"
 # run 参数
 TARGET=$(out)
 
-# 编译添加版本信息
-versionDir = "${MOD_NAME}/pkg/version"
-gitTag = $(shell if [ "`git describe --tags --abbrev=0 2>/dev/null`" != "" ];then git describe --tags --abbrev=0; else git log --pretty=format:'%h' -n 1; fi)
-buildDate = $(shell TZ=Asia/Shanghai date +%FT%T%z)
-gitCommit = $(shell git log --pretty=format:'%H' -n 1)
-gitTreeState = $(shell if git status|grep -q 'clean';then echo clean; else echo dirty; fi)
-ldflags="-w -X ${versionDir}.gitTag=${gitTag} -X ${versionDir}.buildDate=${buildDate} -X ${versionDir}.gitCommit=${gitCommit} -X ${versionDir}.gitTreeState=${gitTreeState}"
-
 # 执行make命令时所执行的所有命令
 all: clean
-	CGO_ENABLED=0 go build -v -ldflags ${ldflags} -o ${BINARY_NAME} cmd/server/main.go
+	CGO_ENABLED=0 go build -v -o ${BINARY_NAME} cmd/server/main.go
 
 docs: clean
-	CGO_ENABLED=0 go build -tags "docs" -v -ldflags ${ldflags} -o ${BINARY_NAME} cmd/server/main.go
+	CGO_ENABLED=0 go build -tags "docs" -v -o ${BINARY_NAME} cmd/server/main.go
 
 # 交叉编译linux amd64版本
 linux: clean
-	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -v -ldflags ${ldflags} -o ${BINARY_NAME} cmd/server/main.go
+	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -v -o ${BINARY_NAME} cmd/server/main.go
 
 linux-docs: clean
-	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -tags "docs" -v -ldflags ${ldflags} -o ${BINARY_NAME} cmd/server/main.go
+	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -tags "docs" -v -o ${BINARY_NAME} cmd/server/main.go
 
 # 编译生成docker镜像
 docker:

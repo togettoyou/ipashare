@@ -1,21 +1,16 @@
 package main
 
 import (
-	"encoding/json"
-	"fmt"
-	"os"
 	"supersign/internal/server"
 	"supersign/pkg"
 	"supersign/pkg/conf"
 	"supersign/pkg/log"
 	"supersign/pkg/validatorer"
-	"supersign/pkg/version"
 
 	"github.com/spf13/pflag"
 )
 
 var (
-	v        = pflag.BoolP("version", "v", false, "显示版本信息")
 	confPath = pflag.StringP("conf", "c", "conf/default.yaml", "指定配置文件路径")
 )
 
@@ -41,16 +36,6 @@ func setup() {
 // @name Authorization
 func main() {
 	pflag.Parse()
-	info := version.Get()
-	marshalled, err := json.MarshalIndent(&info, "", "  ")
-	if err != nil {
-		fmt.Printf("%v\n", err)
-		os.Exit(1)
-	}
-	fmt.Println(string(marshalled))
-	if *v {
-		return
-	}
 	setup()
 	server.Start()
 }
