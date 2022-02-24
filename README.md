@@ -1,163 +1,50 @@
-# README.md
+<h1 align="center">Hi 👋, 我的微信公众号：SuperGopher
+<a href="https://golang.org" target="_blank"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/go/go-original.svg" alt="go" width="40" height="40"/> </a> <a href="https://www.docker.com/" target="_blank"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/docker/docker-original-wordmark.svg" alt="docker" width="40" height="40"/> </a>  <a href="https://kubernetes.io" target="_blank"> <img src="https://www.vectorlogo.zone/logos/kubernetes/kubernetes-icon.svg" alt="kubernetes" width="40" height="40"/> </a></h1>
 
-![微信公众号.png](https://gitee.com/togettoyou/picture/raw/master/2022-2-9/1644374999459-weixin.jpg)
+<h1 align="center">
+
+
+![微信公众号.png](https://user-images.githubusercontent.com/55381228/155444889-eacc0104-cd85-45c9-b7b7-9036e0c2334c.jpg)
+</h1>
 
 # JetBrains 开源证书支持
 
-感谢 JetBrains 提供的免费授权
+本项目使用 GoLand 开发，感谢 JetBrains 提供的免费授权
 
 <a href="https://www.jetbrains.com/?from=togettoyou" target="_blank"><img src="https://user-images.githubusercontent.com/55381228/127271051-14879011-41dd-4d1b-88a2-1591925b51de.png" width="250" align="middle"/></a>
 
 ## 用途
 
-仅提供给个人开发者测试分发自己的应用，苹果个人开发者账号名下有 100 台测试设备可以绑定进行测试分发 APP，本应用仅允许开发者用于分享自己的应用，不可用作其它用途。
+相信每一位 iOS 开发者都会有开发一款自己的 APP 的想法。但 iOS 不像 Android 那样可以随意自由的分发 APP 。
 
-## 声明
+对于 iOS 开发者来说，开发一款 APP ，必须先开通苹果开发者账号（这里只讨论个人账号），在将 APP 上架到 App Store 之前（上架流程比较复杂），苹果允许我们添加 100 台苹果设备（udid）当作测试设备可以进行真机调试。
 
-本应用功能仅是调用 [zsign](https://github.com/zhlynn/zsign) 和 [App Store Connect API](https://developer.apple.com/documentation/appstoreconnectapi) 实现，如有侵权，请与我联系，会及时处理。
+而本项目就是用来简化开发者进行 100 台测试设备绑定的流程。想一想，当你开发一款 APP 的过程中，想要给身边的小伙伴体验一下，不必再使用 USB
+连接手机这种琐碎的过程了，只需要使用本项目生成一个二维码链接，扫一扫，即可全程自动绑定设备并安装 APP 。
 
-严禁使用本软件进行盈利、损坏官方、散落任何违法信息等行为。
+## 郑重声明
 
-本人不再对此软件进行维护。
+本项目的核心功能调用 [zsign](https://github.com/zhlynn/zsign)
+和 [App Store Connect API](https://developer.apple.com/documentation/appstoreconnectapi) 实现，如有侵权，请与我联系，会及时处理。
 
-## 这是什么
+本项目仅作为给开发者分发合法合规的 APP 使用，严禁使用本项目进行任何盈利、损害官方利益、分发任何违法违规的 APP 等行为，否则一切后果与本人无关。
 
-一个用 go 实现的 iOS 签名分发应用
+## 部署项目
 
-使用本应用可以进行 IPA 重签名分发
+待更
 
-实现功能：苹果开发者账号管理、IPA安装包管理
+## 升级 zsign
 
-运行环境：Docker 或 centos 7
+待更
 
-核心签名使用 [zsign](https://github.com/zhlynn/zsign) ，感谢
+## 效果预览
 
-## Docker 运行
+待更
 
-```shell
-# 查看帮助
-docker run --rm togettoyou/super-signature:latest -h
-# 版本
-docker run --rm togettoyou/super-signature:latest -v
-```
+## 喝杯奶茶
 
-```shell
-# http 方式部署，ssl 证书部署可以自行使用 nginx 等网关，或支持 https 的内网穿透等方式
-mkdir super-signature
-cd super-signature
-docker run --name super-signature \
-  -v $PWD/ios:/root/super-signature/ios \
-  -v $PWD/db:/root/super-signature/db \
-  -p 8888:8888 \
-  togettoyou/super-signature:latest \
-  --url=https://你的域名
-# 运行后会挂载容器内 ios目录(存放账号和ipa文件) 和 db目录(存放sqlite文件) 到当前目录下
-```
+如有帮助，可以打赏支持，一分也是爱！
 
-```shell
-# https 方式部署
-mkdir super-signature
-cd super-signature
-mkdir ssl
-# 自行向服务厂商申请域名的 ssl 证书后拷贝 server.crt 和 server.key 到 ssl 目录
-docker run --name super-signature \
-  -v $PWD/ios:/root/super-signature/ios \
-  -v $PWD/db:/root/super-signature/db \
-  -v $PWD/ssl:/root/super-signature/ssl \
-  -p 443:443 \
-  togettoyou/super-signature:latest \
-  --url=https://你的域名 \
-  --port=443 \
-  --crt=ssl/server.crt \
-  --key=ssl/server.key
-```
-
-## 可支持阿里云 OSS 作为 IPA 下载服务
-
-```shell
-# 使用 enableOSS 开启 oss 支持
-docker run --name super-signature \
-  -v $PWD/ios:/root/super-signature/ios \
-  -v $PWD/db:/root/super-signature/db \
-  -v $PWD/ssl:/root/super-signature/ssl \
-  -p 443:443 \
-  togettoyou/super-signature:latest \
-  --url=https://你的域名 \
-  --port=443 \
-  --crt=ssl/server.crt \
-  --key=ssl/server.key \
-  --enableOSS=true \
-  --ossEndpoint=oss-cn-xxx.aliyuncs.com \
-  --ossAccessKeyId=XXXXXXXXXXXXXXXXX \
-  --ossAccessKeySecret=XXXXXXXXXXXXXXXXXXXX
-```
-
-## 使用 centos 7 自行编译运行
-
-```shell
-git clone https://github.com/togettoyou/super-signature.git
-cd super-signature
-# go 1.16+
-make
-yum install -y openssl openssl-devel unzip zip
-cp zsign/zsign /usr/local/bin/
-chmod +x /usr/local/bin/zsign
-./super-signature-app -h
-# http
-./super-signature-app --url=https://你的域名
-# https
-./super-signature-app --url=https://你的域名 --port=443 --crt=ssl/server.crt --key=ssl/server.key
-```
-
-## 查看效果
-
-访问你的域名 https://你的域名/swagger/index.html
-
-![image.png](https://cdn.nlark.com/yuque/0/2021/png/1077776/1622719814015-5552a7a4-496a-4271-b43f-7f78592176d1.png#clientId=uc4af6cdf-c3d2-4&from=paste&height=827&id=u84b71819&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1654&originWidth=2880&originalType=binary&size=275056&status=done&style=none&taskId=ua10a445e-d046-46a0-b6ef-617fde81539&width=1440#id=PdB8i&originHeight=1654&originWidth=2880&originalType=binary&ratio=1&status=done&style=none)
-
-
-## 使用说明
-
-1、 上传苹果开发者账号信息
-
-登陆 [https://appstoreconnect.apple.com/access/api](https://appstoreconnect.apple.com/access/api) 获取p8(下载的API密钥文件内容)，kid (
-密钥ID)，Iss (Issuer ID)：
-
-![](https://cdn.nlark.com/yuque/0/2021/png/1077776/1614157937920-e048fc1b-b8ef-4b08-a559-bcf0a9b72c39.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_14%2Ctext_Z2l0aHViL3RvZ2V0dG95b3U%3D%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10#from=url&id=ipJUH&margin=%5Bobject%20Object%5D&originHeight=970&originWidth=3284&originalType=binary&ratio=2&status=done&style=none)
-
-上传：
-
-![image.png](https://cdn.nlark.com/yuque/0/2021/png/1077776/1623042480919-37ecee18-c7e7-4e17-91ac-c2ad8b7e117a.png#clientId=uab37fe2a-4554-4&from=paste&height=821&id=u8d372f30&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1641&originWidth=2880&originalType=binary&ratio=2&size=239573&status=done&style=none&taskId=ueb474557-a63b-43a0-97c2-b066502a2a4&width=1440)
-
-2、 上传IPA
-
-![image.png](https://cdn.nlark.com/yuque/0/2021/png/1077776/1623042643053-67a10d99-3359-4ebb-9ee4-b36d7ea48bdb.png#clientId=uab37fe2a-4554-4&from=paste&height=822&id=udac83704&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1644&originWidth=2880&originalType=binary&ratio=2&size=240127&status=done&style=none&taskId=ub147db0c-bab9-4419-abef-6de3e71fb46&width=1440)
-
-3、 iPhone 使用 Safari 浏览器打开 AppLink 链接
-
-`/api/v1/getAllPackage` 返回数据格式说明
-
-```json
-{
-  "code": 0,
-  "msg": "成功",
-  "data": [
-    {
-      "ID": 1,
-      "IconLink": "应用图标地址",
-      "BundleIdentifier": "应用包名",
-      "Name": "应用名称",
-      "Version": "应用版本号",
-      "BuildVersion": "应用BuildVersion",
-      "MiniVersion": "最低支持ios版本",
-      "Summary": "简介",
-      "AppLink": "应用下载地址，iPhone使用Safari浏览器访问即可下载",
-      "Size": "应用大小",
-      "Count": "累计下载量"
-    }
-  ]
-}
-```
-
-<img src="https://cdn.nlark.com/yuque/0/2021/png/1077776/1614159853374-673e82af-a2f2-479d-9ef8-03da193ed801.png#from=url&id=yGJKs&margin=%5Bobject%20Object%5D&originHeight=1970&originWidth=1154&originalType=binary&ratio=2&status=done&style=none" width="50%" height="50%">
-
+|  ![微信打赏](https://user-images.githubusercontent.com/55381228/155450359-0ce92911-fd3f-4d6b-9878-e40a17b34652.jpg)   | ![支付宝打赏](https://user-images.githubusercontent.com/55381228/155450383-509d0475-5497-4983-8583-137946b4d78e.jpg)  |
+|  ----  | ----  |
+| 微信  | 支付宝 |
