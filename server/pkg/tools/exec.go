@@ -37,7 +37,5 @@ func (c *cmdClient) Command(name string, arg ...string) error {
 
 func (c *cmdClient) Output(name string, arg ...string) ([]byte, error) {
 	cmd := exec.Command(name, arg...)
-	cmd.Stdout = c
-	cmd.Stderr = c
 	return cmd.Output()
 }

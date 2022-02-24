@@ -5,8 +5,12 @@ COPY . /root/togettoyou/
 WORKDIR /root/togettoyou/
 RUN make
 
-FROM scratch
+FROM togettoyou/zsign:latest AS zsign
+
+FROM centos:7
 COPY --from=builder /root/togettoyou/supersign /root/togettoyou/
 COPY --from=builder /root/togettoyou/conf/ /root/togettoyou/conf/
+COPY --from=zsign /zsign/zsign /bin/zsign
+RUN yum install -y openssl openssl-devel unzip zip
 WORKDIR /root/togettoyou/
 ENTRYPOINT ["./supersign"]
