@@ -1,0 +1,42 @@
+# 服务配置
+SERVER:
+  # 开发模式 debug,release,test
+  RUNMODE: debug
+  # 读超时/s
+  READTIMEOUT: 60
+  # 写超时/s
+  WRITETIMEOUT: 60
+  # 端口
+  HTTPPORT: 8888
+  # 开启 https true,false
+  TLS: false
+  # 公钥路径
+  CRT:
+  # 私钥路径
+  KEY:
+
+# 日志配置
+LOG:
+  # 日志输出等级 fatal,error,warn,info,debug
+  LEVEL: debug
+
+# redis 配置（可选）
+REDIS:
+  # redis的哪个数据库
+  DB: 0
+  # 服务器地址:端口
+  ADDR: 127.0.0.1:6379
+  # 密码
+  PASSWORD:
+
+# mysql 配置（可选）
+# 配置内容参考: https://gorm.io/zh_CN/docs/connecting_to_the_database.html
+MYSQL:
+  # 连接驱动
+  DSN: root:123456@tcp(127.0.0.1:3306)/db_default?charset=utf8mb4&parseTime=True&loc=Local
+  # 空闲连接池中连接的最大数量
+  MAXIDLE: 10
+  # 打开数据库连接的最大数量
+  MAXOPEN: 10
+  # 连接可复用的最大时间/单位分钟
+  MAXLIFETIME: 60

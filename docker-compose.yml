@@ -1,0 +1,9 @@
+version: '3'
+services:
+  server:
+    image: supersign:v1
+    ports:
+      - "32288:8888"
+    environment:
+      - SERVER.RUNMODE=release
+      - LOG.LEVEL=info

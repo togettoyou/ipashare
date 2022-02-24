@@ -1,0 +1,186 @@
+definitions:
+  api.Response:
+    properties:
+      code:
+        type: integer
+      data:
+        type: object
+      msg:
+        type: string
+    type: object
+  req.Book:
+    properties:
+      name:
+        type: string
+      url:
+        type: string
+    required:
+    - name
+    - url
+    type: object
+  req.JSONBody:
+    properties:
+      email:
+        example: admin@qq.com
+        type: string
+      username:
+        example: admin
+        type: string
+    required:
+    - email
+    - username
+    type: object
+info:
+  contact: {}
+  license: {}
+  title: supersign 后端服务接口文档
+  version: "1.0"
+paths:
+  /api/v1beta1/book:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取书籍列表
+      tags:
+      - book
+    post:
+      parameters:
+      - description: 测试请求json参数
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/req.Book'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 新增书籍
+      tags:
+      - book
+  /api/v1beta1/example:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Response'
+      summary: Get请求
+      tags:
+      - example
+  /api/v1beta1/example/err/{id}:
+    get:
+      parameters:
+      - description: id值
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Response'
+      summary: Err请求
+      tags:
+      - example
+  /api/v1beta1/example/form:
+    post:
+      consumes:
+      - application/x-www-form-urlencoded
+      description: 处理application/x-www-form-urlencoded类型的POST请求
+      parameters:
+      - description: 邮箱
+        in: formData
+        name: email
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Response'
+      summary: form表单请求
+      tags:
+      - example
+  /api/v1beta1/example/json:
+    post:
+      description: 邮箱、用户名校验
+      parameters:
+      - description: 测试请求json参数
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/req.JSONBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Response'
+      summary: JSON参数请求
+      tags:
+      - example
+  /api/v1beta1/example/query:
+    get:
+      description: 查询参数，匹配 query?id=xxx
+      parameters:
+      - description: 邮箱
+        in: query
+        name: email
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Response'
+      summary: query参数查询
+      tags:
+      - example
+  /api/v1beta1/example/uri/{id}:
+    get:
+      description: 路径参数，匹配 /uri/{id}
+      parameters:
+      - description: id值
+        in: path
+        name: id
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Response'
+      summary: uri参数请求
+      tags:
+      - example
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
