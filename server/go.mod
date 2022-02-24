@@ -4,6 +4,7 @@ go 1.16
 
 require (
 	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751
+	github.com/andrianbdn/iospng v0.0.0-20180730113000-dccef1992541
 	github.com/fsnotify/fsnotify v1.5.0
 	github.com/gin-contrib/cors v1.3.1
 	github.com/gin-contrib/pprof v1.3.0
@@ -21,4 +22,5 @@ require (
 	gorm.io/driver/mysql v1.1.2
 	gorm.io/driver/sqlite v1.1.4
 	gorm.io/gorm v1.21.13
+	howett.net/plist v1.0.0
 )
