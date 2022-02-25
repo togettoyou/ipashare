@@ -21,14 +21,14 @@ func (a *appleDevice) Create(appleDevice *model.AppleDevice) error {
 }
 
 func (a *appleDevice) Del(udid string) error {
-	return a.db.Delete(&model.AppleDevice{UDID: udid}).Error
+	return a.db.Where("udid = ?", udid).Delete(&model.AppleDevice{}).Error
 }
 
 func (a *appleDevice) Query(udid string) (*model.AppleDevice, error) {
-	appleDevice := &model.AppleDevice{UDID: udid}
-	err := a.db.Take(appleDevice).Error
+	var appleDevice model.AppleDevice
+	err := a.db.Where("udid = ?", udid).Take(&appleDevice).Error
 	if err != nil {
 		return nil, err
 	}
-	return appleDevice, nil
+	return &appleDevice, nil
 }

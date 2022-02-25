@@ -21,41 +21,45 @@ func (a *appleDeveloper) Create(appleDeveloper *model.AppleDeveloper) error {
 }
 
 func (a *appleDeveloper) Del(iss string) error {
-	return a.db.Delete(&model.AppleDeveloper{Iss: iss}).Error
+	return a.db.Where("iss = ?", iss).Delete(&model.AppleDeveloper{}).Error
 }
 
 func (a *appleDeveloper) AddCount(iss string, num int) error {
-	return a.db.Model(&model.AppleDeveloper{Iss: iss}).
+	return a.db.Model(&model.AppleDeveloper{}).
+		Where("iss = ?", iss).
 		UpdateColumn("count", gorm.Expr("count + ?", num)).Error
 }
 
 func (a *appleDeveloper) UpdateCount(iss string, count int) error {
-	return a.db.Model(&model.AppleDeveloper{Iss: iss}).
+	return a.db.Model(&model.AppleDeveloper{}).
+		Where("iss = ?", iss).
 		Update("count", count).Error
 }
 
 func (a *appleDeveloper) UpdateLimit(iss string, limit int) error {
-	return a.db.Model(&model.AppleDeveloper{Iss: iss}).
-		Update("limit", limit).Error
+	return a.db.Model(&model.AppleDeveloper{}).
+		Where("iss = ?", iss).
+		Update("`limit`", limit).Error
 }
 
 func (a *appleDeveloper) Enable(iss string, enable bool) error {
-	return a.db.Model(&model.AppleDeveloper{Iss: iss}).
+	return a.db.Model(&model.AppleDeveloper{}).
+		Where("iss = ?", iss).
 		Update("enable", enable).Error
 }
 
 func (a *appleDeveloper) Query(iss string) (*model.AppleDeveloper, error) {
-	appleDeveloper := &model.AppleDeveloper{Iss: iss}
-	err := a.db.Take(appleDeveloper).Error
+	var appleDeveloper model.AppleDeveloper
+	err := a.db.Where("iss = ?", iss).Take(&appleDeveloper).Error
 	if err != nil {
 		return nil, err
 	}
-	return appleDeveloper, nil
+	return &appleDeveloper, nil
 }
 
 func (a *appleDeveloper) GetUsable() (*model.AppleDeveloper, error) {
 	var appleDeveloper model.AppleDeveloper
-	err := a.db.Where("limit - count > 0 And count < ? And enable = ?", 100, true).
+	err := a.db.Where("`limit` - count > 0 And count < ? And enable = ?", 100, true).
 		Take(&appleDeveloper).Error
 	if err != nil {
 		return nil, err
