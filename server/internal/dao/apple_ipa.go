@@ -45,11 +45,18 @@ func (a *appleIPA) AddCount(uuid string, num int) error {
 		UpdateColumn("count", gorm.Expr("count + ?", num)).Error
 }
 
-func (a *appleIPA) List(page, pageSize *int) ([]model.AppleIPA, error) {
-	var appleIPAs []model.AppleIPA
-	err := a.db.Scopes(paginate(page, pageSize)).Find(&appleIPAs).Error
+func (a *appleIPA) List(page, pageSize *int) ([]model.AppleIPA, int64, error) {
+	var (
+		appleIPAs []model.AppleIPA
+		total     int64
+	)
+	err := a.db.Model(&model.AppleIPA{}).Count(&total).Error
 	if err != nil {
-		return nil, err
+		return nil, 0, err
 	}
-	return appleIPAs, nil
+	err = a.db.Scopes(paginate(page, pageSize)).Find(&appleIPAs).Error
+	if err != nil {
+		return nil, 0, err
+	}
+	return appleIPAs, total, nil
 }

@@ -67,11 +67,18 @@ func (a *appleDeveloper) GetUsable() (*model.AppleDeveloper, error) {
 	return &appleDeveloper, nil
 }
 
-func (a *appleDeveloper) List(page, pageSize *int) ([]model.AppleDeveloper, error) {
-	var appleDevelopers []model.AppleDeveloper
-	err := a.db.Scopes(paginate(page, pageSize)).Find(&appleDevelopers).Error
+func (a *appleDeveloper) List(page, pageSize *int) ([]model.AppleDeveloper, int64, error) {
+	var (
+		appleDevelopers []model.AppleDeveloper
+		total           int64
+	)
+	err := a.db.Model(&model.AppleDeveloper{}).Count(&total).Error
 	if err != nil {
-		return nil, err
+		return nil, 0, err
 	}
-	return appleDevelopers, nil
+	err = a.db.Scopes(paginate(page, pageSize)).Find(&appleDevelopers).Error
+	if err != nil {
+		return nil, 0, err
+	}
+	return appleDevelopers, total, nil
 }

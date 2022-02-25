@@ -27,5 +27,5 @@ type AppleIPAStore interface {
 	Query(uuid string) (*AppleIPA, error)
 	UpdateMobileConfigLink(uuid, mobileConfigLink string) error
 	AddCount(uuid string, num int) error
-	List(page, pageSize *int) ([]AppleIPA, error)
+	List(page, pageSize *int) ([]AppleIPA, int64, error)
 }

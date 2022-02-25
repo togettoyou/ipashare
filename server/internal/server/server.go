@@ -31,8 +31,8 @@ func setGinMode() {
 
 func Start() {
 	// 选择数据源实现
-	store, err := dao.NewMock()
-	//store, err := dao.NewSqlite()
+	//store, err := dao.NewMock()
+	store, err := dao.NewSqlite()
 	//store, err := dao.NewMysql()
 	if err != nil {
 		panic(err)

@@ -36,6 +36,29 @@ info:
   title: supersign 后端服务接口文档
   version: "1.0"
 paths:
+  /api/v1/ipa:
+    get:
+      parameters:
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 页面大小
+        in: query
+        name: page_size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取 IPA 列表
+      tags:
+      - IPA
   /api/v1beta1/book:
     get:
       produces:

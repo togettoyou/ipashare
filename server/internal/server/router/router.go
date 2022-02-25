@@ -18,6 +18,7 @@ func New(store *model.Store) *gin.Engine {
 	registerDebugRouter(r)
 	registerSwagRouter(r)
 	registerV1beta1Router(store, r)
+	registerV1Router(store, r)
 	return r
 }
 
@@ -50,4 +51,10 @@ func registerV1beta1Router(store *model.Store, r *gin.Engine) {
 	v1beta1Group := r.Group("api/v1beta1")
 	registerBookRouter(store, v1beta1Group)
 	registerExampleRouter(v1beta1Group)
+}
+
+// registerV1Router v1 版本路由注册
+func registerV1Router(store *model.Store, r *gin.Engine) {
+	v1Group := r.Group("api/v1")
+	registerAppleIPARouter(store, v1Group)
 }
