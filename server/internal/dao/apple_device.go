@@ -17,13 +17,18 @@ type appleDevice struct {
 var _ model.AppleDeviceStore = (*appleDevice)(nil)
 
 func (a *appleDevice) Create(appleDevice *model.AppleDevice) error {
-	panic("implement me")
+	return a.db.Create(appleDevice).Error
 }
 
 func (a *appleDevice) Del(udid string) error {
-	panic("implement me")
+	return a.db.Delete(&model.AppleDevice{UDID: udid}).Error
 }
 
 func (a *appleDevice) Query(udid string) (*model.AppleDevice, error) {
-	panic("implement me")
+	appleDevice := &model.AppleDevice{UDID: udid}
+	err := a.db.Take(appleDevice).Error
+	if err != nil {
+		return nil, err
+	}
+	return appleDevice, nil
 }
