@@ -3,9 +3,7 @@
 # 生成的二进制文件名
 BINARY_NAME="supersign"
 # 生成的镜像名:版本
-IMAGE_NAME="supersign:v1"
-# 项目包名
-MOD_NAME="supersign"
+IMAGE_NAME="supersign:latest"
 # run 参数
 TARGET=$(out)
 
