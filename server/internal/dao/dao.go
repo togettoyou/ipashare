@@ -26,8 +26,8 @@ func NewSqlite() (*model.Store, error) {
 		sqlite.Open("./data.db"), // 数据库文件存放路径
 		&gorm.Config{
 			NamingStrategy: schema.NamingStrategy{
-				TablePrefix:   "sys_", // 表名前缀，`User` 的表名应该是 `sys_users`
-				SingularTable: true,   // 使用单数表名，启用该选项，此时，`User` 的表名应该是 `sys_user`
+				TablePrefix:   "ss_", // 表名前缀，`User` 的表名应该是 `ss_users`
+				SingularTable: true,  // 使用单数表名，启用该选项，此时，`User` 的表名应该是 `ss_user`
 			},
 			Logger: log.NewGormLogger(log.New("gorm").L()),
 		})
@@ -38,13 +38,19 @@ func NewSqlite() (*model.Store, error) {
 	err = db.AutoMigrate(
 		/*数据库实体模型*/
 		&model.Book{},
+		&model.AppleDeveloper{},
+		&model.AppleDevice{},
+		&model.AppleIPA{},
 	)
 	if err != nil {
 		return nil, err
 	}
 
 	return &model.Store{
-		Book: newBook1(db),
+		Book:           newBook1(db),
+		AppleDeveloper: newAppleDeveloper(db),
+		AppleDevice:    newAppleDevice(db),
+		AppleIPA:       newAppleIPA(db),
 	}, nil
 }
 
@@ -61,8 +67,8 @@ func NewMysql() (*model.Store, error) {
 		}),
 		&gorm.Config{
 			NamingStrategy: schema.NamingStrategy{
-				TablePrefix:   "sys_", // 表名前缀，`User` 的表名应该是 `sys_users`
-				SingularTable: true,   // 使用单数表名，启用该选项，此时，`User` 的表名应该是 `sys_user`
+				TablePrefix:   "ss_", // 表名前缀，`User` 的表名应该是 `ss_users`
+				SingularTable: true,  // 使用单数表名，启用该选项，此时，`User` 的表名应该是 `ss_user`
 			},
 			Logger: log.NewGormLogger(log.New("gorm").L()),
 		})
@@ -86,12 +92,18 @@ func NewMysql() (*model.Store, error) {
 		AutoMigrate(
 			/*数据库实体模型*/
 			&model.Book{},
+			&model.AppleDeveloper{},
+			&model.AppleDevice{},
+			&model.AppleIPA{},
 		)
 	if err != nil {
 		return nil, err
 	}
 
 	return &model.Store{
-		Book: newBook1(db),
+		Book:           newBook1(db),
+		AppleDeveloper: newAppleDeveloper(db),
+		AppleDevice:    newAppleDevice(db),
+		AppleIPA:       newAppleIPA(db),
 	}, nil
 }
