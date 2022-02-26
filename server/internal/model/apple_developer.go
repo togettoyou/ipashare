@@ -28,5 +28,5 @@ type AppleDeveloperStore interface {
 	Enable(iss string, enable bool) error
 	Query(iss string) (*AppleDeveloper, error)
 	GetUsable() (*AppleDeveloper, error)
-	List(page, pageSize *int) ([]AppleDeveloper, int64, error)
+	List(content string, page, pageSize *int) ([]AppleDeveloper, int64, error)
 }
