@@ -60,17 +60,18 @@ func (a AppleIPA) Upload(c *gin.Context) {
 // @Produce json
 // @Param page query int false "页码"
 // @Param page_size query int false "页面大小"
+// @Param content query string false "搜索内容"
 // @Success 200 {object} api.Response
 // @Router /api/v1/ipa [get]
 func (a AppleIPA) List(c *gin.Context) {
 	var (
 		appleIPASvc svc.AppleIPA
-		args        req.Pagination
+		args        req.IPAFind
 	)
 	if !a.MakeContext(c).MakeService(&appleIPASvc.Service).ParseQuery(&args) {
 		return
 	}
-	appleIPAs, total, err := appleIPASvc.List(&args.Page, &args.PageSize)
+	appleIPAs, total, err := appleIPASvc.List(args.Content, &args.Page, &args.PageSize)
 	if a.HasErr(err) {
 		return
 	}
@@ -85,7 +86,6 @@ func (a AppleIPA) List(c *gin.Context) {
 // Del
 // @Tags IPA
 // @Summary 删除指定IPA
-// @Accept application/x-www-form-urlencoded
 // @Security ApiKeyAuth
 // @Produce json
 // @Param uuid query string true "uuid"

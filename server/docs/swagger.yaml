@@ -38,8 +38,6 @@ info:
 paths:
   /api/v1/ipa:
     delete:
-      consumes:
-      - application/x-www-form-urlencoded
       parameters:
       - description: uuid
         in: query
@@ -68,6 +66,10 @@ paths:
         in: query
         name: page_size
         type: integer
+      - description: 搜索内容
+        in: query
+        name: content
+        type: string
       produces:
       - application/json
       responses:

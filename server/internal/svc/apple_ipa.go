@@ -60,8 +60,8 @@ func (a *AppleIPA) AnalyzeIPA(ipaUUID, ipaPath, summary string) (appleIPA *model
 	return appleIPA, nil
 }
 
-func (a *AppleIPA) List(page, pageSize *int) ([]model.AppleIPA, int64, error) {
-	appleIPAs, total, err := a.store.AppleIPA.List(page, pageSize)
+func (a *AppleIPA) List(content string, page, pageSize *int) ([]model.AppleIPA, int64, error) {
+	appleIPAs, total, err := a.store.AppleIPA.List(content, page, pageSize)
 	if err != nil {
 		return nil, 0, e.NewWithStack(e.DBError, err)
 	}

@@ -51,6 +51,12 @@ var doc = `{
                         "description": "页面大小",
                         "name": "page_size",
                         "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "搜索内容",
+                        "name": "content",
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -107,9 +113,6 @@ var doc = `{
                     {
                         "ApiKeyAuth": []
                     }
-                ],
-                "consumes": [
-                    "application/x-www-form-urlencoded"
                 ],
                 "produces": [
                     "application/json"

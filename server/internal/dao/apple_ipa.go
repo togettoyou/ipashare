@@ -33,30 +33,39 @@ func (a *appleIPA) Query(uuid string) (*model.AppleIPA, error) {
 	return &appleIPA, nil
 }
 
-func (a *appleIPA) UpdateMobileConfigLink(uuid, mobileConfigLink string) error {
-	return a.db.Model(&model.AppleIPA{}).
-		Where("uuid = ?", uuid).
-		Update("mobile_config_link", mobileConfigLink).Error
-}
-
 func (a *appleIPA) AddCount(uuid string, num int) error {
 	return a.db.Model(&model.AppleIPA{}).
 		Where("uuid = ?", uuid).
 		UpdateColumn("count", gorm.Expr("count + ?", num)).Error
 }
 
-func (a *appleIPA) List(page, pageSize *int) ([]model.AppleIPA, int64, error) {
+func (a *appleIPA) List(content string, page, pageSize *int) ([]model.AppleIPA, int64, error) {
 	var (
 		appleIPAs []model.AppleIPA
 		total     int64
 	)
-	err := a.db.Model(&model.AppleIPA{}).Count(&total).Error
-	if err != nil {
-		return nil, 0, err
-	}
-	err = a.db.Scopes(paginate(page, pageSize)).Find(&appleIPAs).Error
-	if err != nil {
-		return nil, 0, err
+	if content == "" {
+		err := a.db.Model(&model.AppleIPA{}).Count(&total).Error
+		if err != nil {
+			return nil, 0, err
+		}
+		err = a.db.Scopes(paginate(page, pageSize)).Find(&appleIPAs).Error
+		if err != nil {
+			return nil, 0, err
+		}
+	} else {
+		err := a.db.Model(&model.AppleIPA{}).
+			Where("name LIKE ? Or summary LIKE ?", "%"+content+"%", "%"+content+"%").
+			Count(&total).Error
+		if err != nil {
+			return nil, 0, err
+		}
+		err = a.db.Scopes(paginate(page, pageSize)).
+			Where("name LIKE ? Or summary LIKE ?", "%"+content+"%", "%"+content+"%").
+			Find(&appleIPAs).Error
+		if err != nil {
+			return nil, 0, err
+		}
 	}
 	return appleIPAs, total, nil
 }
