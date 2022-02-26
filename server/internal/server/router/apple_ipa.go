@@ -18,5 +18,6 @@ func registerAppleIPARouter(store *model.Store, r *gin.RouterGroup) {
 	{
 		appleIPAR.POST("", appleIPA.Upload)
 		appleIPAR.GET("", appleIPA.List)
+		appleIPAR.DELETE("", appleIPA.Del)
 	}
 }

@@ -81,3 +81,26 @@ func (a AppleIPA) List(c *gin.Context) {
 		Total:    total,
 	})
 }
+
+// Del
+// @Tags IPA
+// @Summary 删除指定IPA
+// @Accept application/x-www-form-urlencoded
+// @Security ApiKeyAuth
+// @Produce json
+// @Param uuid query string true "uuid"
+// @Success 200 {object} api.Response
+// @Router /api/v1/ipa [delete]
+func (a AppleIPA) Del(c *gin.Context) {
+	var (
+		appleIPASvc svc.AppleIPA
+		args        req.IPAQuery
+	)
+	if !a.MakeContext(c).MakeService(&appleIPASvc.Service).ParseQuery(&args) {
+		return
+	}
+	if a.HasErr(appleIPASvc.Del(args.UUID)) {
+		return
+	}
+	a.OK()
+}

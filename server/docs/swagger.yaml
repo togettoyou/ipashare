@@ -37,6 +37,27 @@ info:
   version: "1.0"
 paths:
   /api/v1/ipa:
+    delete:
+      consumes:
+      - application/x-www-form-urlencoded
+      parameters:
+      - description: uuid
+        in: query
+        name: uuid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 删除指定IPA
+      tags:
+      - IPA
     get:
       parameters:
       - description: 页码

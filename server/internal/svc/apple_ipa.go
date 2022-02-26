@@ -67,3 +67,17 @@ func (a *AppleIPA) List(page, pageSize *int) ([]model.AppleIPA, int64, error) {
 	}
 	return appleIPAs, total, nil
 }
+
+func (a *AppleIPA) Del(uuid string) error {
+	appleIPA, err := a.store.AppleIPA.Query(uuid)
+	if err != nil {
+		return e.NewWithStack(e.DBError, err)
+	}
+	err = a.store.AppleIPA.Del(uuid)
+	if err != nil {
+		return e.NewWithStack(e.DBError, err)
+	}
+	os.Remove(appleIPA.IPAPath)
+	os.Remove(appleIPA.IconPath)
+	return nil
+}
