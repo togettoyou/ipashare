@@ -11,8 +11,12 @@ var (
 	DBError     = &errno{code: 10002, msg: "DB异常"}
 	BindError   = &errno{code: 10003, msg: "参数绑定异常"}
 
-	ErrValidation = &errno{code: 20001, msg: "参数校验失败"}
+	ErrValidation   = &errno{code: 20001, msg: "参数校验失败"}
+	ErrUploadFormat = &errno{code: 20002, msg: "文件上传格式不合法"}
 
 	ErrNotLogin = &errno{code: 20101, msg: "请登录"}
 	// 可自行扩展...
+
+	ErrIPAParser = &errno{code: 20201, msg: "IPA 解析异常"}
+	ErrIPAIcon   = &errno{code: 20202, msg: "IPA Icon 提取异常"}
 )

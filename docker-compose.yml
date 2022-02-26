@@ -5,5 +5,6 @@ services:
     ports:
       - "32288:8888"
     environment:
+      - SERVER.URL=https://qq.com
       - SERVER.RUNMODE=release
       - LOG.LEVEL=info

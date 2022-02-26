@@ -1,16 +1,56 @@
 package v1
 
 import (
+	"net/http"
+	"path"
+	"strings"
 	"supersign/internal/api"
 	"supersign/internal/model/req"
 	"supersign/internal/model/resp"
 	"supersign/internal/svc"
+	"supersign/pkg/conf"
+	"supersign/pkg/e"
 
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 )
 
 type AppleIPA struct {
 	api.Base
+}
+
+// Upload
+// @Tags IPA
+// @Summary 上传 IPA
+// @Accept multipart/form-data
+// @Security ApiKeyAuth
+// @Produce json
+// @Param ipa formData file true "ipa"
+// @Param summary formData string false "summary"
+// @Success 200 {object} api.Response
+// @Router /api/v1/ipa [post]
+func (a AppleIPA) Upload(c *gin.Context) {
+	var (
+		appleIPASvc svc.AppleIPA
+		args        req.IPAForm
+	)
+	if !a.MakeContext(c).MakeService(&appleIPASvc.Service).Parse(&args) {
+		return
+	}
+	if !strings.HasSuffix(args.IPA.Filename, ".ipa") {
+		a.Resp(http.StatusBadRequest, e.ErrUploadFormat, false)
+		return
+	}
+	ipaUUID := uuid.New().String()
+	ipaPath := path.Join(conf.Apple.UploadFilePath, ipaUUID+".ipa")
+	if a.HasErr(c.SaveUploadedFile(args.IPA, ipaPath)) {
+		return
+	}
+	data, err := appleIPASvc.AnalyzeIPA(ipaUUID, ipaPath, args.Summary)
+	if a.HasErr(err) {
+		return
+	}
+	a.OK(data)
 }
 
 // List

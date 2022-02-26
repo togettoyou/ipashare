@@ -1,6 +1,8 @@
 package conf
 
 import (
+	"supersign/pkg/tools"
+
 	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/viper"
 )
@@ -13,6 +15,7 @@ type config struct {
 }
 
 type server struct {
+	URL          string `yaml:"URL"`
 	RunMode      string `yaml:"RUNMODE"`
 	ReadTimeout  int    `yaml:"READTIMEOUT"`
 	WriteTimeout int    `yaml:"WRITETIMEOUT"`
@@ -39,12 +42,23 @@ type mysql struct {
 	MaxLifetime int    `yaml:"MAXLIFETIME"`
 }
 
+type apple struct {
+	AppleDeveloperPath string
+	UploadFilePath     string
+	TemporaryFilePath  string
+}
+
 var (
 	Server server
 	Log    log
 	Redis  redis
 	Mysql  mysql
-	Path   string
+	Apple  = apple{
+		AppleDeveloperPath: "data/apple_developer/",
+		UploadFilePath:     "data/upload_file_path/",
+		TemporaryFilePath:  "data/temporary_file_path/",
+	}
+	Path string
 )
 
 // Setup 配置文件设置
@@ -62,6 +76,16 @@ func Setup() {
 	}
 	if err := setConfig(); err != nil {
 		panic(err)
+	}
+	mkdir([]string{Apple.AppleDeveloperPath, Apple.UploadFilePath, Apple.TemporaryFilePath})
+}
+
+func mkdir(paths []string) {
+	for _, path := range paths {
+		err := tools.MkdirAll(path)
+		if err != nil {
+			panic(err)
+		}
 	}
 }
 

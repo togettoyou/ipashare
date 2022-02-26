@@ -101,6 +101,17 @@ func (b *Base) HasErr(err error) bool {
 	return false
 }
 
+// Parse 解析参数并校验，自动解析方式
+// obj 要解析的结构体实例地址
+// bind 解析类型
+// hideDetails 可选择隐藏参数校验详细信息
+func (b *Base) Parse(obj interface{}, hideDetails ...bool) bool {
+	if err := b.c.ShouldBind(obj); err != nil {
+		return b.validatorData(err, len(hideDetails) > 0 && hideDetails[0])
+	}
+	return true
+}
+
 // ParseWith 解析参数并校验，自定义解析方式
 // obj 要解析的结构体实例地址
 // bind 解析类型

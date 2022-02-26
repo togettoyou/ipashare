@@ -1,5 +1,7 @@
 # 服务配置
 SERVER:
+  # https 域名，必填
+  URL: https://qq.com
   # 开发模式 debug,release,test
   RUNMODE: debug
   # 读超时/s

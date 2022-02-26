@@ -59,6 +59,31 @@ paths:
       summary: 获取 IPA 列表
       tags:
       - IPA
+    post:
+      consumes:
+      - multipart/form-data
+      parameters:
+      - description: ipa
+        in: formData
+        name: ipa
+        required: true
+        type: file
+      - description: summary
+        in: formData
+        name: summary
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 上传 IPA
+      tags:
+      - IPA
   /api/v1beta1/book:
     get:
       produces:
