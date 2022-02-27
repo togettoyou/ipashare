@@ -15,17 +15,16 @@ type AppleIPA struct {
 }
 
 func (a *AppleIPA) AnalyzeIPA(ipaUUID, ipaPath, summary string) (appleIPA *model.AppleIPA, err error) {
-	iconPath := path.Join(conf.Apple.UploadFilePath, ipaUUID+".png")
 	defer func() {
 		if err != nil {
-			os.Remove(ipaPath)
-			os.Remove(iconPath)
+			os.RemoveAll(path.Join(conf.Apple.UploadFilePath, ipaUUID))
 		}
 	}()
 	info, err := ipa.Parser(ipaPath)
 	if err != nil {
 		return nil, e.NewWithStack(e.ErrIPAParser, err)
 	}
+	iconPath := path.Join(conf.Apple.UploadFilePath, ipaUUID, "icon.png")
 	if info.Icon != nil {
 		iconFile, err := os.Create(iconPath)
 		if err != nil {
@@ -69,7 +68,7 @@ func (a *AppleIPA) List(content string, page, pageSize *int) ([]model.AppleIPA, 
 }
 
 func (a *AppleIPA) Del(uuid string) error {
-	appleIPA, err := a.store.AppleIPA.Query(uuid)
+	_, err := a.store.AppleIPA.Query(uuid)
 	if err != nil {
 		return e.NewWithStack(e.DBError, err)
 	}
@@ -77,7 +76,6 @@ func (a *AppleIPA) Del(uuid string) error {
 	if err != nil {
 		return e.NewWithStack(e.DBError, err)
 	}
-	os.Remove(appleIPA.IPAPath)
-	os.Remove(appleIPA.IconPath)
+	os.RemoveAll(path.Join(conf.Apple.UploadFilePath, uuid))
 	return nil
 }

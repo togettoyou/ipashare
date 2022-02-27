@@ -10,6 +10,7 @@ import (
 	"supersign/internal/svc"
 	"supersign/pkg/conf"
 	"supersign/pkg/e"
+	"supersign/pkg/tools"
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
@@ -42,7 +43,10 @@ func (a AppleIPA) Upload(c *gin.Context) {
 		return
 	}
 	ipaUUID := uuid.New().String()
-	ipaPath := path.Join(conf.Apple.UploadFilePath, ipaUUID+".ipa")
+	ipaPath := path.Join(conf.Apple.UploadFilePath, ipaUUID, args.IPA.Filename)
+	if a.HasErr(tools.MkdirAll(ipaPath)) {
+		return
+	}
 	if a.HasErr(c.SaveUploadedFile(args.IPA, ipaPath)) {
 		return
 	}

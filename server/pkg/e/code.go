@@ -21,6 +21,7 @@ var (
 	ErrIPAIcon   = &errno{code: 20202, msg: "IPA Icon 提取异常"}
 
 	ErrIssExist           = &errno{code: 20301, msg: "Iss 已存在"}
-	ErrAppstoreAPI        = &errno{code: 20302, msg: "App Store Connect API 连接失败"}
-	ErrDeviceInsufficient = &errno{code: 20303, msg: "账号可绑设备已不足"}
+	ErrIssAdd             = &errno{code: 20302, msg: "账号添加失败"}
+	ErrAppstoreAPI        = &errno{code: 20303, msg: "App Store Connect API 连接失败"}
+	ErrDeviceInsufficient = &errno{code: 20304, msg: "账号可绑设备已不足"}
 )

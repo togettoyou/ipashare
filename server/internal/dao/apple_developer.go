@@ -16,8 +16,17 @@ type appleDeveloper struct {
 
 var _ model.AppleDeveloperStore = (*appleDeveloper)(nil)
 
-func (a *appleDeveloper) Create(appleDeveloper *model.AppleDeveloper) error {
-	return a.db.Create(appleDeveloper).Error
+func (a *appleDeveloper) Create(appleDeveloper *model.AppleDeveloper, appleDevices []model.AppleDevice) error {
+	return a.db.Transaction(func(tx *gorm.DB) error {
+		err := tx.Create(appleDeveloper).Error
+		if err != nil {
+			return err
+		}
+		if appleDevices == nil || len(appleDevices) == 0 {
+			return nil
+		}
+		return tx.Create(appleDevices).Error
+	})
 }
 
 func (a *appleDeveloper) Del(iss string) error {

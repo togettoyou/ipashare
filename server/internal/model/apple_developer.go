@@ -20,7 +20,7 @@ type AppleDeveloper struct {
 }
 
 type AppleDeveloperStore interface {
-	Create(appleDeveloper *AppleDeveloper) error
+	Create(appleDeveloper *AppleDeveloper, appleDevices []AppleDevice) error
 	Del(iss string) error
 	AddCount(iss string, num int) error
 	UpdateCount(iss string, count int) error
