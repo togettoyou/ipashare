@@ -44,3 +44,25 @@ func (a AppleDeveloper) Upload(c *gin.Context) {
 	}
 	a.OK(num)
 }
+
+// Del
+// @Tags AppleDeveloper
+// @Summary 删除指定苹果开发者账号
+// @Security ApiKeyAuth
+// @Produce json
+// @Param iss query string true "iss"
+// @Success 200 {object} api.Response
+// @Router /api/v1/appleDeveloper [delete]
+func (a AppleDeveloper) Del(c *gin.Context) {
+	var (
+		appleDeveloperSvc svc.AppleDeveloper
+		args              req.AppleDeveloperQuery
+	)
+	if !a.MakeContext(c).MakeService(&appleDeveloperSvc.Service).ParseQuery(&args) {
+		return
+	}
+	if a.HasErr(appleDeveloperSvc.Del(args.Iss)) {
+		return
+	}
+	a.OK()
+}

@@ -37,6 +37,25 @@ info:
   version: "1.0"
 paths:
   /api/v1/appleDeveloper:
+    delete:
+      parameters:
+      - description: iss
+        in: query
+        name: iss
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 删除指定苹果开发者账号
+      tags:
+      - AppleDeveloper
     post:
       consumes:
       - multipart/form-data

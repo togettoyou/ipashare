@@ -73,6 +73,37 @@ var doc = `{
                         }
                     }
                 }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "AppleDeveloper"
+                ],
+                "summary": "删除指定苹果开发者账号",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "iss",
+                        "name": "iss",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.Response"
+                        }
+                    }
+                }
             }
         },
         "/api/v1/ipa": {

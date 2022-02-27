@@ -30,7 +30,13 @@ func (a *appleDeveloper) Create(appleDeveloper *model.AppleDeveloper, appleDevic
 }
 
 func (a *appleDeveloper) Del(iss string) error {
-	return a.db.Where("iss = ?", iss).Delete(&model.AppleDeveloper{}).Error
+	return a.db.Transaction(func(tx *gorm.DB) error {
+		err := tx.Where("iss = ?", iss).Delete(&model.AppleDeveloper{}).Error
+		if err != nil {
+			return err
+		}
+		return tx.Where("iss = ?", iss).Delete(&model.AppleDevice{}).Error
+	})
 }
 
 func (a *appleDeveloper) AddCount(iss string, num int) error {

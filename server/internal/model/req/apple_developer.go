@@ -7,3 +7,7 @@ type AppleDeveloperForm struct {
 	Iss string                `form:"iss" binding:"required"`
 	Kid string                `form:"kid" binding:"required"`
 }
+
+type AppleDeveloperQuery struct {
+	Iss string `form:"iss" binding:"required"`
+}

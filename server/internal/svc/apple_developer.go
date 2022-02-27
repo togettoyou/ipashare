@@ -118,3 +118,22 @@ func (a *AppleDeveloper) Add(iss, kid, p8 string) (num int, err error) {
 	}
 	return 100 - devices.Meta.Paging.Total, nil
 }
+
+func (a *AppleDeveloper) Del(iss string) error {
+	appleDeveloper, err := a.store.AppleDeveloper.Query(iss)
+	if err != nil {
+		return e.NewWithStack(e.DBError, err)
+	}
+	err = a.store.AppleDeveloper.Del(iss)
+	if err != nil {
+		return e.NewWithStack(e.DBError, err)
+	}
+	os.RemoveAll(path.Join(conf.Apple.AppleDeveloperPath, iss))
+	authorize := appstore.Authorize{
+		P8:  appleDeveloper.P8,
+		Iss: appleDeveloper.Iss,
+		Kid: appleDeveloper.Kid,
+	}
+	authorize.DeleteCertificatesByCerId(appleDeveloper.CerID)
+	return nil
+}

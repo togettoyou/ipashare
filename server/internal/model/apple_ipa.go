@@ -8,16 +8,16 @@ import (
 type AppleIPA struct {
 	gorm.Model
 	UUID             string `gorm:"unique;not null" json:"uuid"`
-	BundleIdentifier string `gorm:"not null;comment:包名"`
-	Name             string `gorm:"comment:应用名"`
-	Version          string `gorm:"comment:版本"`
-	BuildVersion     string `gorm:"comment:编译版本号"`
-	MiniVersion      string `gorm:"comment:最小支持版本"`
-	Summary          string `gorm:"comment:应用简介"`
-	Size             string `gorm:"comment:应用大小"`
-	IconPath         string `gorm:"comment:应用图标路径"`
-	IPAPath          string `gorm:"comment:IPA路径"`
-	Count            int    `gorm:"comment:总下载量"`
+	BundleIdentifier string `gorm:"not null;comment:包名" json:"bundle_identifier"`
+	Name             string `gorm:"comment:应用名" json:"name"`
+	Version          string `gorm:"comment:版本" json:"version"`
+	BuildVersion     string `gorm:"comment:编译版本号" json:"build_version"`
+	MiniVersion      string `gorm:"comment:最小支持版本" json:"mini_version"`
+	Summary          string `gorm:"comment:应用简介" json:"summary"`
+	Size             string `gorm:"comment:应用大小" json:"size"`
+	IconPath         string `gorm:"comment:应用图标路径" json:"-"`
+	IPAPath          string `gorm:"comment:IPA路径" json:"-"`
+	Count            int    `gorm:"comment:总下载量" json:"count"`
 }
 
 type AppleIPAStore interface {

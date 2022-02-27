@@ -15,6 +15,5 @@ type AppleDevice struct {
 type AppleDeviceStore interface {
 	Create(appleDevice *AppleDevice) error
 	Del(udid string) error
-	DelByIss(iss string) error
 	Query(udid string) (*AppleDevice, error)
 }

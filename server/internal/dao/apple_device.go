@@ -24,10 +24,6 @@ func (a *appleDevice) Del(udid string) error {
 	return a.db.Where("udid = ?", udid).Delete(&model.AppleDevice{}).Error
 }
 
-func (a *appleDevice) DelByIss(iss string) error {
-	return a.db.Where("iss = ?", iss).Delete(&model.AppleDevice{}).Error
-}
-
 func (a *appleDevice) Query(udid string) (*model.AppleDevice, error) {
 	var appleDevice model.AppleDevice
 	err := a.db.Where("udid = ?", udid).Take(&appleDevice).Error
