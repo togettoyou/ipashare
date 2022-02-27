@@ -18,5 +18,7 @@ func registerAppleDeveloperRouter(store *model.Store, r *gin.RouterGroup) {
 	{
 		appleDeveloperR.POST("", appleDeveloper.Upload)
 		appleDeveloperR.DELETE("", appleDeveloper.Del)
+		appleDeveloperR.GET("", appleDeveloper.List)
+		appleDeveloperR.PATCH("", appleDeveloper.Update)
 	}
 }

@@ -70,7 +70,7 @@ func (a AppleIPA) Upload(c *gin.Context) {
 func (a AppleIPA) List(c *gin.Context) {
 	var (
 		appleIPASvc svc.AppleIPA
-		args        req.IPAFind
+		args        req.Find
 	)
 	if !a.MakeContext(c).MakeService(&appleIPASvc.Service).ParseQuery(&args) {
 		return

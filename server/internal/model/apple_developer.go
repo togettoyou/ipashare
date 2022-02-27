@@ -24,8 +24,7 @@ type AppleDeveloperStore interface {
 	Del(iss string) error
 	AddCount(iss string, num int) error
 	UpdateCount(iss string, count int) error
-	UpdateLimit(iss string, limit int) error
-	Enable(iss string, enable bool) error
+	UpdateSetup(iss string, limit int, enable bool) error
 	Query(iss string) (*AppleDeveloper, error)
 	GetUsable() (*AppleDeveloper, error)
 	List(content string, page, pageSize *int) ([]AppleDeveloper, int64, error)

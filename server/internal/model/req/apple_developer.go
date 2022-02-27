@@ -11,3 +11,9 @@ type AppleDeveloperForm struct {
 type AppleDeveloperQuery struct {
 	Iss string `form:"iss" binding:"required"`
 }
+
+type AppleDeveloperSetup struct {
+	Iss    string `form:"iss" binding:"required"`
+	Limit  int    `form:"limit"`
+	Enable bool   `form:"enable"`
+}

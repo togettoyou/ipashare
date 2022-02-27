@@ -5,6 +5,7 @@ import (
 	"strings"
 	"supersign/internal/api"
 	"supersign/internal/model/req"
+	"supersign/internal/model/resp"
 	"supersign/internal/svc"
 	"supersign/pkg/e"
 
@@ -43,6 +44,60 @@ func (a AppleDeveloper) Upload(c *gin.Context) {
 		return
 	}
 	a.OK(num)
+}
+
+// List
+// @Tags AppleDeveloper
+// @Summary 获取苹果开发者账号列表
+// @Security ApiKeyAuth
+// @Produce json
+// @Param page query int false "页码"
+// @Param page_size query int false "页面大小"
+// @Param content query string false "搜索内容"
+// @Success 200 {object} api.Response
+// @Router /api/v1/appleDeveloper [get]
+func (a AppleDeveloper) List(c *gin.Context) {
+	var (
+		appleDeveloperSvc svc.AppleDeveloper
+		args              req.Find
+	)
+	if !a.MakeContext(c).MakeService(&appleDeveloperSvc.Service).ParseQuery(&args) {
+		return
+	}
+	appleDevelopers, total, err := appleDeveloperSvc.List(args.Content, &args.Page, &args.PageSize)
+	if a.HasErr(err) {
+		return
+	}
+	a.OK(resp.Pagination{
+		PageSize: args.PageSize,
+		Page:     args.Page,
+		Data:     appleDevelopers,
+		Total:    total,
+	})
+}
+
+// Update
+// @Tags AppleDeveloper
+// @Summary 苹果开发者账号设置
+// @Security ApiKeyAuth
+// @Produce json
+// @Param iss query string true "iss"
+// @Param limit query int false "limit"
+// @Param enable query bool false "enable"
+// @Success 200 {object} api.Response
+// @Router /api/v1/appleDeveloper [patch]
+func (a AppleDeveloper) Update(c *gin.Context) {
+	var (
+		appleDeveloperSvc svc.AppleDeveloper
+		args              req.AppleDeveloperSetup
+	)
+	if !a.MakeContext(c).MakeService(&appleDeveloperSvc.Service).ParseQuery(&args) {
+		return
+	}
+	if a.HasErr(appleDeveloperSvc.Update(args.Iss, args.Limit, args.Enable)) {
+		return
+	}
+	a.OK()
 }
 
 // Del

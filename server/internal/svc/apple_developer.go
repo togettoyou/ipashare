@@ -137,3 +137,19 @@ func (a *AppleDeveloper) Del(iss string) error {
 	authorize.DeleteCertificatesByCerId(appleDeveloper.CerID)
 	return nil
 }
+
+func (a *AppleDeveloper) List(content string, page, pageSize *int) ([]model.AppleDeveloper, int64, error) {
+	appleDevelopers, total, err := a.store.AppleDeveloper.List(content, page, pageSize)
+	if err != nil {
+		return nil, 0, e.NewWithStack(e.DBError, err)
+	}
+	return appleDevelopers, total, nil
+}
+
+func (a *AppleDeveloper) Update(iss string, limit int, enable bool) error {
+	err := a.store.AppleDeveloper.UpdateSetup(iss, limit, enable)
+	if err != nil {
+		return e.NewWithStack(e.DBError, err)
+	}
+	return nil
+}

@@ -51,16 +51,10 @@ func (a *appleDeveloper) UpdateCount(iss string, count int) error {
 		Update("count", count).Error
 }
 
-func (a *appleDeveloper) UpdateLimit(iss string, limit int) error {
+func (a *appleDeveloper) UpdateSetup(iss string, limit int, enable bool) error {
 	return a.db.Model(&model.AppleDeveloper{}).
 		Where("iss = ?", iss).
-		Update("`limit`", limit).Error
-}
-
-func (a *appleDeveloper) Enable(iss string, enable bool) error {
-	return a.db.Model(&model.AppleDeveloper{}).
-		Where("iss = ?", iss).
-		Update("enable", enable).Error
+		Updates(map[string]interface{}{"`limit`": limit, "enable": enable}).Error
 }
 
 func (a *appleDeveloper) Query(iss string) (*model.AppleDeveloper, error) {
