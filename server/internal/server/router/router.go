@@ -57,4 +57,5 @@ func registerV1beta1Router(store *model.Store, r *gin.Engine) {
 func registerV1Router(store *model.Store, r *gin.Engine) {
 	v1Group := r.Group("api/v1")
 	registerAppleIPARouter(store, v1Group)
+	registerAppleDeveloperRouter(store, v1Group)
 }

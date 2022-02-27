@@ -19,4 +19,8 @@ var (
 
 	ErrIPAParser = &errno{code: 20201, msg: "IPA 解析异常"}
 	ErrIPAIcon   = &errno{code: 20202, msg: "IPA Icon 提取异常"}
+
+	ErrIssExist           = &errno{code: 20301, msg: "Iss 已存在"}
+	ErrAppstoreAPI        = &errno{code: 20302, msg: "App Store Connect API 连接失败"}
+	ErrDeviceInsufficient = &errno{code: 20303, msg: "账号可绑设备已不足"}
 )

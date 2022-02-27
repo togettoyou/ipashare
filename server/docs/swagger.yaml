@@ -36,6 +36,38 @@ info:
   title: supersign 后端服务接口文档
   version: "1.0"
 paths:
+  /api/v1/appleDeveloper:
+    post:
+      consumes:
+      - multipart/form-data
+      parameters:
+      - description: p8
+        in: formData
+        name: p8
+        required: true
+        type: file
+      - description: iss
+        in: formData
+        name: iss
+        required: true
+        type: string
+      - description: kid
+        in: formData
+        name: kid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 上传苹果开发者账号
+      tags:
+      - AppleDeveloper
   /api/v1/ipa:
     delete:
       parameters:
