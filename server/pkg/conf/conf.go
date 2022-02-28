@@ -8,14 +8,15 @@ import (
 )
 
 type config struct {
-	Server server `yaml:"SERVER"`
-	Log    log    `yaml:"LOG"`
-	Redis  redis  `yaml:"REDIS"`
-	Mysql  mysql  `yaml:"MYSQL"`
+	Server  server  `yaml:"SERVER"`
+	Log     log     `yaml:"LOG"`
+	Storage storage `yaml:"STORAGE"`
+	Mysql   mysql   `yaml:"MYSQL"`
 }
 
 type server struct {
 	URL          string `yaml:"URL"`
+	MaxJob       int    `yaml:"MAXJOB"`
 	RunMode      string `yaml:"RUNMODE"`
 	ReadTimeout  int    `yaml:"READTIMEOUT"`
 	WriteTimeout int    `yaml:"WRITETIMEOUT"`
@@ -29,10 +30,12 @@ type log struct {
 	Level string `yaml:"LEVEL"`
 }
 
-type redis struct {
-	DB       int    `yaml:"DB"`
-	Addr     string `yaml:"ADDR"`
-	Password string `yaml:"PASSWORD"`
+type storage struct {
+	EnableOSS          bool   `yaml:"ENABLEOSS"`
+	BucketName         string `yaml:"BUCKETNAME"`
+	OSSEndpoint        string `yaml:"OSSENDPOINT"`
+	OSSAccessKeyId     string `yaml:"OSSACCESSKEYID"`
+	OSSAccessKeySecret string `yaml:"OSSACCESSKEYSECRET"`
 }
 
 type mysql struct {
@@ -49,11 +52,11 @@ type apple struct {
 }
 
 var (
-	Server server
-	Log    log
-	Redis  redis
-	Mysql  mysql
-	Apple  = apple{
+	Server  server
+	Log     log
+	Storage storage
+	Mysql   mysql
+	Apple   = apple{
 		AppleDeveloperPath: "data/apple_developer/",
 		UploadFilePath:     "data/upload_file_path/",
 		TemporaryFilePath:  "data/temporary_file_path/",
@@ -108,7 +111,7 @@ func setConfig() error {
 	}
 	Server = config.Server
 	Log = config.Log
-	Redis = config.Redis
+	Storage = config.Storage
 	Mysql = config.Mysql
 	return nil
 }

@@ -2,6 +2,8 @@
 SERVER:
   # https 域名，必填
   URL: https://qq.com
+  # 签名任务并发量
+  MAXJOB: 10
   # 开发模式 debug,release,test
   RUNMODE: debug
   # 读超时/s
@@ -22,14 +24,14 @@ LOG:
   # 日志输出等级 fatal,error,warn,info,debug
   LEVEL: debug
 
-# redis 配置（可选）
-REDIS:
-  # redis的哪个数据库
-  DB: 0
-  # 服务器地址:端口
-  ADDR: 127.0.0.1:6379
-  # 密码
-  PASSWORD:
+# 存储配置
+STORAGE:
+  # 阿里云OSS服务
+  ENABLEOSS: false
+  BUCKETNAME:
+  OSSENDPOINT:
+  OSSACCESSKEYID:
+  OSSACCESSKEYSECRET:
 
 # mysql 配置（可选）
 # 配置内容参考: https://gorm.io/zh_CN/docs/connecting_to_the_database.html

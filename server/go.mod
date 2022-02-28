@@ -4,7 +4,9 @@ go 1.16
 
 require (
 	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751
+	github.com/aliyun/aliyun-oss-go-sdk v2.2.1+incompatible
 	github.com/andrianbdn/iospng v0.0.0-20180730113000-dccef1992541
+	github.com/baiyubin/aliyun-sts-go-sdk v0.0.0-20180326062324-cfa1a18b161f // indirect
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/fsnotify/fsnotify v1.5.0
 	github.com/gin-contrib/cors v1.3.1
@@ -16,6 +18,7 @@ require (
 	github.com/go-redis/redis/v8 v8.11.4
 	github.com/google/uuid v1.1.2
 	github.com/pkg/errors v0.9.1
+	github.com/satori/go.uuid v1.2.0 // indirect
 	github.com/spf13/pflag v1.0.5
 	github.com/spf13/viper v1.8.1
 	github.com/swaggo/gin-swagger v1.3.1
