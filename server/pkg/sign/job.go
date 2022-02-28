@@ -3,6 +3,7 @@ package sign
 import (
 	"os"
 	"path"
+	"supersign/pkg/ali"
 	"supersign/pkg/conf"
 	"sync"
 	"time"
@@ -16,7 +17,7 @@ type job struct {
 	logger    *zap.Logger
 	streamCh  chan *Stream
 	doneCache map[string]*done
-	mu        sync.Mutex
+	mu        sync.RWMutex
 }
 
 type Stream struct {
@@ -82,6 +83,20 @@ func Setup(logger *zap.Logger, maxJob int) {
 					}
 					signJob.mu.Lock()
 					defer signJob.mu.Unlock()
+					if conf.Storage.EnableOSS {
+						err := ali.UploadFile(
+							stream.ProfileUUID+".ipa",
+							path.Join(conf.Apple.TemporaryFilePath, stream.ProfileUUID, "ipa.ipa"),
+						)
+						if err != nil {
+							signJob.doneCache[stream.ProfileUUID] = &done{
+								Success: false,
+								Msg:     "重签名任务执行失败:" + err.Error(),
+							}
+							signJob.logger.Error("重签名任务执行失败:" + err.Error())
+							return
+						}
+					}
 					signJob.doneCache[stream.ProfileUUID] = &done{
 						Success:          true,
 						Msg:              "重签名任务执行成功",
@@ -103,8 +118,8 @@ func Push(stream *Stream) {
 }
 
 func DoneCache(ProfileUUID string) (done *done, ok bool) {
-	signJob.mu.Lock()
-	defer signJob.mu.Unlock()
+	signJob.mu.RLock()
+	defer signJob.mu.RUnlock()
 	done, ok = signJob.doneCache[ProfileUUID]
 	return
 }
