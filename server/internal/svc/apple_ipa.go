@@ -48,8 +48,6 @@ func (a *AppleIPA) AnalyzeIPA(ipaUUID, ipaPath, summary string) (appleIPA *model
 		MiniVersion:      info.Plist.MinimumOSVersion,
 		Summary:          summary,
 		Size:             fmt.Sprintf("%.2fMB", float64(info.Size)/float64(1024*1024)),
-		IconPath:         iconPath,
-		IPAPath:          ipaPath,
 		Count:            0,
 	}
 	err = a.store.AppleIPA.Create(appleIPA)

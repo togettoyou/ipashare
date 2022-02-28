@@ -43,7 +43,7 @@ func (a AppleIPA) Upload(c *gin.Context) {
 		return
 	}
 	ipaUUID := uuid.New().String()
-	ipaPath := path.Join(conf.Apple.UploadFilePath, ipaUUID, args.IPA.Filename)
+	ipaPath := path.Join(conf.Apple.UploadFilePath, ipaUUID, "ipa.ipa")
 	if a.HasErr(tools.MkdirAll(ipaPath)) {
 		return
 	}

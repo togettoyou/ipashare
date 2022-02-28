@@ -140,6 +140,66 @@ paths:
       summary: 上传苹果开发者账号
       tags:
       - AppleDeveloper
+  /api/v1/download/icon/{uuid}:
+    get:
+      parameters:
+      - description: uuid
+        in: path
+        name: uuid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 下载icon服务
+      tags:
+      - Download
+  /api/v1/download/ipa/{uuid}:
+    get:
+      parameters:
+      - description: uuid
+        in: path
+        name: uuid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 下载IPA服务
+      tags:
+      - Download
+  /api/v1/download/mobileConfig/{uuid}:
+    get:
+      parameters:
+      - description: uuid
+        in: path
+        name: uuid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 下载mobileconfig服务
+      tags:
+      - Download
   /api/v1/ipa:
     delete:
       parameters:

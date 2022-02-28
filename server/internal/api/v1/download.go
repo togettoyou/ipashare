@@ -1,0 +1,115 @@
+package v1
+
+import (
+	"fmt"
+	"path"
+	"supersign/internal/api"
+	"supersign/internal/model/req"
+	"supersign/pkg/conf"
+	"text/template"
+
+	"github.com/gin-gonic/gin"
+)
+
+type Download struct {
+	api.Base
+}
+
+const (
+	mobileConfigTemp = `<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>PayloadContent</key>
+        <dict>
+            <key>URL</key>
+            <string>{{ .URL }}</string>
+            <key>DeviceAttributes</key>
+            <array>
+                <string>UDID</string>
+                <string>IMEI</string>
+                <string>ICCID</string>
+                <string>VERSION</string>
+                <string>PRODUCT</string>
+            </array>
+        </dict>
+        <key>PayloadOrganization</key>
+        <string>supersign</string>
+        <key>PayloadDisplayName</key>
+        <string>获取UDID</string>
+        <key>PayloadVersion</key>
+        <integer>1</integer>
+        <key>PayloadUUID</key>
+        <string>{{ .UUID }}</string>
+        <key>PayloadIdentifier</key>
+        <string>github.togettoyou.supersign</string>
+        <key>PayloadDescription</key>
+        <string>仅用于绑定设备UDID以便安装APP</string>
+        <key>PayloadType</key>
+        <string>Profile Service</string>
+    </dict>
+</plist>`
+)
+
+// MobileConfig
+// @Tags Download
+// @Summary 下载mobileconfig服务
+// @Security ApiKeyAuth
+// @Produce json
+// @Param uuid path string true "uuid"
+// @Success 200 {object} api.Response
+// @Router /api/v1/download/mobileConfig/{uuid} [get]
+func (d Download) MobileConfig(c *gin.Context) {
+	var args req.DownloadUri
+	if !d.MakeContext(c).ParseUri(&args) {
+		return
+	}
+	tmpl, err := template.New(args.UUID).Parse(mobileConfigTemp)
+	if d.HasErr(err) {
+		return
+	}
+	c.Header("Content-Type", "application/octet-stream")
+	c.Header("Content-Disposition", "attachment; filename="+args.UUID+".mobileconfig")
+	url := fmt.Sprintf("%s/api/v1/uuid/%s", conf.Server.URL, args.UUID)
+	if d.HasErr(tmpl.Execute(c.Writer, map[string]string{"URL": url, "UUID": args.UUID})) {
+		return
+	}
+}
+
+func (d Download) Plist(c *gin.Context) {
+
+}
+
+// IPA
+// @Tags Download
+// @Summary 下载IPA服务
+// @Security ApiKeyAuth
+// @Produce json
+// @Param uuid path string true "uuid"
+// @Success 200 {object} api.Response
+// @Router /api/v1/download/ipa/{uuid} [get]
+func (d Download) IPA(c *gin.Context) {
+	var args req.DownloadUri
+	if !d.MakeContext(c).ParseUri(&args) {
+		return
+	}
+	c.Header("Content-Type", "application/octet-stream")
+	c.Header("Content-Disposition", "attachment; filename="+args.UUID+".ipa")
+	c.File(path.Join(conf.Apple.UploadFilePath, args.UUID, "ipa.ipa"))
+}
+
+// Icon
+// @Tags Download
+// @Summary 下载icon服务
+// @Security ApiKeyAuth
+// @Produce json
+// @Param uuid path string true "uuid"
+// @Success 200 {object} api.Response
+// @Router /api/v1/download/icon/{uuid} [get]
+func (d Download) Icon(c *gin.Context) {
+	var args req.DownloadUri
+	if !d.MakeContext(c).ParseUri(&args) {
+		return
+	}
+	c.File(path.Join(conf.Apple.UploadFilePath, args.UUID, "icon.png"))
+}

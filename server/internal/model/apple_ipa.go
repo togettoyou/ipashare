@@ -15,8 +15,6 @@ type AppleIPA struct {
 	MiniVersion      string `gorm:"comment:最小支持版本" json:"mini_version"`
 	Summary          string `gorm:"comment:应用简介" json:"summary"`
 	Size             string `gorm:"comment:应用大小" json:"size"`
-	IconPath         string `gorm:"comment:应用图标路径" json:"-"`
-	IPAPath          string `gorm:"comment:IPA路径" json:"-"`
 	Count            int    `gorm:"comment:总下载量" json:"count"`
 }
 
