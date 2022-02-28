@@ -49,12 +49,42 @@ const (
         <string>Profile Service</string>
     </dict>
 </plist>`
+	plistTemp = `<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+        <key>items</key>
+        <array>
+                <dict>
+                        <key>assets</key>
+                        <array>
+                                <dict>
+                                    <key>kind</key>
+                                    <string>software-package</string>
+                                    <key>url</key>
+                                    <string>{{ .URL }}</string>
+                                </dict>
+                        </array>
+                        <key>metadata</key>
+                        <dict>
+                            <key>bundle-identifier</key>
+                            <string>{{ .BundleIdentifier }}</string>
+                            <key>bundle-version</key>
+                            <string>{{ .Version }}</string>
+                            <key>kind</key>
+                            <string>software</string>
+                            <key>title</key>
+                            <string>{{ .Name }}</string>
+                        </dict>
+                </dict>
+        </array>
+</dict>
+</plist>`
 )
 
 // MobileConfig
 // @Tags Download
 // @Summary 下载mobileconfig服务
-// @Security ApiKeyAuth
 // @Produce json
 // @Param uuid path string true "uuid"
 // @Success 200 {object} api.Response
@@ -76,8 +106,32 @@ func (d Download) MobileConfig(c *gin.Context) {
 	}
 }
 
+// Plist
+// @Tags Download
+// @Summary 下载Plist服务
+// @Produce json
+// @Param uuid path string true "uuid"
+// @Success 200 {object} api.Response
+// @Router /api/v1/download/plist/{uuid} [get]
 func (d Download) Plist(c *gin.Context) {
-
+	var args req.DownloadUri
+	if !d.MakeContext(c).ParseUri(&args) {
+		return
+	}
+	tmpl, err := template.New(args.UUID).Parse(plistTemp)
+	if d.HasErr(err) {
+		return
+	}
+	c.Header("Content-Type", "application/octet-stream")
+	c.Header("Content-Disposition", "attachment; filename="+args.UUID+".plist")
+	if d.HasErr(tmpl.Execute(c.Writer, map[string]string{
+		"URL":              "",
+		"BundleIdentifier": "",
+		"Version":          "",
+		"Name":             "",
+	})) {
+		return
+	}
 }
 
 // IPA
@@ -98,10 +152,26 @@ func (d Download) IPA(c *gin.Context) {
 	c.File(path.Join(conf.Apple.UploadFilePath, args.UUID, "ipa.ipa"))
 }
 
+// TempIPA
+// @Tags Download
+// @Summary 下载TempIPA服务
+// @Produce json
+// @Param uuid path string true "uuid"
+// @Success 200 {object} api.Response
+// @Router /api/v1/download/tempipa/{uuid} [get]
+func (d Download) TempIPA(c *gin.Context) {
+	var args req.DownloadUri
+	if !d.MakeContext(c).ParseUri(&args) {
+		return
+	}
+	c.Header("Content-Type", "application/octet-stream")
+	c.Header("Content-Disposition", "attachment; filename="+args.UUID+".ipa")
+	c.File(path.Join(conf.Apple.TemporaryFilePath, args.UUID, "ipa.ipa"))
+}
+
 // Icon
 // @Tags Download
 // @Summary 下载icon服务
-// @Security ApiKeyAuth
 // @Produce json
 // @Param uuid path string true "uuid"
 // @Success 200 {object} api.Response
