@@ -13,13 +13,6 @@ import (
 	"gorm.io/gorm/schema"
 )
 
-// NewMock 模拟
-func NewMock() (*model.Store, error) {
-	return &model.Store{
-		Book: newBook2(),
-	}, nil
-}
-
 // NewSqlite 使用 Sqlite 数据库
 func NewSqlite() (*model.Store, error) {
 	db, err := gorm.Open(
@@ -37,7 +30,6 @@ func NewSqlite() (*model.Store, error) {
 
 	err = db.AutoMigrate(
 		/*数据库实体模型*/
-		&model.Book{},
 		&model.AppleDeveloper{},
 		&model.AppleDevice{},
 		&model.AppleIPA{},
@@ -47,7 +39,6 @@ func NewSqlite() (*model.Store, error) {
 	}
 
 	return &model.Store{
-		Book:           newBook1(db),
 		AppleDeveloper: newAppleDeveloper(db),
 		AppleDevice:    newAppleDevice(db),
 		AppleIPA:       newAppleIPA(db),
@@ -91,7 +82,6 @@ func NewMysql() (*model.Store, error) {
 	err = db.Set("gorm:table_options", "ENGINE=InnoDB DEFAULT CHARSET=utf8").
 		AutoMigrate(
 			/*数据库实体模型*/
-			&model.Book{},
 			&model.AppleDeveloper{},
 			&model.AppleDevice{},
 			&model.AppleIPA{},
@@ -101,7 +91,6 @@ func NewMysql() (*model.Store, error) {
 	}
 
 	return &model.Store{
-		Book:           newBook1(db),
 		AppleDeveloper: newAppleDeveloper(db),
 		AppleDevice:    newAppleDevice(db),
 		AppleIPA:       newAppleIPA(db),

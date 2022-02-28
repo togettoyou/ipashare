@@ -30,7 +30,6 @@ func New(store *model.Store) *gin.Engine {
 	}
 	r.SetHTMLTemplate(t)
 
-	registerV1beta1Router(store, r)
 	registerV1Router(store, r)
 	return r
 }
@@ -57,13 +56,6 @@ func registerSwagRouter(r *gin.Engine) {
 	if swag != nil {
 		r.GET("/swagger/*any", swag)
 	}
-}
-
-// registerV1beta1Router v1beta1 版本路由注册
-func registerV1beta1Router(store *model.Store, r *gin.Engine) {
-	v1beta1Group := r.Group("api/v1beta1")
-	registerBookRouter(store, v1beta1Group)
-	registerExampleRouter(v1beta1Group)
 }
 
 // registerV1Router v1 版本路由注册

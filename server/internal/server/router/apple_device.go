@@ -16,6 +16,6 @@ func registerAppleDeviceRouter(store *model.Store, r *gin.RouterGroup) {
 	appleDeviceR := r.Group("/appleDevice")
 
 	{
-		appleDeviceR.POST("udid", appleDevice.UDID)
+		appleDeviceR.POST("udid/:uuid", appleDevice.UDID)
 	}
 }
