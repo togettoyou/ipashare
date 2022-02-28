@@ -24,4 +24,5 @@ var (
 	ErrIssAdd             = &errno{code: 20302, msg: "账号添加失败"}
 	ErrAppstoreAPI        = &errno{code: 20303, msg: "App Store Connect API 连接失败"}
 	ErrDeviceInsufficient = &errno{code: 20304, msg: "账号可绑设备已不足"}
+	ErrSign               = &errno{code: 20305, msg: "重签名失败"}
 )

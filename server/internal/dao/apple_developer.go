@@ -39,12 +39,6 @@ func (a *appleDeveloper) Del(iss string) error {
 	})
 }
 
-func (a *appleDeveloper) AddCount(iss string, num int) error {
-	return a.db.Model(&model.AppleDeveloper{}).
-		Where("iss = ?", iss).
-		UpdateColumn("count", gorm.Expr("count + ?", num)).Error
-}
-
 func (a *appleDeveloper) UpdateCount(iss string, count int) error {
 	return a.db.Model(&model.AppleDeveloper{}).
 		Where("iss = ?", iss).

@@ -1,5 +1,5 @@
 package req
 
-type DownloadUri struct {
+type AppleDeviceUri struct {
 	UUID string `uri:"uuid" binding:"required"`
 }

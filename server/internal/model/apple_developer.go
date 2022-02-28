@@ -18,7 +18,6 @@ type AppleDeveloper struct {
 type AppleDeveloperStore interface {
 	Create(appleDeveloper *AppleDeveloper, appleDevices []AppleDevice) error
 	Del(iss string) error
-	AddCount(iss string, num int) error
 	UpdateCount(iss string, count int) error
 	UpdateSetup(iss string, limit int, enable bool) error
 	Query(iss string) (*AppleDeveloper, error)
