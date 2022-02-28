@@ -39,6 +39,7 @@ type storage struct {
 }
 
 type mysql struct {
+	Enable      bool   `yaml:"ENABLE"`
 	Dsn         string `yaml:"DSN"`
 	MaxIdle     int    `yaml:"MAXIDLE"`
 	MaxOpen     int    `yaml:"MAXOPEN"`

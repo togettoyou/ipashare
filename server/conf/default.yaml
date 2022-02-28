@@ -36,6 +36,8 @@ STORAGE:
 # mysql 配置（可选）
 # 配置内容参考: https://gorm.io/zh_CN/docs/connecting_to_the_database.html
 MYSQL:
+  # 是否启用，不启用默认使用 sqlLite
+  ENABLE: false
   # 连接驱动
   DSN: root:123456@tcp(127.0.0.1:3306)/db_default?charset=utf8mb4&parseTime=True&loc=Local
   # 空闲连接池中连接的最大数量

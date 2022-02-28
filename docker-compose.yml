@@ -5,6 +5,14 @@ services:
     ports:
       - "32288:8888"
     environment:
-      - SERVER.URL=https://qq.com
+      - SERVER.URL=https://你的域名
+      - SERVER.MAXJOB=10
       - SERVER.RUNMODE=release
       - LOG.LEVEL=info
+      - STORAGE.ENABLEOSS=false
+      - STORAGE.BUCKETNAME=
+      - STORAGE.OSSENDPOINT=
+      - STORAGE.OSSACCESSKEYID=
+      - STORAGE.OSSACCESSKEYSECRET=
+      - MYSQL.ENABLE=false
+      - MYSQL.DSN=

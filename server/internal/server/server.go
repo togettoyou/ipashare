@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"supersign/internal/dao"
+	"supersign/internal/model"
 	"supersign/internal/server/router"
 	"supersign/pkg/conf"
 
@@ -31,8 +32,15 @@ func setGinMode() {
 
 func Start() {
 	// 选择数据源实现
-	store, err := dao.NewSqlite()
-	//store, err := dao.NewMysql()
+	var (
+		store *model.Store
+		err   error
+	)
+	if conf.Mysql.Enable {
+		store, err = dao.NewMysql()
+	} else {
+		store, err = dao.NewSqlite()
+	}
 	if err != nil {
 		panic(err)
 	}
