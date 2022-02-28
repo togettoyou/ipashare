@@ -37,6 +37,6 @@ func (a AppleDevice) UDID(c *gin.Context) {
 	}
 	c.Redirect(
 		http.StatusMovedPermanently,
-		fmt.Sprintf("%s/api/v1/download/plist/%s", conf.Server.URL, plistUUID),
+		fmt.Sprintf("%s/api/v1/appstore/%s", conf.Server.URL, plistUUID),
 	)
 }

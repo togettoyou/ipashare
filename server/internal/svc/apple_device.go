@@ -148,6 +148,7 @@ func (a *AppleDevice) signature(deviceID string, appleDeveloper *model.AppleDeve
 		BundleIdentifier:    appleIPA.BundleIdentifier,
 		Version:             appleIPA.Version,
 		Name:                appleIPA.Name,
+		Summary:             appleIPA.Summary,
 	})
 	return profileUUID, nil
 }

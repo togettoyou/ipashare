@@ -1,6 +1,8 @@
 package router
 
 import (
+	"embed"
+	"html/template"
 	"net/http"
 
 	"supersign/internal/model"
@@ -12,11 +14,22 @@ import (
 
 var swag gin.HandlerFunc
 
+//go:embed templates
+var templates embed.FS
+
 func New(store *model.Store) *gin.Engine {
 	r := gin.New()
 	useMiddleware(r)
 	registerDebugRouter(r)
 	registerSwagRouter(r)
+
+	//加载模板文件
+	t, err := template.ParseFS(templates, "templates/*.tmpl")
+	if err != nil {
+		panic(err)
+	}
+	r.SetHTMLTemplate(t)
+
 	registerV1beta1Router(store, r)
 	registerV1Router(store, r)
 	return r
@@ -60,4 +73,5 @@ func registerV1Router(store *model.Store, r *gin.Engine) {
 	registerAppleDeveloperRouter(store, v1Group)
 	registerDownloadRouter(store, v1Group)
 	registerAppleDeviceRouter(store, v1Group)
+	registerAppstoreRouter(store, v1Group)
 }

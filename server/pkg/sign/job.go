@@ -1,9 +1,11 @@
 package sign
 
 import (
+	"os"
 	"path"
 	"supersign/pkg/conf"
 	"sync"
+	"time"
 
 	"go.uber.org/zap"
 )
@@ -25,6 +27,7 @@ type Stream struct {
 	BundleIdentifier    string
 	Version             string
 	Name                string
+	Summary             string
 }
 
 type done struct {
@@ -33,6 +36,8 @@ type done struct {
 	BundleIdentifier string
 	Version          string
 	Name             string
+	Summary          string
+	IpaUUID          string
 }
 
 func Setup(logger *zap.Logger, maxJob int) {
@@ -48,6 +53,14 @@ func Setup(logger *zap.Logger, maxJob int) {
 				if !ok {
 					return
 				}
+				go func() {
+					time.Sleep(1 * time.Hour)
+					signJob.mu.Lock()
+					defer signJob.mu.Unlock()
+					signJob.logger.Info("开始清理旧数据:" + stream.ProfileUUID)
+					delete(signJob.doneCache, stream.ProfileUUID)
+					os.RemoveAll(path.Join(conf.Apple.TemporaryFilePath, stream.ProfileUUID))
+				}()
 				go func() {
 					signJob.logger.Info("开始执行重签名任务......")
 					err := run(
@@ -75,6 +88,8 @@ func Setup(logger *zap.Logger, maxJob int) {
 						BundleIdentifier: stream.BundleIdentifier,
 						Version:          stream.Version,
 						Name:             stream.Name,
+						Summary:          stream.Summary,
+						IpaUUID:          stream.IpaUUID,
 					}
 					signJob.logger.Info("重签名任务执行成功")
 				}()

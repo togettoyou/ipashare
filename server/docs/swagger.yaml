@@ -140,6 +140,42 @@ paths:
       summary: 上传苹果开发者账号
       tags:
       - AppleDeveloper
+  /api/v1/appleDevice/udid/{uuid}:
+    post:
+      parameters:
+      - description: uuid
+        in: path
+        name: uuid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Response'
+      summary: 获取 UDID（苹果服务器回调）
+      tags:
+      - AppleDevice
+  /api/v1/appstore/{uuid}:
+    get:
+      parameters:
+      - description: uuid
+        in: path
+        name: uuid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Response'
+      summary: APP 下载页面
+      tags:
+      - Appstore
   /api/v1/download/icon/{uuid}:
     get:
       parameters:

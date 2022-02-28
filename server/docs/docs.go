@@ -191,6 +191,62 @@ var doc = `{
                 }
             }
         },
+        "/api/v1/appleDevice/udid/{uuid}": {
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "AppleDevice"
+                ],
+                "summary": "获取 UDID（苹果服务器回调）",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "uuid",
+                        "name": "uuid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/appstore/{uuid}": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Appstore"
+                ],
+                "summary": "APP 下载页面",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "uuid",
+                        "name": "uuid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/download/icon/{uuid}": {
             "get": {
                 "produces": [

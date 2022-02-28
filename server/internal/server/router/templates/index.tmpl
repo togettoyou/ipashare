@@ -1,0 +1,326 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <title>supersign</title>
+    <style>
+        body,
+        div,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        hr,
+        p,
+        blockquote,
+        dl,
+        dt,
+        dd,
+        ul,
+        ol,
+        li,
+        pre,
+        fieldset,
+        lengend,
+        button,
+        input,
+        textarea,
+        form,
+        th,
+        td {
+            margin: 0;
+            padding: 0;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            -webkit-text-size-adjust: none;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        }
+
+        body,
+        button,
+        input,
+        select,
+        textarea {
+            /* for ie */
+            color: #272727;
+            font: 0.373rem/1.42857143 "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+            outline: 0;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+            -webkit-appearance: none;
+        }
+
+        code,
+        kbd,
+        pre,
+        samp,
+        tt {
+            font-family: "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+        }
+
+        ul,
+        ol {
+            list-style: none;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-size: 100%;
+            font-weight: normal;
+        }
+
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        img {
+            vertical-align: top;
+            border: 0;
+        }
+
+        a {
+            color: #2b98fc;
+            text-decoration: none;
+        }
+
+        a:hover,
+        a:focus {
+            color: #fff;
+            text-decoration: none;
+            outline: none;
+        }
+
+        a:visited {
+            /*color: #272727;*/
+        }
+
+        @media only screen and (max-width: 319px) {
+
+            html {
+                font-size: 31.9px;
+            }
+        }
+
+        @media only screen and (min-width: 320px) and (max-width: 360px) {
+
+            html {
+                font-size: 32px;
+            }
+        }
+
+        @media only screen and (min-width: 360px) and (max-width: 375px) {
+
+            html {
+                font-size: 36px;
+            }
+        }
+
+        @media only screen and (min-width: 375px) and (max-width: 414px) {
+
+            /*iphone6                    */
+            html {
+                font-size: 37.5px;
+            }
+        }
+
+        @media only screen and (min-width: 414px) and (max-width: 481px) {
+
+            /*iphone6 plus               */
+            html {
+                font-size: 41.4px;
+            }
+        }
+
+        @media only screen and (min-width: 481px) and (max-width: 500px) {
+
+            html {
+                font-size: 48.1px;
+            }
+        }
+
+        @media only screen and (min-width: 500px) and (max-width: 600px) {
+
+            html {
+                font-size: 50px;
+            }
+        }
+
+        @media only screen and (min-width: 600px) and (max-width: 700px) {
+
+            html {
+                font-size: 60px;
+            }
+        }
+
+        @media only screen and (min-width: 700px) {
+
+            html {
+                font-size: 40px;
+            }
+        }
+    </style>
+    <style>
+        body,
+        html {
+            width: 100%;
+            height: 100%;
+        }
+
+        .page-demo {
+            background: #8ba3d5 url(https://images.pexels.com/photos/3922221/pexels-photo-3922221.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500);
+            -webkit-background-size: 5.86rem auto;
+            background-size: 5.86rem auto;
+            height: 100%;
+        }
+
+        .page-demo .wrapper {
+            -webkit-background-size: 6.74rem auto;
+            background-size: 6.74rem auto;
+            padding: 1.5rem 0.66rem 0;
+            position: relative;
+            height: 100%;
+        }
+
+        .page-demo .logo {
+            /*padding-top: 1.5rem;*/
+            width: 3.58rem;
+            height: 1.4rem;
+            -webkit-background-size: 3.58rem auto;
+            background-size: 3.58rem auto;
+        }
+
+        .page-demo .title {
+            padding-top: 0.8rem;
+            padding-bottom: 0.3rem;
+            font-size: 0.6rem;
+            color: #fff;
+            line-height: 1.2;
+
+        }
+
+        .page-demo .describe {
+            padding-bottom: 1.2rem;
+        }
+
+        .page-demo .describe p {
+            color: #fff;
+            font-size: 0.4rem;
+            padding-bottom: 0.3rem;
+            line-height: 0.68rem;
+        }
+
+        .page-demo .download .item .btn {
+            display: block;
+            margin: 0 auto 0.7rem;
+            width: 6.69rem;
+            height: 1.2rem;
+            /*border: 1px solid #fff;*/
+            border-radius: 2rem;
+            text-align: center;
+            font-size: 0.46rem;
+            color: #135dff;
+            line-height: 1.2rem;
+            background: #fff;
+        }
+
+        .page-demo .download .item .btn img {
+            display: inline-block;
+            width: 0.58rem;
+            /*height: 0.58rem;*/
+            vertical-align: top;
+            margin-top: 0.3rem;
+            margin-right: 0.3rem;
+        }
+
+        .page-demo .download .item .btn span {
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        .page-demo .link {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            width: 6.69rem;
+            margin: 0 auto;
+        }
+
+        .page-demo .link a {
+            color: #fff;
+        }
+
+        .page-demo .link a:after {
+            content: '';
+            display: inline-block;
+            width: 0.4rem;
+            height: 0.33rem;
+            vertical-align: middle;
+            -webkit-background-size: 0.4rem auto;
+            background-size: 0.4rem auto;
+        }
+
+        .page-demo .detail {
+            width: 100%;
+            position: absolute;
+            left: 50%;
+            transform: translate(-50%);
+            -webkit-transform: translate(-50%);
+            bottom: 0;
+            text-align: center;
+            color: #fff;
+            font-size: 0.4rem;
+            padding-bottom: 0.8rem;
+        }
+
+        @media only screen and (min-width: 700px) {
+
+            /*大部分安卓手机以及其他手机      */
+            .page-demo {
+                text-align: center;
+            }
+
+            .page-demo .logo {
+                margin: 0 auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div class="page-demo">
+    <div class="wrapper">
+        <div class="logo"><img src="{{ .Icon }}"></div>
+        <div class="title">{{ .Name }}</div>
+        <div class="describe">
+            <p>{{ .Version }}</p>
+            <p>{{ .BundleIdentifier }}</p>
+            <p>{{ .Summary }}</p>
+            <p>提示：点击安装APP后到桌面查看安装进度</p>
+        </div>
+        <div class="download">
+            <div class="item">
+                <a class="btn" href="itms-services://?action=download-manifest&amp;url={{ .Plist }}">
+                    <div>
+                        <img src="https://rongcloud-res.cn.ronghub.com/54be71d1a57130e1ad259c61b04ae84e" alt="">
+                        <span>安装</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+
+</html>
