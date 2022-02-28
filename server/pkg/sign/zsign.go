@@ -2,7 +2,7 @@ package sign
 
 import "supersign/pkg/tools"
 
-func Run(pemPath, keyPath, mobileprovisionPath, outputIPAPath, inputIPAPath string) error {
+func run(pemPath, keyPath, mobileprovisionPath, outputIPAPath, inputIPAPath string) error {
 	return tools.CmdClient.Command("zsign",
 		"-c", pemPath,
 		"-k", keyPath,

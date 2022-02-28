@@ -1,11 +1,14 @@
 package v1
 
 import (
+	"errors"
 	"fmt"
+	"net/http"
 	"path"
 	"supersign/internal/api"
 	"supersign/internal/model/req"
 	"supersign/pkg/conf"
+	"supersign/pkg/sign"
 	"text/template"
 
 	"github.com/gin-gonic/gin"
@@ -118,6 +121,15 @@ func (d Download) Plist(c *gin.Context) {
 	if !d.MakeContext(c).ParseUri(&args) {
 		return
 	}
+	doneCache, ok := sign.DoneCache(args.UUID)
+	if !ok {
+		d.Resp(http.StatusNotFound, nil, false)
+		return
+	}
+	if !doneCache.Success {
+		d.Resp(http.StatusInternalServerError, errors.New(doneCache.Msg), false)
+		return
+	}
 	tmpl, err := template.New(args.UUID).Parse(plistTemp)
 	if d.HasErr(err) {
 		return
@@ -125,10 +137,10 @@ func (d Download) Plist(c *gin.Context) {
 	c.Header("Content-Type", "application/octet-stream")
 	c.Header("Content-Disposition", "attachment; filename="+args.UUID+".plist")
 	if d.HasErr(tmpl.Execute(c.Writer, map[string]string{
-		"URL":              "",
-		"BundleIdentifier": "",
-		"Version":          "",
-		"Name":             "",
+		"URL":              fmt.Sprintf("%s/api/v1/download/tempipa/%s", conf.Server.URL, args.UUID),
+		"BundleIdentifier": doneCache.BundleIdentifier,
+		"Version":          doneCache.Version,
+		"Name":             doneCache.Name,
 	})) {
 		return
 	}

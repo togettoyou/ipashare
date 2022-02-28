@@ -1,10 +1,15 @@
 package svc
 
 import (
+	"path"
 	"supersign/internal/model"
 	"supersign/pkg/appstore"
+	"supersign/pkg/conf"
 	"supersign/pkg/e"
+	"supersign/pkg/sign"
+	"supersign/pkg/tools"
 
+	"github.com/google/uuid"
 	"gorm.io/gorm"
 )
 
@@ -118,5 +123,31 @@ func (a *AppleDevice) bindingAppleDeveloper(udid string, appleIPA *model.AppleIP
 }
 
 func (a *AppleDevice) signature(deviceID string, appleDeveloper *model.AppleDeveloper, appleIPA *model.AppleIPA) (string, error) {
-	return "", nil
+	// 获取mobileprovision描述文件
+	authorize := appstore.Authorize{
+		P8:  appleDeveloper.P8,
+		Iss: appleDeveloper.Iss,
+		Kid: appleDeveloper.Kid,
+	}
+	profileUUID := uuid.New().String()
+	profileResponse, err := authorize.CreateProfile(profileUUID, appleDeveloper.BundleIds, appleDeveloper.CerID, deviceID)
+	if err != nil {
+		return "", err
+	}
+	mobileprovisionPath := path.Join(conf.Apple.TemporaryFilePath, profileUUID, "mobileprovision.mobileprovision")
+	err = tools.Base64ToFile(profileResponse.Data.Attributes.ProfileContent, mobileprovisionPath)
+	if err != nil {
+		return "", err
+	}
+	// 发布重签名任务
+	go sign.Push(&sign.Stream{
+		ProfileUUID:         profileUUID,
+		Iss:                 appleDeveloper.Iss,
+		MobileprovisionPath: mobileprovisionPath,
+		IpaUUID:             appleIPA.UUID,
+		BundleIdentifier:    appleIPA.BundleIdentifier,
+		Version:             appleIPA.Version,
+		Name:                appleIPA.Name,
+	})
+	return profileUUID, nil
 }

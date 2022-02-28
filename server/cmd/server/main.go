@@ -5,6 +5,7 @@ import (
 	"supersign/pkg"
 	"supersign/pkg/conf"
 	"supersign/pkg/log"
+	"supersign/pkg/sign"
 	"supersign/pkg/validatorer"
 
 	"github.com/spf13/pflag"
@@ -19,6 +20,7 @@ func setup() {
 	conf.Setup()
 	log.Setup(conf.Log.Level)
 	validatorer.Setup()
+	sign.Setup(log.New("sign").L(), 10)
 	//_ = redis.Setup(conf.Redis.DB, conf.Redis.Addr, conf.Redis.Password)
 	conf.OnChange(func() {
 		if err := pkg.Reset(); err != nil {
