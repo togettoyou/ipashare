@@ -20,8 +20,6 @@ var templates embed.FS
 func New(store *model.Store) *gin.Engine {
 	r := gin.New()
 	useMiddleware(r)
-	registerDebugRouter(r)
-	registerSwagRouter(r)
 
 	//加载模板文件
 	t, err := template.ParseFS(templates, "templates/*.tmpl")
@@ -30,6 +28,8 @@ func New(store *model.Store) *gin.Engine {
 	}
 	r.SetHTMLTemplate(t)
 
+	registerDebugRouter(r)
+	registerSwagRouter(r)
 	registerV1Router(store, r)
 	return r
 }
