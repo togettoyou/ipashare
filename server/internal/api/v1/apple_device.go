@@ -41,7 +41,7 @@ func (a AppleDevice) UDID(c *gin.Context) {
 	if a.HasErr(err) {
 		return
 	}
-	udid := ipa.ParseUDID(string(bytes))
+	udid := ipa.ParseUDID(bytes)
 	if udid == "" {
 		a.Resp(http.StatusBadRequest, e.BindError, false)
 		return

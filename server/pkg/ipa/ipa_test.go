@@ -27,7 +27,7 @@ func TestIPA(t *testing.T) {
 }
 
 func TestParseUDID(t *testing.T) {
-	t.Log(ParseUDID(`<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+	t.Log(ParseUDID([]byte(`<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
   <dict>
     <key>IMEI</key>
@@ -39,5 +39,5 @@ func TestParseUDID(t *testing.T) {
     <key>VERSION</key>
     <string>12345</string>
   </dict>
-</plist>`))
+</plist>`)))
 }
