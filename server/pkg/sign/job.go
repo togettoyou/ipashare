@@ -1,6 +1,7 @@
 package sign
 
 import (
+	"fmt"
 	"os"
 	"path"
 	"supersign/pkg/ali"
@@ -15,7 +16,7 @@ var signJob *job
 
 type job struct {
 	logger    *zap.Logger
-	streamCh  chan *Stream
+	streamCh  chan struct{}
 	doneCache map[string]*done
 	mu        sync.RWMutex
 }
@@ -44,77 +45,71 @@ type done struct {
 func Setup(logger *zap.Logger, maxJob int) {
 	signJob = &job{
 		logger:    logger,
-		streamCh:  make(chan *Stream, maxJob),
+		streamCh:  make(chan struct{}, maxJob),
 		doneCache: make(map[string]*done, 0),
 	}
-	go func() {
-		for {
-			select {
-			case stream, ok := <-signJob.streamCh:
-				if !ok {
-					return
-				}
-				go func() {
-					time.Sleep(1 * time.Hour)
-					signJob.mu.Lock()
-					defer signJob.mu.Unlock()
-					signJob.logger.Info("开始清理旧数据:" + stream.ProfileUUID)
-					delete(signJob.doneCache, stream.ProfileUUID)
-					os.RemoveAll(path.Join(conf.Apple.TemporaryFilePath, stream.ProfileUUID))
-				}()
-				go func() {
-					signJob.logger.Info("开始执行重签名任务......")
-					err := run(
-						path.Join(conf.Apple.AppleDeveloperPath, stream.Iss, "pem.pem"),
-						path.Join(conf.Apple.AppleDeveloperPath, stream.Iss, "key.key"),
-						stream.MobileprovisionPath,
-						path.Join(conf.Apple.TemporaryFilePath, stream.ProfileUUID, "ipa.ipa"),
-						path.Join(conf.Apple.UploadFilePath, stream.IpaUUID, "ipa.ipa"),
-					)
-					if err != nil {
-						signJob.mu.Lock()
-						defer signJob.mu.Unlock()
-						signJob.doneCache[stream.ProfileUUID] = &done{
-							Success: false,
-							Msg:     "重签名任务执行失败:" + err.Error(),
-						}
-						signJob.logger.Error("重签名任务执行失败:" + err.Error())
-						return
-					}
-					signJob.mu.Lock()
-					defer signJob.mu.Unlock()
-					if conf.Storage.EnableOSS {
-						err := ali.UploadFile(
-							stream.ProfileUUID+".ipa",
-							path.Join(conf.Apple.TemporaryFilePath, stream.ProfileUUID, "ipa.ipa"),
-						)
-						if err != nil {
-							signJob.doneCache[stream.ProfileUUID] = &done{
-								Success: false,
-								Msg:     "重签名任务执行失败:" + err.Error(),
-							}
-							signJob.logger.Error("重签名任务执行失败:" + err.Error())
-							return
-						}
-					}
-					signJob.doneCache[stream.ProfileUUID] = &done{
-						Success:          true,
-						Msg:              "重签名任务执行成功",
-						BundleIdentifier: stream.BundleIdentifier,
-						Version:          stream.Version,
-						Name:             stream.Name,
-						Summary:          stream.Summary,
-						IpaUUID:          stream.IpaUUID,
-					}
-					signJob.logger.Info("重签名任务执行成功")
-				}()
-			}
-		}
-	}()
 }
 
 func Push(stream *Stream) {
-	signJob.streamCh <- stream
+	signJob.streamCh <- struct{}{}
+	go func() {
+		time.Sleep(1 * time.Hour)
+		signJob.mu.Lock()
+		defer signJob.mu.Unlock()
+		signJob.logger.Info("开始清理旧数据:" + stream.ProfileUUID)
+		delete(signJob.doneCache, stream.ProfileUUID)
+		os.RemoveAll(path.Join(conf.Apple.TemporaryFilePath, stream.ProfileUUID))
+	}()
+	go func() {
+		var err error
+		defer func() {
+			if e := recover(); e != nil {
+				signJob.logger.Named("Push").Error(fmt.Sprintf("%v", e))
+			}
+			if err != nil {
+				signJob.mu.Lock()
+				signJob.doneCache[stream.ProfileUUID] = &done{
+					Success: false,
+					Msg:     "重签名任务执行失败:" + err.Error(),
+				}
+				signJob.mu.Unlock()
+				signJob.logger.Error("重签名任务执行失败:" + err.Error())
+			}
+			<-signJob.streamCh
+		}()
+		signJob.logger.Info("开始执行重签名任务......")
+		err = run(
+			path.Join(conf.Apple.AppleDeveloperPath, stream.Iss, "pem.pem"),
+			path.Join(conf.Apple.AppleDeveloperPath, stream.Iss, "key.key"),
+			stream.MobileprovisionPath,
+			path.Join(conf.Apple.TemporaryFilePath, stream.ProfileUUID, "ipa.ipa"),
+			path.Join(conf.Apple.UploadFilePath, stream.IpaUUID, "ipa.ipa"),
+		)
+		if err != nil {
+			return
+		}
+		if conf.Storage.EnableOSS {
+			err = ali.UploadFile(
+				stream.ProfileUUID+".ipa",
+				path.Join(conf.Apple.TemporaryFilePath, stream.ProfileUUID, "ipa.ipa"),
+			)
+			if err != nil {
+				return
+			}
+		}
+		signJob.mu.Lock()
+		signJob.doneCache[stream.ProfileUUID] = &done{
+			Success:          true,
+			Msg:              "重签名任务执行成功",
+			BundleIdentifier: stream.BundleIdentifier,
+			Version:          stream.Version,
+			Name:             stream.Name,
+			Summary:          stream.Summary,
+			IpaUUID:          stream.IpaUUID,
+		}
+		signJob.mu.Unlock()
+		signJob.logger.Info("重签名任务执行成功")
+	}()
 }
 
 func DoneCache(ProfileUUID string) (done *done, ok bool) {
