@@ -193,6 +193,9 @@ var doc = `{
         },
         "/api/v1/appleDevice/udid/{uuid}": {
             "post": {
+                "consumes": [
+                    "text/xml"
+                ],
                 "produces": [
                     "application/json"
                 ],
@@ -201,6 +204,15 @@ var doc = `{
                 ],
                 "summary": "获取 UDID（苹果服务器回调）",
                 "parameters": [
+                    {
+                        "description": "data",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
                     {
                         "type": "string",
                         "description": "uuid",

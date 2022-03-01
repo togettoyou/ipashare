@@ -120,7 +120,15 @@ paths:
       - AppleDeveloper
   /api/v1/appleDevice/udid/{uuid}:
     post:
+      consumes:
+      - text/xml
       parameters:
+      - description: data
+        in: body
+        name: data
+        required: true
+        schema:
+          type: string
       - description: uuid
         in: path
         name: uuid
