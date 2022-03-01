@@ -7,9 +7,9 @@ SERVER:
   # 开发模式 debug,release,test
   RUNMODE: release
   # 读超时/s
-  READTIMEOUT: 60
+  READTIMEOUT: 0
   # 写超时/s
-  WRITETIMEOUT: 60
+  WRITETIMEOUT: 0
   # 端口
   HTTPPORT: 8888
   # 开启 https true,false
