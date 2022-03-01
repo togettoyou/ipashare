@@ -3,7 +3,7 @@ SERVER:
   # https 域名，必填
   URL: https://supersign-production.up.railway.app
   # 签名任务并发量
-  MAXJOB: 10
+  MAXJOB: 1
   # 开发模式 debug,release,test
   RUNMODE: release
   # 读超时/s
