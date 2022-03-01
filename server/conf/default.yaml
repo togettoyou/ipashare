@@ -5,7 +5,7 @@ SERVER:
   # 签名任务并发量
   MAXJOB: 1
   # 开发模式 debug,release,test
-  RUNMODE: release
+  RUNMODE: debug
   # 读超时/s
   READTIMEOUT: 0
   # 写超时/s
@@ -22,7 +22,7 @@ SERVER:
 # 日志配置
 LOG:
   # 日志输出等级 fatal,error,warn,info,debug
-  LEVEL: info
+  LEVEL: debug
 
 # 存储配置
 STORAGE:
