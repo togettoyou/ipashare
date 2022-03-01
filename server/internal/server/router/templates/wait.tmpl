@@ -1,10 +1,29 @@
 <!DOCTYPE html>
-<head>
-    <meta charset="UTF-8">
-    <title>supersign wait</title>
-    <meta http-equiv="refresh" content="5">
-</head>
-<body>
-<h1>{{ .Msg }}</h1>
-</body>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>APP正在后台重签名中，请耐心等待</title>
+  </head>
+  <body>
+    <p>APP正在后台重签名中，请耐心等待。</p>
+    <p>本页面无需手动操作，会自动刷新检查重签名状态。</p>
+    <span>刷新倒计时：</span><span id="timer">5</span><span> 秒</span>
+    <script>
+      var timeInt = setInterval(function () {
+        leftTimer();
+      }, 1000);
+      var leftTime = 4000;
+      function leftTimer() {
+        if (leftTime == 0) {
+          clearInterval(timeInt);
+          location.reload(true);
+        } else {
+          var seconds = parseInt((leftTime / 1000) % 60, 10);
+          document.getElementById("timer").innerHTML = seconds;
+          leftTime = leftTime - 1000;
+        }
+      }
+    </script>
+  </body>
 </html>

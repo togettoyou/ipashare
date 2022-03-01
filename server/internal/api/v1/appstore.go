@@ -29,9 +29,7 @@ func (a Appstore) Install(c *gin.Context) {
 	}
 	doneCache, ok := sign.DoneCache(args.UUID)
 	if !ok {
-		c.HTML(http.StatusOK, "wait.tmpl", gin.H{
-			"Msg": "正在后台签名中，请耐心等待。本页面 5 秒自动刷新一次",
-		})
+		c.HTML(http.StatusOK, "wait.tmpl", nil)
 		return
 	}
 	if !doneCache.Success {
