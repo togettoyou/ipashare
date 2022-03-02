@@ -2,6 +2,7 @@ package e
 
 import (
 	"fmt"
+	"gorm.io/gorm"
 
 	"github.com/pkg/errors"
 )
@@ -70,6 +71,9 @@ func DecodeErr(err error) (int, string) {
 	case *errno:
 		return typed.code, typed.msg
 	case *codeError:
+		if typed.err == gorm.ErrRecordNotFound {
+			return DBRecordNotFoundError.code, DBRecordNotFoundError.msg
+		}
 		return typed.code, typed.msg
 	}
 	return ServerError.code, err.Error()
