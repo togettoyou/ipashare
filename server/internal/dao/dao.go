@@ -16,7 +16,7 @@ import (
 // NewSqlite 使用 Sqlite 数据库
 func NewSqlite() (*model.Store, error) {
 	db, err := gorm.Open(
-		sqlite.Open("./data.db"), // 数据库文件存放路径
+		sqlite.Open("data/sqlite.db"), // 数据库文件存放路径
 		&gorm.Config{
 			NamingStrategy: schema.NamingStrategy{
 				TablePrefix:   "ss_", // 表名前缀，`User` 的表名应该是 `ss_users`
