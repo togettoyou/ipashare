@@ -76,7 +76,7 @@ func Setup() {
 	}
 	viper.SetConfigType("yaml")
 	viper.AutomaticEnv()
-	replacer := strings.NewReplacer("-", "_")
+	replacer := strings.NewReplacer(".", "_")
 	viper.SetEnvKeyReplacer(replacer)
 	if err := viper.ReadInConfig(); err != nil {
 		panic(err)
