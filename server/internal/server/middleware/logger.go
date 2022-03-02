@@ -1,9 +1,9 @@
 package middleware
 
 import (
-	"fmt"
 	"time"
 
+	"supersign/internal/server/middleware/cache"
 	"supersign/pkg/log"
 
 	"github.com/gin-gonic/gin"
@@ -30,7 +30,7 @@ func Logger() gin.HandlerFunc {
 			// 请求花费时间
 			zap.Duration("cost", cost),
 		}
-		result := getCode(c)
+		result := cache.GetCode(c)
 		if statusCode > 499 {
 			logger.Error(result, data...)
 		} else if statusCode > 399 {
@@ -39,19 +39,4 @@ func Logger() gin.HandlerFunc {
 			logger.Info(result, data...)
 		}
 	}
-}
-
-const _errCode = "errcode"
-
-func getCode(c *gin.Context) string {
-	if value, ok := c.Get(_errCode); ok {
-		if str, ok := value.(string); ok {
-			return str
-		}
-	}
-	return ""
-}
-
-func SetCode(c *gin.Context, code int, msg string) {
-	c.Set(_errCode, fmt.Sprintf("code = %d msg = %s", code, msg))
 }

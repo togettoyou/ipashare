@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"supersign/internal/model"
-	"supersign/internal/server/middleware"
+	"supersign/internal/server/middleware/cache"
 	"supersign/internal/svc"
 	"supersign/pkg/e"
 	logpkg "supersign/pkg/log"
@@ -74,7 +74,7 @@ func (b *Base) OK(arg ...interface{}) {
 	if len(arg) > 0 {
 		resp.Data = arg[0]
 	}
-	middleware.SetCode(b.c, resp.Code, resp.Msg)
+	cache.SetCode(b.c, resp.Code, resp.Msg)
 	b.c.AbortWithStatusJSON(http.StatusOK, resp)
 }
 
@@ -85,7 +85,7 @@ func (b *Base) Resp(httpCode int, err error, log bool, arg ...interface{}) {
 	if len(arg) > 0 {
 		resp.Data = arg[0]
 	}
-	middleware.SetCode(b.c, code, msg)
+	cache.SetCode(b.c, code, msg)
 	b.c.AbortWithStatusJSON(httpCode, resp)
 	if log && err != nil {
 		b.log.Error(fmt.Sprintf("%+v", err))

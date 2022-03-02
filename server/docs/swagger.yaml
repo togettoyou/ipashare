@@ -8,6 +8,23 @@ definitions:
       msg:
         type: string
     type: object
+  req.Login:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  req.UserPW:
+    properties:
+      password:
+        type: string
+    required:
+    - password
+    type: object
 info:
   contact: {}
   license: {}
@@ -325,6 +342,46 @@ paths:
       summary: 上传 IPA
       tags:
       - IPA
+  /api/v1/user/changepw:
+    post:
+      parameters:
+      - description: 登录信息
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/req.UserPW'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 修改密码
+      tags:
+      - User
+  /api/v1/user/login:
+    post:
+      parameters:
+      - description: 登录信息
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/req.Login'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Response'
+      summary: 登录
+      tags:
+      - User
 securityDefinitions:
   ApiKeyAuth:
     in: header

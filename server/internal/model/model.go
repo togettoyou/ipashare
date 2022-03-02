@@ -5,4 +5,5 @@ type Store struct {
 	AppleDeveloper AppleDeveloperStore
 	AppleDevice    AppleDeviceStore
 	AppleIPA       AppleIPAStore
+	User           UserStore
 }

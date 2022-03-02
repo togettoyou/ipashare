@@ -14,7 +14,12 @@ var (
 	ErrValidation   = &errno{code: 20001, msg: "参数校验失败"}
 	ErrUploadFormat = &errno{code: 20002, msg: "文件上传格式不合法"}
 
-	ErrNotLogin = &errno{code: 20101, msg: "请登录"}
+	ErrNotLogin     = &errno{code: 20101, msg: "请登录"}
+	ErrPassword     = &errno{code: 20102, msg: "密码错误"}
+	ErrTokenGen     = &errno{code: 20103, msg: "令牌生成失败"}
+	ErrTokenExpired = &errno{code: 20104, msg: "令牌已过期"}
+	ErrTokenInvalid = &errno{code: 20105, msg: "令牌无效"}
+	ErrTokenFailure = &errno{code: 20106, msg: "令牌验证失败"}
 	// 可自行扩展...
 
 	ErrIPAParser = &errno{code: 20201, msg: "IPA 解析异常"}

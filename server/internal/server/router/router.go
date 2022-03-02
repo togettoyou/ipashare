@@ -66,4 +66,5 @@ func registerV1Router(store *model.Store, r *gin.Engine) {
 	registerDownloadRouter(store, v1Group)
 	registerAppleDeviceRouter(store, v1Group)
 	registerAppstoreRouter(store, v1Group)
+	registerUserRouter(store, v1Group)
 }
