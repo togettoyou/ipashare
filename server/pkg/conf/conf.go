@@ -1,6 +1,7 @@
 package conf
 
 import (
+	"strings"
 	"supersign/pkg/tools"
 
 	"github.com/fsnotify/fsnotify"
@@ -8,42 +9,42 @@ import (
 )
 
 type config struct {
-	Server  server  `yaml:"SERVER"`
-	Log     log     `yaml:"LOG"`
-	Storage storage `yaml:"STORAGE"`
-	Mysql   mysql   `yaml:"MYSQL"`
+	Server  server  `mapstructure:"SERVER"`
+	Log     log     `mapstructure:"LOG"`
+	Storage storage `mapstructure:"STORAGE"`
+	Mysql   mysql   `mapstructure:"MYSQL"`
 }
 
 type server struct {
-	URL          string `yaml:"URL"`
-	MaxJob       int    `yaml:"MAXJOB"`
-	RunMode      string `yaml:"RUNMODE"`
-	ReadTimeout  int    `yaml:"READTIMEOUT"`
-	WriteTimeout int    `yaml:"WRITETIMEOUT"`
-	HttpPort     int    `yaml:"HTTPPORT"`
-	TLS          bool   `yaml:"TLS"`
-	Crt          string `yaml:"CRT"`
-	Key          string `yaml:"KEY"`
+	URL          string `mapstructure:"URL"`
+	MaxJob       int    `mapstructure:"MAXJOB"`
+	RunMode      string `mapstructure:"RUNMODE"`
+	ReadTimeout  int    `mapstructure:"READTIMEOUT"`
+	WriteTimeout int    `mapstructure:"WRITETIMEOUT"`
+	HttpPort     int    `mapstructure:"HTTPPORT"`
+	TLS          bool   `mapstructure:"TLS"`
+	Crt          string `mapstructure:"CRT"`
+	Key          string `mapstructure:"KEY"`
 }
 
 type log struct {
-	Level string `yaml:"LEVEL"`
+	Level string `mapstructure:"LEVEL"`
 }
 
 type storage struct {
-	EnableOSS          bool   `yaml:"ENABLEOSS"`
-	BucketName         string `yaml:"BUCKETNAME"`
-	OSSEndpoint        string `yaml:"OSSENDPOINT"`
-	OSSAccessKeyId     string `yaml:"OSSACCESSKEYID"`
-	OSSAccessKeySecret string `yaml:"OSSACCESSKEYSECRET"`
+	EnableOSS          bool   `mapstructure:"ENABLEOSS"`
+	BucketName         string `mapstructure:"BUCKETNAME"`
+	OSSEndpoint        string `mapstructure:"OSSENDPOINT"`
+	OSSAccessKeyId     string `mapstructure:"OSSACCESSKEYID"`
+	OSSAccessKeySecret string `mapstructure:"OSSACCESSKEYSECRET"`
 }
 
 type mysql struct {
-	Enable      bool   `yaml:"ENABLE"`
-	Dsn         string `yaml:"DSN"`
-	MaxIdle     int    `yaml:"MAXIDLE"`
-	MaxOpen     int    `yaml:"MAXOPEN"`
-	MaxLifetime int    `yaml:"MAXLIFETIME"`
+	Enable      bool   `mapstructure:"ENABLE"`
+	Dsn         string `mapstructure:"DSN"`
+	MaxIdle     int    `mapstructure:"MAXIDLE"`
+	MaxOpen     int    `mapstructure:"MAXOPEN"`
+	MaxLifetime int    `mapstructure:"MAXLIFETIME"`
 }
 
 type apple struct {
@@ -75,6 +76,8 @@ func Setup() {
 	}
 	viper.SetConfigType("yaml")
 	viper.AutomaticEnv()
+	replacer := strings.NewReplacer("-", "_")
+	viper.SetEnvKeyReplacer(replacer)
 	if err := viper.ReadInConfig(); err != nil {
 		panic(err)
 	}

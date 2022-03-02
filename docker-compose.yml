@@ -5,14 +5,14 @@ services:
     ports:
       - "32288:8888"
     environment:
-      - SERVER.URL=https://你的域名
+      - SERVER.URL=https://一定要修改成你的域名
       - SERVER.MAXJOB=10
       - SERVER.RUNMODE=release
       - LOG.LEVEL=info
       - STORAGE.ENABLEOSS=false
-      - STORAGE.BUCKETNAME=
-      - STORAGE.OSSENDPOINT=
-      - STORAGE.OSSACCESSKEYID=
-      - STORAGE.OSSACCESSKEYSECRET=
+      - STORAGE.BUCKETNAME=阿里云OSS的BucketName
+      - STORAGE.OSSENDPOINT=阿里云OSS的Endpoint
+      - STORAGE.OSSACCESSKEYID=阿里云OSS的AccessKeyId
+      - STORAGE.OSSACCESSKEYSECRET=阿里云OSS的AccessKeySecret
       - MYSQL.ENABLE=false
-      - MYSQL.DSN=
+      - MYSQL.DSN=用户名:密码@tcp(IP:端口)/数据库名?charset=utf8mb4&parseTime=True&loc=Local
