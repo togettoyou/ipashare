@@ -2,8 +2,6 @@ version: '3'
 services:
   server:
     image: togettoyou/supersign-server:latest
-    ports:
-      - "32288:8888"
     volumes:
       - $PWD/data:/root/togettoyou/data
     environment:
@@ -18,3 +16,9 @@ services:
       - STORAGE_OSSACCESSKEYSECRET=阿里云OSS的AccessKeySecret
       - MYSQL_ENABLE=false
       - MYSQL_DSN=用户名:密码@tcp(IP:端口)/数据库名?charset=utf8mb4&parseTime=True&loc=Local
+  web:
+    image: togettoyou/supersign-web:latest
+    ports:
+      - "8080:80"
+    environment:
+      - BACKEND_URL=http://server:8888
