@@ -8,7 +8,7 @@ definitions:
       msg:
         type: string
     type: object
-  req.Login:
+  req.UserPW:
     properties:
       password:
         type: string
@@ -17,13 +17,6 @@ definitions:
     required:
     - password
     - username
-    type: object
-  req.UserPW:
-    properties:
-      password:
-        type: string
-    required:
-    - password
     type: object
 info:
   contact: {}
@@ -371,7 +364,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/req.Login'
+          $ref: '#/definitions/req.UserPW'
       produces:
       - application/json
       responses:

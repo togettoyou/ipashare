@@ -570,7 +570,7 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/req.Login"
+                            "$ref": "#/definitions/req.UserPW"
                         }
                     }
                 ],
@@ -600,7 +600,7 @@ var doc = `{
                 }
             }
         },
-        "req.Login": {
+        "req.UserPW": {
             "type": "object",
             "required": [
                 "password",
@@ -611,17 +611,6 @@ var doc = `{
                     "type": "string"
                 },
                 "username": {
-                    "type": "string"
-                }
-            }
-        },
-        "req.UserPW": {
-            "type": "object",
-            "required": [
-                "password"
-            ],
-            "properties": {
-                "password": {
                     "type": "string"
                 }
             }

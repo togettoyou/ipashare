@@ -17,12 +17,12 @@ type User struct {
 // @Tags User
 // @Summary 登录
 // @Produce json
-// @Param data body req.Login true "登录信息"
+// @Param data body req.UserPW true "登录信息"
 // @Success 200 {object} api.Response
 // @Router /api/v1/user/login [post]
 func (u User) Login(c *gin.Context) {
 	var (
-		body    req.Login
+		body    req.UserPW
 		userSvc svc.User
 	)
 	if !u.MakeContext(c).MakeService(&userSvc.Service).ParseJSON(&body) {
@@ -51,7 +51,7 @@ func (u User) ChangePW(c *gin.Context) {
 	if !u.MakeContext(c).MakeService(&userSvc.Service).ParseJSON(&body) {
 		return
 	}
-	err := userSvc.ChangePW(cache.GetJwtClaims(c).Username, body.Password)
+	err := userSvc.ChangePW(cache.GetJwtClaims(c).Username, body.Username, body.Password)
 	if u.HasErr(err) {
 		return
 	}

@@ -10,8 +10,8 @@ import (
 
 func newUser(db *gorm.DB) *user {
 	u := &user{db}
-	_, err := u.Query("admin")
-	if err == gorm.ErrRecordNotFound {
+	var users []model.User
+	if u.db.Find(&users).Error == nil && users != nil && len(users) == 0 {
 		salt := uuid.New().String()
 		u.db.Create(&model.User{
 			Username: "admin",
@@ -37,11 +37,12 @@ func (u *user) Query(username string) (*model.User, error) {
 	return &user, nil
 }
 
-func (u *user) Update(username, password string) error {
+func (u *user) Update(oldUsername, newUsername, password string) error {
 	salt := uuid.New().String()
 	return u.db.Model(&model.User{}).
-		Where("username = ?", username).
+		Where("username = ?", oldUsername).
 		Updates(map[string]interface{}{
+			"username": newUsername,
 			"password": tools.MD5LowercaseEncode(password + salt),
 			"salt":     salt,
 		}).Error

@@ -53,3 +53,7 @@ func ParseJWT(token string) (*LoginClaims, error) {
 	}
 	return nil, errors.New("parse jwt fail")
 }
+
+func ChangeJwtSecret() {
+	jwtSecret = uuid.New().String()
+}

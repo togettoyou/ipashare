@@ -12,5 +12,5 @@ type User struct {
 
 type UserStore interface {
 	Query(username string) (*User, error)
-	Update(username, password string) error
+	Update(oldUsername, newUsername, password string) error
 }
