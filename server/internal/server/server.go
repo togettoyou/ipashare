@@ -53,6 +53,7 @@ func Start() {
 		WriteTimeout:   time.Duration(conf.Server.WriteTimeout) * time.Second,
 		MaxHeaderBytes: 1 << 20,
 	}
+	fmt.Println(conf.Server.URL)
 	if conf.Server.TLS {
 		if err := server.ListenAndServeTLS(conf.Server.Crt, conf.Server.Key); err != nil {
 			panic(err)
