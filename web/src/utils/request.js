@@ -1,7 +1,7 @@
 import axios from "axios";
-import { MessageBox, Message } from "element-ui";
+import {Message} from "element-ui";
 import store from "@/store";
-import { getToken } from "@/utils/auth";
+import {getToken} from "@/utils/auth";
 
 // create an axios instance
 const service = axios.create({
@@ -28,13 +28,6 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   (response) => {
     const res = response.data;
-
-    // 令牌失效,或令牌不存在
-    if (res.code === 20104 || res.code === 20105 || res.code === 20106) {
-      location.href = "/#/login";
-    }
-
-    // if the custom code is not 20000, it is judged as an error.
     if (res.code !== 0) {
       Message({
         message: res.msg || "Error",
@@ -47,9 +40,13 @@ service.interceptors.response.use(
     }
   },
   (error) => {
-    console.log("err" + error); // for debug
+    const res = error.response.data
+    // 令牌失效,或令牌不存在
+    if (res.code === 20104 || res.code === 20105 || res.code === 20106) {
+      location.href = "/#/login";
+    }
     Message({
-      message: error.message,
+      message: res.msg,
       type: "error",
       duration: 5 * 1000,
     });

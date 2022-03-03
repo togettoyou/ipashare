@@ -7,3 +7,11 @@ export function login(data) {
     data,
   });
 }
+
+export function changePW(data) {
+  return request({
+    url: "user/changepw",
+    method: "post",
+    data,
+  });
+}

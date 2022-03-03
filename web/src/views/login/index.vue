@@ -62,7 +62,7 @@
         <span> password: 123456</span>
       </div>
       <div class="tips">
-        <span style="margin-right: 20px">请及时修改密码</span>
+        <span style="margin-right: 20px">请及时修改密码（已修改请忽略）</span>
       </div>
     </el-form>
   </div>
