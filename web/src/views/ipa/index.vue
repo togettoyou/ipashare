@@ -17,7 +17,7 @@
     <el-table :data="List" style="width: 100%;" stripe highlight-current-row border
               :header-cell-style="{background:'#f8f8f9',color: '#606266','font-weight':'bold'}">
       <el-table-column prop="uuid" label="应用UUID" align="center" header-align="center"></el-table-column>
-      <el-table-column prop="name" label="应用名" align="center" width="70px" header-align="center"></el-table-column>
+      <el-table-column prop="name" label="应用名" align="center" header-align="center"></el-table-column>
       <el-table-column
         prop="icon_url"
         label="图标"
