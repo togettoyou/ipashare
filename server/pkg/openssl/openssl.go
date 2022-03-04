@@ -6,8 +6,7 @@ import (
 )
 
 const (
-	//bash                 = "/bin/bash"
-	bash                 = "D:\\App\\Git\\bin\\bash.exe" // 本地测试用
+	bash                 = "/bin/bash"
 	keyAndReqCSRConfPath = "KeyAndReqCSR.conf"
 )
 
