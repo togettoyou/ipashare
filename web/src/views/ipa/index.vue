@@ -82,10 +82,12 @@
             class="upload-demo"
             action=""
             accept=".ipa"
+            drag
             :multiple=false
             :auto-upload=false
             :file-list="fileList"
             :on-change="handleChange"
+            :on-remove="handleRemove"
           >
             <i class="el-icon-upload"></i>
             <div class="el-upload__text"><em>点击上传</em></div>
@@ -107,6 +109,7 @@
 <script>
 import {download, list, upload} from "@/api/ipa";
 import QRCode from 'qrcodejs2';
+import {Loading} from 'element-ui';
 
 export default {
   name: 'IPA',
@@ -174,15 +177,26 @@ export default {
           return false;
         }
         if (valid) {
+          let loading = Loading.service({
+            fullscreen: true,
+            text: '正在上传'
+          })
           const formData = new FormData()
           formData.append('ipa', this.fileList[0].raw)
           formData.append('summary', this.form.summary)
-          upload(formData).then(res => {
-            console.log(res);
+          upload(formData, progressEvent => {
+            loading.setText(`已上传 ${((progressEvent.loaded / progressEvent.total) * 100).toFixed(2)}%`)
+            if (progressEvent.loaded === progressEvent.total) {
+              loading.setText("正在解析IPA中")
+            }
+          }).then(res => {
             this.$message.success('上传成功')
+            loading.close()
             this.clearForm()
           }).catch(err => {
-            console.log(err);
+            this.$message.error('上传失败' + err)
+            loading.close()
+            this.clearForm()
           })
         } else {
           return false;
@@ -199,6 +213,9 @@ export default {
         this.fileList = [fileList[fileList.length - 1]]
       }
     },
+    handleRemove() {
+      this.fileList = []
+    },
     qrCode(row) {
       this.dialogQrcode = true;
       this.$nextTick(function () {
@@ -212,8 +229,15 @@ export default {
       });
     },
     download(uuid) {
-      download(uuid).then(res => {
-        console.log(res);
+      let notify = this.$notify({
+        dangerouslyUseHTMLString: true,
+        showClose: false,
+        duration: 0,
+        message: `${uuid}.ipa<br><p style="width: 100px;">开始下载</p>`,
+      });
+      download(uuid, progressEvent => {
+        notify.message = `${uuid}.ipa<br><p style="width: 100px;">正在下载<span" style="float: right" >${((progressEvent.loaded / progressEvent.total) * 100).toFixed(2)}%</span></p>`
+      }).then(res => {
         let data = res
         if (!data) {
           return
@@ -227,8 +251,11 @@ export default {
         a.click()
         window.URL.revokeObjectURL(a.href)
         document.body.removeChild(a)
+        this.$message.success("下载成功")
+        notify.close()
       }).catch(err => {
-        console.log(err);
+        this.$message.error("下载失败" + err)
+        notify.close()
       })
     }
   },
