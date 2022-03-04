@@ -12,18 +12,30 @@ go、云原生技术、项目问题、单纯支持 ...... 来者不拒
 
 对于 iOS 开发者来说，苹果开发者账号几乎人手必备（这里只讨论个人账号）， 而苹果公司允许我们添加 100 台设备（udid）绑定到账号上，这 100 台设备可以自由安装由账号签名且使用 Ad Hoc 方式打包出的 `.ipa`
 
-本项目就是利用这个规则，来简化 iOS APP 的分发流程。想一想，当你开发一款 APP 的过程中，想要给身边的小伙伴体验一下，只需要使用本项目生成一个二维码链接，扫一扫，即可全程自动绑定设备并签名安装 APP 。
+本项目就是利用这个规则，来简化 iOS APP 的分发流程。想一想，当你开发一款 APP 的过程中，想要给身边的小伙伴体验一下，只需要使用本项目生成一个二维码链接，扫一扫，即可全程自动绑定设备并签名安装 APP
 
 ## 声明
 
 本项目的核心功能调用 [zsign](https://github.com/zhlynn/zsign)
-和 [App Store Connect API](https://developer.apple.com/documentation/appstoreconnectapi) 实现，如有侵权，请与我联系，会及时处理。
+和 [App Store Connect API](https://developer.apple.com/documentation/appstoreconnectapi) 实现，如有侵权，请与我联系，会及时处理
 
-本项目仅作为给开发者分发合法合规的 APP 使用，严禁使用本项目进行任何盈利、损害官方利益、分发任何违法违规的 APP 等行为。
+本项目仅作为给开发者分发合法合规的 APP 使用，严禁使用本项目进行任何盈利、损害官方利益、分发任何违法违规的 APP 等行为
 
 ## 部署项目
 
-待更
+1、下载 `docker-compose.yml`
+
+```shell
+curl -O https://raw.githubusercontent.com/togettoyou/supersign/main/docker-compose.yml
+```
+
+2、修改 `docker-compose.yml`
+
+3、使用 `docker-compose` 部署
+
+```shell
+docker-compose up
+```
 
 ## 效果预览
 
