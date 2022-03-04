@@ -53,7 +53,7 @@
         width="83">
         <template slot-scope="scope">
           <el-button type="text" size="small">修改</el-button>
-          <el-button type="text" size="small">删除</el-button>
+          <el-button type="text" @click="del(scope.row.uuid)" size="small">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -74,8 +74,13 @@
       <h2 id="name"></h2>
     </el-dialog>
 
-    <el-dialog title="上传IPA" :visible.sync="dialogFormVisible">
-      <el-form ref="form" :model="form"
+    <el-dialog title="上传IPA" :visible.sync="dialogFormVisible"
+               :show-close="false"
+               :close-on-click-modal="false"
+               :close-on-press-escape="false"
+               :destroy-on-close="true"
+    >
+      <el-form ref="form" :model="form" id="dialogForm"
                :rules="formRules">
         <el-form-item style="text-align:center;">
           <el-upload
@@ -90,7 +95,7 @@
             :on-remove="handleRemove"
           >
             <i class="el-icon-upload"></i>
-            <div class="el-upload__text"><em>点击上传</em></div>
+            <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
           </el-upload>
         </el-form-item>
         <el-form-item label="简介" prop="summary">
@@ -100,16 +105,17 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="clearForm">取 消</el-button>
-        <el-button type="primary" @click="upload">确 定</el-button>
+        <el-button type="primary" @click="upload" :loading="uploading">确 定</el-button>
       </div>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import {download, list, upload} from "@/api/ipa";
+import {del, download, list, upload} from "@/api/ipa";
 import QRCode from 'qrcodejs2';
 import {Loading} from 'element-ui';
+import axios from "axios";
 
 export default {
   name: 'IPA',
@@ -130,6 +136,8 @@ export default {
         summary: [{required: true, trigger: "blur", min: 2, max: 100, message: "请输入简介（2-100字数）"}],
       },
       fileList: [],
+      uploading: false,
+      uploadCancel: null,
       dialogQrcode: false,
     }
   },
@@ -177,7 +185,10 @@ export default {
           return false;
         }
         if (valid) {
+          this.uploading = true
+          let that = this
           let loading = Loading.service({
+            target: "#dialogForm",
             fullscreen: true,
             text: '正在上传'
           })
@@ -189,10 +200,13 @@ export default {
             if (progressEvent.loaded === progressEvent.total) {
               loading.setText("正在解析IPA中")
             }
-          }).then(res => {
+          }, new axios.CancelToken(function executor(c) {
+            that.uploadCancel = c;
+          })).then(res => {
             this.$message.success('上传成功')
             loading.close()
             this.clearForm()
+            this.getListFilter()
           }).catch(err => {
             this.$message.error('上传失败' + err)
             loading.close()
@@ -204,9 +218,14 @@ export default {
       });
     },
     clearForm() {
+      if (this.uploadCancel) {
+        this.uploadCancel()
+      }
+      this.uploadCancel = null
       this.$refs.form.resetFields()
       this.fileList = []
       this.dialogFormVisible = false
+      this.uploading = false
     },
     handleChange(file, fileList) {
       if (fileList.length > 0) {
@@ -229,15 +248,20 @@ export default {
       });
     },
     download(uuid) {
-      let notify = this.$notify({
+      let cancel;
+      let notify = this.$notify.success({
         dangerouslyUseHTMLString: true,
-        showClose: false,
+        onClose: () => {
+          cancel();
+        },
         duration: 0,
         message: `${uuid}.ipa<br><p style="width: 100px;">开始下载</p>`,
       });
       download(uuid, progressEvent => {
-        notify.message = `${uuid}.ipa<br><p style="width: 100px;">正在下载<span" style="float: right" >${((progressEvent.loaded / progressEvent.total) * 100).toFixed(2)}%</span></p>`
-      }).then(res => {
+        notify.message = `${uuid}.ipa<br><p style="width: 120px;">正在下载<span" style="float: right" >${((progressEvent.loaded / progressEvent.total) * 100).toFixed(2)}%</span></p>`
+      }, new axios.CancelToken(function executor(c) {
+        cancel = c;
+      })).then(res => {
         let data = res
         if (!data) {
           return
@@ -257,6 +281,25 @@ export default {
         this.$message.error("下载失败" + err)
         notify.close()
       })
+    },
+    del(uuid) {
+      this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        del(uuid).then(res => {
+          this.$message.success("删除成功")
+          this.getListFilter()
+        }).catch(err => {
+          this.$message.error("删除失败" + err)
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        });
+      });
     }
   },
 }

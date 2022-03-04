@@ -8,21 +8,23 @@ export function list(params) {
   });
 }
 
-export function upload(data, config) {
+export function upload(data, config, cancel) {
   return request({
     url: "ipa",
     method: "post",
     data,
-    onUploadProgress: config
+    onUploadProgress: config,
+    cancelToken: cancel
   });
 }
 
-export function download(uuid, config) {
+export function download(uuid, config, cancel) {
   return request({
     url: "download/ipa/" + uuid,
     method: "get",
     responseType: 'blob',
-    onDownloadProgress: config
+    onDownloadProgress: config,
+    cancelToken: cancel
   });
 }
 
