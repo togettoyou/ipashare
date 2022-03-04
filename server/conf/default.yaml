@@ -1,7 +1,7 @@
 # 服务配置
 SERVER:
   # https 域名，必填
-  URL: https://127.0.0.1
+  URL: http://localhost:8888
   # 签名任务并发量
   MAXJOB: 10
   # 开发模式 debug,release,test
