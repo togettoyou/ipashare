@@ -21,6 +21,7 @@
       <el-table-column
         prop="icon_url"
         label="图标"
+        align="center"
         width="70px">
         <template slot-scope="scope">
           <el-avatar shape="square" :size="48" fit="fill" :src="scope.row.icon_url"></el-avatar>
@@ -37,7 +38,8 @@
       <el-table-column prop="CreatedAt" label="添加时间" align="center" header-align="center"></el-table-column>
       <el-table-column
         fixed="right"
-        label="操作"
+        label="功能"
+        align="center"
         width="83">
         <template slot-scope="scope">
           <el-button type="text" @click="qrCode(scope.row)" size="small">安装</el-button>
@@ -47,6 +49,7 @@
       <el-table-column
         fixed="right"
         label="操作"
+        align="center"
         width="83">
         <template slot-scope="scope">
           <el-button type="text" size="small">修改</el-button>
