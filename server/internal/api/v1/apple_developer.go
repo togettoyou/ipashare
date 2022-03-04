@@ -1,6 +1,7 @@
 package v1
 
 import (
+	"io/ioutil"
 	"net/http"
 	"strings"
 	"supersign/internal/api"
@@ -39,7 +40,16 @@ func (a AppleDeveloper) Upload(c *gin.Context) {
 		a.Resp(http.StatusBadRequest, e.ErrUploadFormat, false)
 		return
 	}
-	num, err := appleDeveloperSvc.Add(args.Iss, args.Kid, "")
+	file, err := args.P8.Open()
+	defer file.Close()
+	if a.HasErr(err) {
+		return
+	}
+	bytes, err := ioutil.ReadAll(file)
+	if a.HasErr(err) {
+		return
+	}
+	num, err := appleDeveloperSvc.Add(args.Iss, args.Kid, string(bytes))
 	if a.HasErr(err) {
 		return
 	}
