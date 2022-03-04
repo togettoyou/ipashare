@@ -16,6 +16,14 @@ export function upload(data) {
   });
 }
 
+export function download(uuid) {
+  return request({
+    url: "download/ipa/" + uuid,
+    method: "get",
+    responseType: 'blob'
+  });
+}
+
 export function del(uuid) {
   return request({
     url: "ipa?uuid=" + uuid,

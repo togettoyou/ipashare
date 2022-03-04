@@ -28,16 +28,17 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   (response) => {
     const res = response.data;
-    if (res.code !== 0) {
-      Message({
-        message: res.msg || "Error",
-        type: "error",
-        duration: 5 * 1000,
-      });
-      return Promise.reject(new Error(res.message || "Error"));
-    } else {
-      return res;
+    if (res.code) {
+      if (res.code !== 0) {
+        Message({
+          message: res.msg || "Error",
+          type: "error",
+          duration: 5 * 1000,
+        });
+        return Promise.reject(new Error(res.message || "Error"));
+      }
     }
+    return res;
   },
   (error) => {
     const res = error.response.data

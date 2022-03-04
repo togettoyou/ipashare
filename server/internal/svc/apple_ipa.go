@@ -5,6 +5,7 @@ import (
 	"os"
 	"path"
 	"supersign/internal/model"
+	"supersign/internal/model/resp"
 	"supersign/pkg/conf"
 	"supersign/pkg/e"
 	"supersign/pkg/ipa"
@@ -57,12 +58,20 @@ func (a *AppleIPA) AnalyzeIPA(ipaUUID, ipaPath, summary string) (appleIPA *model
 	return appleIPA, nil
 }
 
-func (a *AppleIPA) List(content string, page, pageSize *int) ([]model.AppleIPA, int64, error) {
+func (a *AppleIPA) List(content string, page, pageSize *int) ([]resp.AppleIPA, int64, error) {
 	appleIPAs, total, err := a.store.AppleIPA.List(content, page, pageSize)
 	if err != nil {
 		return nil, 0, e.NewWithStack(e.DBError, err)
 	}
-	return appleIPAs, total, nil
+	appleIPAResp := make([]resp.AppleIPA, 0)
+	for _, ipA := range appleIPAs {
+		appleIPAResp = append(appleIPAResp, resp.AppleIPA{
+			AppleIPA:   ipA,
+			IconUrl:    conf.Server.URL + "/api/v1/download/icon/" + ipA.UUID,
+			InstallUrl: conf.Server.URL + "/api/v1/download/mobileConfig/" + ipA.UUID,
+		})
+	}
+	return appleIPAResp, total, nil
 }
 
 func (a *AppleIPA) Del(uuid string) error {
