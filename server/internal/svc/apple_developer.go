@@ -45,10 +45,10 @@ func (a *AppleDeveloper) Add(iss, kid, p8 string) (num int, err error) {
 	if devices.Meta.Paging.Total >= 100 {
 		return 0, e.ErrDeviceInsufficient
 	}
-	tools.MkdirAll(path.Join(conf.Apple.AppleDeveloperPath, iss))
 	// 生成CSR和KEY证书
 	csrPath := path.Join(conf.Apple.AppleDeveloperPath, iss, "csr.csr")
 	keyPath := path.Join(conf.Apple.AppleDeveloperPath, iss, "key.key")
+	tools.MkdirAll(csrPath)
 	err = openssl.GenKeyAndReqCSR(keyPath, csrPath)
 	if err != nil {
 		return 0, e.NewWithStack(e.ErrIssAdd, err)
