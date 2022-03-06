@@ -1,21 +1,26 @@
 package ipa
 
 import (
-	"bytes"
-	"howett.net/plist"
+	"strings"
 )
 
-type plistData struct {
-	UDID string `plist:"UDID"`
+func ParseUDID(data []byte) string {
+	return getBetweenStr(string(data), `<key>UDID</key>
+	<string>`, `</string>
+	<key>VERSION</key>`)
 }
 
-func ParseUDID(data []byte) string {
-	var plistData plistData
-	buf := bytes.NewReader(data)
-	decoder := plist.NewDecoder(buf)
-	err := decoder.Decode(&plistData)
-	if err != nil {
-		return ""
+func getBetweenStr(str, start, end string) string {
+	n := strings.Index(str, start)
+	if n == -1 {
+		n = 0
 	}
-	return plistData.UDID
+	n += len(start)
+	str = string([]byte(str)[n:])
+	m := strings.Index(str, end)
+	if m == -1 {
+		m = len(str)
+	}
+	str = string([]byte(str)[:m])
+	return str
 }

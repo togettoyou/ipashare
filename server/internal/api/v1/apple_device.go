@@ -41,11 +41,13 @@ func (a AppleDevice) UDID(c *gin.Context) {
 	if a.HasErr(err) {
 		return
 	}
+	a.Log.Info(string(bytes))
 	udid := ipa.ParseUDID(bytes)
 	if udid == "" {
 		a.Resp(http.StatusBadRequest, e.BindError, false)
 		return
 	}
+	a.Log.Info(udid)
 
 	plistUUID, err := appleDeviceSvc.Sign(udid, args.UUID)
 	if a.HasErr(err) {
