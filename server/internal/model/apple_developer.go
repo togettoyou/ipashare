@@ -7,7 +7,7 @@ type AppleDeveloper struct {
 	gorm.Model
 	Iss       string `gorm:"unique;not null" json:"iss"`
 	Kid       string `gorm:"not null" json:"kid"`
-	P8        string `gorm:"not null" json:"-"`
+	P8        string `gorm:"type:text;not null" json:"-"`
 	BundleIds string `gorm:"comment:苹果开发者账号的通配证书id" json:"-"`
 	CerID     string `gorm:"comment:根据csr生成的cerID" json:"-"`
 	Count     int    `gorm:"comment:当前已绑定的设备量" json:"count"`
