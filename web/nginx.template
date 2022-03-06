@@ -1,7 +1,7 @@
 server {
   listen 80;
-  client_max_body_size 100m;
-  client_body_buffer_size 50m;
+  client_max_body_size 300m;
+  client_body_buffer_size 300m;
   location / {
     root   /usr/share/nginx/html;
     index  index.html index.htm;
