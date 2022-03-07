@@ -74,6 +74,14 @@ func (a *AppleIPA) List(content string, page, pageSize *int) ([]resp.AppleIPA, i
 	return appleIPAResp, total, nil
 }
 
+func (a *AppleIPA) Update(uuid, summary string) error {
+	err := a.store.AppleIPA.Update(uuid, summary)
+	if err != nil {
+		return e.NewWithStack(e.DBError, err)
+	}
+	return nil
+}
+
 func (a *AppleIPA) Del(uuid string) error {
 	_, err := a.store.AppleIPA.Query(uuid)
 	if err != nil {

@@ -52,7 +52,7 @@
         align="center"
         width="83">
         <template slot-scope="scope">
-          <el-button type="text" size="small">修改</el-button>
+          <el-button type="text" @click="updateDialog(scope.row)" size="small">修改</el-button>
           <el-button type="text" @click="del(scope.row.uuid)" size="small">删除</el-button>
         </template>
       </el-table-column>
@@ -73,6 +73,26 @@
       <div id="qrcode"></div>
       <h2 id="name"></h2>
     </el-dialog>
+
+    <el-dialog title="修改IPA简介" :visible.sync="updateDialogFormVisible"
+               :show-close="false"
+               :close-on-click-modal="false"
+               :close-on-press-escape="false"
+               :destroy-on-close="true"
+    >
+      <el-form ref="updateForm" :model="updateForm"
+               :rules="formRules">
+        <el-form-item label="简介" prop="summary">
+          <el-input type="textarea" :autosize="{ minRows: 4, maxRows: 6}" v-model="updateForm.summary"
+                    placeholder="请输入简介"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="clearUpdateForm">取 消</el-button>
+        <el-button type="primary" @click="update" :loading="uploading">确 定</el-button>
+      </div>
+    </el-dialog>
+
 
     <el-dialog title="上传IPA" :visible.sync="dialogFormVisible"
                :show-close="false"
@@ -112,7 +132,7 @@
 </template>
 
 <script>
-import {del, download, list, upload} from "@/api/ipa";
+import {del, download, list, update, upload} from "@/api/ipa";
 import QRCode from 'qrcodejs2';
 import {Loading} from 'element-ui';
 import axios from "axios";
@@ -139,6 +159,11 @@ export default {
       uploading: false,
       uploadCancel: null,
       dialogQrcode: false,
+      updateDialogFormVisible: false,
+      updateForm: {
+        uuid: '',
+        summary: '',
+      },
     }
   },
   created() {
@@ -208,9 +233,39 @@ export default {
             this.clearForm()
             this.getListFilter()
           }).catch(err => {
-            this.$message.error('上传失败' + err)
             loading.close()
             this.clearForm()
+          })
+        } else {
+          return false;
+        }
+      });
+    },
+    updateDialog(row) {
+      this.updateForm = {
+        uuid: row.uuid,
+        summary: row.summary,
+      }
+      this.updateDialogFormVisible = true
+    },
+    clearUpdateForm() {
+      this.updateForm = {
+        uuid: '',
+        summary: '',
+      }
+      this.updateDialogFormVisible = false
+      this.uploading = false
+    },
+    update() {
+      this.$refs.updateForm.validate((valid) => {
+        if (valid) {
+          this.uploading = true
+          update(this.updateForm).then(res => {
+            this.$message.success('修改成功')
+            this.clearUpdateForm()
+            this.getListFilter()
+          }).catch(err => {
+            this.clearUpdateForm()
           })
         } else {
           return false;
@@ -222,7 +277,9 @@ export default {
         this.uploadCancel()
       }
       this.uploadCancel = null
-      this.$refs.form.resetFields()
+      this.form = {
+        summary: '',
+      }
       this.fileList = []
       this.dialogFormVisible = false
       this.uploading = false

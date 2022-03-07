@@ -28,6 +28,14 @@ export function download(uuid, config, cancel) {
   });
 }
 
+export function update(data) {
+  return request({
+    url: "ipa",
+    method: "patch",
+    data
+  });
+}
+
 export function del(uuid) {
   return request({
     url: "ipa?uuid=" + uuid,

@@ -517,6 +517,39 @@ var doc = `{
                         }
                     }
                 }
+            },
+            "patch": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "IPA"
+                ],
+                "summary": "更改指定IPA简介",
+                "parameters": [
+                    {
+                        "description": "data",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/req.IPABody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.Response"
+                        }
+                    }
+                }
             }
         },
         "/api/v1/user/changepw": {
@@ -596,6 +629,20 @@ var doc = `{
                     "type": "object"
                 },
                 "msg": {
+                    "type": "string"
+                }
+            }
+        },
+        "req.IPABody": {
+            "type": "object",
+            "required": [
+                "uuid"
+            ],
+            "properties": {
+                "summary": {
+                    "type": "string"
+                },
+                "uuid": {
                     "type": "string"
                 }
             }

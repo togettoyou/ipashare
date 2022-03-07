@@ -8,7 +8,7 @@ RUN go env -w GO111MODULE=on \
     && go env -w GOPROXY=https://goproxy.cn,direct
 COPY . /root/togettoyou/
 WORKDIR /root/togettoyou/
-RUN make docs
+RUN make
 
 FROM togettoyou/zsign:latest AS zsign
 

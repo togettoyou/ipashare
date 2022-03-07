@@ -87,6 +87,28 @@ func (a AppleIPA) List(c *gin.Context) {
 	})
 }
 
+// Update
+// @Tags IPA
+// @Summary 更改指定IPA简介
+// @Security ApiKeyAuth
+// @Produce json
+// @Param data body req.IPABody true "data"
+// @Success 200 {object} api.Response
+// @Router /api/v1/ipa [patch]
+func (a AppleIPA) Update(c *gin.Context) {
+	var (
+		appleIPASvc svc.AppleIPA
+		args        req.IPABody
+	)
+	if !a.MakeContext(c).MakeService(&appleIPASvc.Service).ParseJSON(&args) {
+		return
+	}
+	if a.HasErr(appleIPASvc.Update(args.UUID, args.Summary)) {
+		return
+	}
+	a.OK()
+}
+
 // Del
 // @Tags IPA
 // @Summary 删除指定IPA

@@ -8,6 +8,15 @@ definitions:
       msg:
         type: string
     type: object
+  req.IPABody:
+    properties:
+      summary:
+        type: string
+      uuid:
+        type: string
+    required:
+    - uuid
+    type: object
   req.UserPW:
     properties:
       password:
@@ -308,6 +317,26 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: 获取 IPA 列表
+      tags:
+      - IPA
+    patch:
+      parameters:
+      - description: data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/req.IPABody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 更改指定IPA简介
       tags:
       - IPA
     post:

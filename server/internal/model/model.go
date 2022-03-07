@@ -15,5 +15,4 @@ type Store struct {
 type Model struct {
 	ID        uint             `json:"-" gorm:"primarykey"`
 	CreatedAt tools.FormatTime `json:"created_at"`
-	UpdatedAt tools.FormatTime `json:"updated_at"`
 }

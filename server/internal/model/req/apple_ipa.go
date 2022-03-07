@@ -10,3 +10,8 @@ type IPAForm struct {
 type IPAQuery struct {
 	UUID string `form:"uuid" binding:"required"`
 }
+
+type IPABody struct {
+	UUID    string `json:"uuid" binding:"required"`
+	Summary string `json:"summary"`
+}

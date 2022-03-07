@@ -33,6 +33,12 @@ func (a *appleIPA) Query(uuid string) (*model.AppleIPA, error) {
 	return &appleIPA, nil
 }
 
+func (a *appleIPA) Update(uuid, summary string) error {
+	return a.db.Model(&model.AppleIPA{}).
+		Where("uuid = ?", uuid).
+		UpdateColumn("summary", summary).Error
+}
+
 func (a *appleIPA) AddCount(uuid string, num int) error {
 	return a.db.Model(&model.AppleIPA{}).
 		Where("uuid = ?", uuid).

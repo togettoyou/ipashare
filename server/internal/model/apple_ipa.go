@@ -19,5 +19,6 @@ type AppleIPAStore interface {
 	Del(uuid string) error
 	Query(uuid string) (*AppleIPA, error)
 	AddCount(uuid string, num int) error
+	Update(uuid, summary string) error
 	List(content string, page, pageSize *int) ([]AppleIPA, int64, error)
 }
