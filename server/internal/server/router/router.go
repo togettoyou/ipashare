@@ -31,6 +31,8 @@ func New(store *model.Store) *gin.Engine {
 	registerDebugRouter(r)
 	registerSwagRouter(r)
 	registerV1Router(store, r)
+
+	r.StaticFS("/admin", http.Dir("dist/"))
 	return r
 }
 

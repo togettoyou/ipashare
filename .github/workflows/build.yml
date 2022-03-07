@@ -23,15 +23,9 @@ jobs:
           context: https://github.com/zhlynn/zsign.git
           push: true
           tags: togettoyou/zsign:latest
-      - name: Build and push server
+      - name: Build and push supersign
         uses: docker/build-push-action@v2
         with:
-          context: server
+          context: .
           push: true
-          tags: togettoyou/supersign-server:latest
-      - name: Build and push web
-        uses: docker/build-push-action@v2
-        with:
-          context: web
-          push: true
-          tags: togettoyou/supersign-web:latest
+          tags: togettoyou/supersign:latest
