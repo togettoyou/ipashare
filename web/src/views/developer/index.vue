@@ -201,7 +201,6 @@ export default {
             this.clearForm()
             this.getListFilter()
           }).catch(err => {
-            this.$message.error('上传失败' + err)
             loading.close()
             this.clearForm()
           })

@@ -47,9 +47,13 @@ func (a *AppleDeveloper) Add(iss, kid, p8 string) (num int, err error) {
 	if err != nil {
 		return 0, e.NewWithStack(e.ErrAppstoreAPI, err)
 	}
-	// 判断账户可用设备是否充足
-	if devices.Meta.Paging.Total >= 100 {
-		return 0, e.ErrDeviceInsufficient
+	// 判断证书额度是否已满
+	certificateDataList, err := authorize.GetCertificatesList()
+	if err != nil {
+		return 0, e.NewWithStack(e.ErrAppstoreAPI, err)
+	}
+	if len(certificateDataList) > 1 {
+		return 0, e.ErrCertificateNotEnough
 	}
 	// 生成CSR和KEY证书
 	csrPath := path.Join(conf.Apple.AppleDeveloperPath, iss, "csr.csr")
@@ -58,19 +62,6 @@ func (a *AppleDeveloper) Add(iss, kid, p8 string) (num int, err error) {
 	err = openssl.GenKeyAndReqCSR(keyPath, csrPath)
 	if err != nil {
 		return 0, e.NewWithStack(e.ErrIssAdd, err)
-	}
-	// 判断账号是否存在bundleIds为*的记录
-	bundleIds, err := authorize.GetBundleIdsByIdentifier("*")
-	if err != nil {
-		return 0, e.NewWithStack(e.ErrAppstoreAPI, err)
-	}
-	if bundleIds == "" {
-		// 创建新的bundleIds
-		bundleIdResponse, err := authorize.CreateBundleIds("*")
-		if err != nil {
-			return 0, e.NewWithStack(e.ErrAppstoreAPI, err)
-		}
-		bundleIds = bundleIdResponse.Data.ID
 	}
 	// 根据CSR创建新的CerId和cer文件证书
 	csrFile, err := os.Open(csrPath)
@@ -97,6 +88,19 @@ func (a *AppleDeveloper) Add(iss, kid, p8 string) (num int, err error) {
 	err = openssl.GenPEM(cerPath, pemPath)
 	if err != nil {
 		return 0, e.NewWithStack(e.ErrIssAdd, err)
+	}
+	// 判断账号是否存在bundleIds为*的记录
+	bundleIds, err := authorize.GetBundleIdsByIdentifier("*")
+	if err != nil {
+		return 0, e.NewWithStack(e.ErrAppstoreAPI, err)
+	}
+	if bundleIds == "" {
+		// 创建新的bundleIds
+		bundleIdResponse, err := authorize.CreateBundleIds("*")
+		if err != nil {
+			return 0, e.NewWithStack(e.ErrAppstoreAPI, err)
+		}
+		bundleIds = bundleIdResponse.Data.ID
 	}
 	// 插入数据库
 	appleDevices := make([]model.AppleDevice, 0)

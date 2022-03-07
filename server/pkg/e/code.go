@@ -26,9 +26,9 @@ var (
 	ErrIPAParser = &errno{code: 20201, msg: "IPA 解析异常"}
 	ErrIPAIcon   = &errno{code: 20202, msg: "IPA Icon 提取异常"}
 
-	ErrIssExist           = &errno{code: 20301, msg: "Iss 已存在"}
-	ErrIssAdd             = &errno{code: 20302, msg: "账号添加失败"}
-	ErrAppstoreAPI        = &errno{code: 20303, msg: "App Store Connect API 连接失败"}
-	ErrDeviceInsufficient = &errno{code: 20304, msg: "账号可绑设备已不足"}
-	ErrSign               = &errno{code: 20305, msg: "重签名失败"}
+	ErrIssExist             = &errno{code: 20301, msg: "Iss 已存在"}
+	ErrIssAdd               = &errno{code: 20302, msg: "账号添加失败"}
+	ErrAppstoreAPI          = &errno{code: 20303, msg: "App Store Connect API 连接异常，详细信息请查看日志"}
+	ErrCertificateNotEnough = &errno{code: 20304, msg: "iOS Development certificate 数量已满，请删除一个"}
+	ErrSign                 = &errno{code: 20305, msg: "重签名失败"}
 )

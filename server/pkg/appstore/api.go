@@ -317,6 +317,66 @@ func (auth *Authorize) CreateCertificates(csr string) (*CertificateResponse, err
 	return &certificateResponse, nil
 }
 
+// GetCertificatesList 获取账号下所有证书
+func (auth *Authorize) GetCertificatesList() ([]CertificateData, error) {
+	resp, err := auth.httpRequest("GET", certificatesUrl, nil)
+	defer fasthttp.ReleaseResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	if resp.StatusCode() != 200 {
+		return nil, errors.New(fmt.Sprintf("%s", resp.Body()))
+	}
+	var certificateResponseList CertificateResponseList
+	err = json.Unmarshal(resp.Body(), &certificateResponseList)
+	if err != nil {
+		return nil, err
+	}
+
+	certificateDataList := make([]CertificateData, 0)
+	for _, v := range certificateResponseList.Data {
+		if v.Type == "certificates" &&
+			(v.Attributes.CertificateType == "IOS_DEVELOPMENT" ||
+				v.Attributes.CertificateType == "MAC_APP_DEVELOPMENT" ||
+				v.Attributes.CertificateType == "DEVELOPMENT") {
+			certificateDataList = append(certificateDataList, v)
+		}
+	}
+	return certificateDataList, nil
+}
+
+// DeleteCertificates 删除账号下指定的证书
+func (auth *Authorize) DeleteCertificates(id string) error {
+	resp, err := auth.httpRequest("GET", certificatesUrl, nil)
+	defer fasthttp.ReleaseResponse(resp)
+	if err != nil {
+		return err
+	}
+	if resp.StatusCode() != 200 {
+		return errors.New(fmt.Sprintf("%s", resp.Body()))
+	}
+	var certificateResponseList CertificateResponseList
+	err = json.Unmarshal(resp.Body(), &certificateResponseList)
+	if err != nil {
+		return err
+	}
+
+	for _, v := range certificateResponseList.Data {
+		if id == v.ID {
+			resp, err := auth.httpRequest("DELETE", certificatesUrl+"/"+v.ID, nil)
+			if err != nil {
+				return err
+			}
+			if resp.StatusCode() != 204 {
+				return errors.New(fmt.Sprintf("DeleteAllCertificates %s", resp.Body()))
+			}
+			fasthttp.ReleaseResponse(resp)
+			break
+		}
+	}
+	return nil
+}
+
 // DeleteAllCertificates 删除账号下所有证书
 func (auth *Authorize) DeleteAllCertificates() error {
 	resp, err := auth.httpRequest("GET", certificatesUrl, nil)
