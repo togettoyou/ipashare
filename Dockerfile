@@ -10,7 +10,7 @@ WORKDIR /root/togettoyou/
 COPY server/. .
 RUN make
 
-FROM node:lts-alpine as build-web
+FROM node:lts-alpine AS builder-web
 WORKDIR /app
 COPY web/package*.json ./
 RUN yarn install --registry=https://registry.npmmirror.com
