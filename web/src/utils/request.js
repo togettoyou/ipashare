@@ -44,7 +44,7 @@ service.interceptors.response.use(
     const res = error.response.data
     // 令牌失效,或令牌不存在
     if (res.code === 20104 || res.code === 20105 || res.code === 20106) {
-      location.href = "/#/login";
+      location.href = "/admin/#/login";
     }
     Message({
       message: res.msg,
