@@ -30,9 +30,10 @@ type AppleDevice struct {
 func (a AppleDevice) UDID(c *gin.Context) {
 	var (
 		appleDeviceSvc svc.AppleDevice
+		appleIPASvc    svc.AppleIPA
 		args           req.AppleDeviceUri
 	)
-	if !a.MakeContext(c).MakeService(&appleDeviceSvc.Service).ParseUri(&args) {
+	if !a.MakeContext(c).MakeService(&appleDeviceSvc.Service, &appleIPASvc.Service).ParseUri(&args) {
 		return
 	}
 
@@ -53,6 +54,7 @@ func (a AppleDevice) UDID(c *gin.Context) {
 	if a.HasErr(err) {
 		return
 	}
+	_ = appleIPASvc.AddCount(args.UUID)
 	c.Redirect(
 		http.StatusMovedPermanently,
 		fmt.Sprintf("%s/api/v1/appstore/%s", conf.Server.URL, plistUUID),

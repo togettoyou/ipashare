@@ -1,10 +1,8 @@
 package model
 
-import "gorm.io/gorm"
-
 // AppleDeveloper 苹果开发者账号
 type AppleDeveloper struct {
-	gorm.Model
+	Model
 	Iss       string `gorm:"unique;not null" json:"iss"`
 	Kid       string `gorm:"not null" json:"kid"`
 	P8        string `gorm:"type:text;not null" json:"-"`

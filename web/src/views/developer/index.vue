@@ -19,7 +19,7 @@
       <el-table-column prop="iss" label="iss" align="center" header-align="center"></el-table-column>
       <el-table-column prop="kid" label="kid" align="center" header-align="center"></el-table-column>
       <el-table-column prop="count" label="已使用设备量" align="center" header-align="center"></el-table-column>
-
+      <el-table-column prop="created_at" label="添加时间" align="center" header-align="center"></el-table-column>
       <el-table-column label="最大限制量" align="center" width="100">
         <template scope="scope">
           <el-input size="small" v-model="scope.row.limit" placeholder="最大限制量"

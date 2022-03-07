@@ -86,3 +86,11 @@ func (a *AppleIPA) Del(uuid string) error {
 	os.RemoveAll(path.Join(conf.Apple.UploadFilePath, uuid))
 	return nil
 }
+
+func (a *AppleIPA) AddCount(uuid string) error {
+	err := a.store.AppleIPA.AddCount(uuid, 1)
+	if err != nil {
+		return e.NewWithStack(e.DBError, err)
+	}
+	return nil
+}

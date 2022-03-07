@@ -1,12 +1,8 @@
 package model
 
-import (
-	"gorm.io/gorm"
-)
-
 // AppleIPA 苹果IPA
 type AppleIPA struct {
-	gorm.Model
+	Model
 	UUID             string `gorm:"unique;not null" json:"uuid"`
 	BundleIdentifier string `gorm:"not null;comment:包名" json:"bundle_identifier"`
 	Name             string `gorm:"comment:应用名" json:"name"`

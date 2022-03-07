@@ -19,9 +19,20 @@ type AppleDeveloper struct {
 }
 
 func (a *AppleDeveloper) Add(iss, kid, p8 string) (num int, err error) {
+	var (
+		cerID     string
+		authorize = appstore.Authorize{
+			P8:  p8,
+			Iss: iss,
+			Kid: kid,
+		}
+	)
 	defer func() {
 		if err != nil {
 			os.RemoveAll(path.Join(conf.Apple.AppleDeveloperPath, iss))
+			if cerID != "" {
+				authorize.DeleteCertificatesByCerId(cerID)
+			}
 		}
 	}()
 	appleDeveloper, err := a.store.AppleDeveloper.Query(iss)
@@ -30,11 +41,6 @@ func (a *AppleDeveloper) Add(iss, kid, p8 string) (num int, err error) {
 	}
 	if appleDeveloper != nil {
 		return 0, e.ErrIssExist
-	}
-	authorize := appstore.Authorize{
-		P8:  p8,
-		Iss: iss,
-		Kid: kid,
 	}
 	// 验证账号合法性
 	devices, err := authorize.GetAvailableDevices()
@@ -80,6 +86,7 @@ func (a *AppleDeveloper) Add(iss, kid, p8 string) (num int, err error) {
 	if err != nil {
 		return 0, e.NewWithStack(e.ErrAppstoreAPI, err)
 	}
+	cerID = certificateResponse.Data.ID
 	cerPath := path.Join(conf.Apple.AppleDeveloperPath, iss, "cer.cer")
 	err = tools.Base64ToFile(certificateResponse.Data.Attributes.CertificateContent, cerPath)
 	if err != nil {
@@ -105,7 +112,7 @@ func (a *AppleDeveloper) Add(iss, kid, p8 string) (num int, err error) {
 		Kid:       kid,
 		P8:        p8,
 		BundleIds: bundleIds,
-		CerID:     certificateResponse.Data.ID,
+		CerID:     cerID,
 		Count:     devices.Meta.Paging.Total,
 		Limit:     100,
 		Enable:    true,

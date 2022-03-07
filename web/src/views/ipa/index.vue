@@ -35,7 +35,7 @@
                        header-align="center"></el-table-column>
       <el-table-column prop="size" label="大小" align="center" header-align="center"></el-table-column>
       <el-table-column prop="count" label="下载量" align="center" header-align="center"></el-table-column>
-      <el-table-column prop="CreatedAt" label="添加时间" align="center" header-align="center"></el-table-column>
+      <el-table-column prop="created_at" label="添加时间" align="center" header-align="center"></el-table-column>
       <el-table-column
         fixed="right"
         label="功能"
