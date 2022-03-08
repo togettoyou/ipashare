@@ -9,10 +9,9 @@ import (
 )
 
 type config struct {
-	Server  server  `mapstructure:"SERVER"`
-	Log     log     `mapstructure:"LOG"`
-	Storage storage `mapstructure:"STORAGE"`
-	Mysql   mysql   `mapstructure:"MYSQL"`
+	Server server `mapstructure:"SERVER"`
+	Log    log    `mapstructure:"LOG"`
+	Mysql  mysql  `mapstructure:"MYSQL"`
 }
 
 type server struct {
@@ -31,14 +30,6 @@ type log struct {
 	Level string `mapstructure:"LEVEL"`
 }
 
-type storage struct {
-	EnableOSS          bool   `mapstructure:"ENABLEOSS"`
-	BucketName         string `mapstructure:"BUCKETNAME"`
-	OSSEndpoint        string `mapstructure:"OSSENDPOINT"`
-	OSSAccessKeyId     string `mapstructure:"OSSACCESSKEYID"`
-	OSSAccessKeySecret string `mapstructure:"OSSACCESSKEYSECRET"`
-}
-
 type mysql struct {
 	Enable      bool   `mapstructure:"ENABLE"`
 	Dsn         string `mapstructure:"DSN"`
@@ -54,11 +45,10 @@ type apple struct {
 }
 
 var (
-	Server  server
-	Log     log
-	Storage storage
-	Mysql   mysql
-	Apple   = apple{
+	Server server
+	Log    log
+	Mysql  mysql
+	Apple  = apple{
 		AppleDeveloperPath: "data/apple_developer/",
 		UploadFilePath:     "data/upload_file_path/",
 		TemporaryFilePath:  "data/temporary_file_path/",
@@ -115,7 +105,6 @@ func setConfig() error {
 	}
 	Server = config.Server
 	Log = config.Log
-	Storage = config.Storage
 	Mysql = config.Mysql
 	return nil
 }

@@ -40,6 +40,7 @@ type done struct {
 	Name             string
 	Summary          string
 	IpaUUID          string
+	IpaURL           string
 }
 
 func Setup(logger *zap.Logger, maxJob int) {
@@ -55,10 +56,11 @@ func Push(stream *Stream) {
 	go func() {
 		time.Sleep(1 * time.Hour)
 		signJob.mu.Lock()
-		defer signJob.mu.Unlock()
-		signJob.logger.Info("开始清理旧数据:" + stream.ProfileUUID)
 		delete(signJob.doneCache, stream.ProfileUUID)
+		signJob.mu.Unlock()
+		signJob.logger.Info("开始清理旧数据:" + stream.ProfileUUID)
 		os.RemoveAll(path.Join(conf.Apple.TemporaryFilePath, stream.ProfileUUID))
+		ali.DelFile(stream.ProfileUUID + ".ipa")
 	}()
 	go func() {
 		var err error
@@ -88,14 +90,12 @@ func Push(stream *Stream) {
 		if err != nil {
 			return
 		}
-		if conf.Storage.EnableOSS {
-			err = ali.UploadFile(
-				stream.ProfileUUID+".ipa",
-				path.Join(conf.Apple.TemporaryFilePath, stream.ProfileUUID, "ipa.ipa"),
-			)
-			if err != nil {
-				return
-			}
+		ipaURL, _ := ali.UploadFile(
+			stream.ProfileUUID+".ipa",
+			path.Join(conf.Apple.TemporaryFilePath, stream.ProfileUUID, "ipa.ipa"),
+		)
+		if ipaURL == "" {
+			ipaURL = fmt.Sprintf("%s/api/v1/download/tempipa/%s", conf.Server.URL, stream.ProfileUUID)
 		}
 		signJob.mu.Lock()
 		signJob.doneCache[stream.ProfileUUID] = &done{
@@ -106,6 +106,7 @@ func Push(stream *Stream) {
 			Name:             stream.Name,
 			Summary:          stream.Summary,
 			IpaUUID:          stream.IpaUUID,
+			IpaURL:           ipaURL,
 		}
 		signJob.mu.Unlock()
 		signJob.logger.Info("重签名任务执行成功")

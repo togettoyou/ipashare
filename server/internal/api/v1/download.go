@@ -136,16 +136,8 @@ func (d Download) Plist(c *gin.Context) {
 	}
 	c.Header("Content-Type", "application/octet-stream")
 	c.Header("Content-Disposition", "attachment; filename="+args.UUID+".plist")
-	url := fmt.Sprintf("%s/api/v1/download/tempipa/%s", conf.Server.URL, args.UUID)
-	if conf.Storage.EnableOSS {
-		url = fmt.Sprintf("https://%s.%s/%s.ipa",
-			conf.Storage.BucketName,
-			conf.Storage.OSSEndpoint,
-			args.UUID,
-		)
-	}
 	if d.HasErr(tmpl.Execute(c.Writer, map[string]string{
-		"URL":              url,
+		"URL":              doneCache.IpaURL,
 		"BundleIdentifier": doneCache.BundleIdentifier,
 		"Version":          doneCache.Version,
 		"Name":             doneCache.Name,

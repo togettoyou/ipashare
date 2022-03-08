@@ -1,40 +1,65 @@
 package ali
 
 import (
-	"supersign/pkg/conf"
+	"fmt"
+	"supersign/pkg/caches"
 
 	"github.com/aliyun/aliyun-oss-go-sdk/oss"
 )
 
-func Setup() {
-	if conf.Storage.EnableOSS {
-		client, err := oss.New(conf.Storage.OSSEndpoint, conf.Storage.OSSAccessKeyId, conf.Storage.OSSAccessKeySecret)
+func Verify() error {
+	ossInfo := caches.GetOSSInfo()
+	if ossInfo.Enable() {
+		client, err := oss.New(ossInfo.OSSEndpoint, ossInfo.OSSAccessKeyID, ossInfo.OSSAccessKeySecret)
 		if err != nil {
-			panic(err)
+			return err
 		}
 		// 判断存储空间是否存在。
-		isExist, err := client.IsBucketExist(conf.Storage.BucketName)
+		isExist, err := client.IsBucketExist(ossInfo.OSSBucketName)
 		if err != nil {
-			panic(err)
+			return err
 		}
 		if !isExist {
 			// 创建存储空间（默认为标准存储类型），并设置存储空间的权限为公共读（默认为私有）。
-			err = client.CreateBucket(conf.Storage.BucketName, oss.ACL(oss.ACLPublicRead))
-			if err != nil {
-				panic(err)
-			}
+			return client.CreateBucket(ossInfo.OSSBucketName, oss.ACL(oss.ACLPublicRead))
 		}
 	}
+	return nil
 }
 
-func UploadFile(objectKey, filePath string) error {
-	client, err := oss.New(conf.Storage.OSSEndpoint, conf.Storage.OSSAccessKeyId, conf.Storage.OSSAccessKeySecret)
+func UploadFile(objectKey, filePath string) (string, error) {
+	ossInfo := caches.GetOSSInfo()
+	if ossInfo.Enable() {
+		client, err := oss.New(ossInfo.OSSEndpoint, ossInfo.OSSAccessKeyID, ossInfo.OSSAccessKeySecret)
+		if err != nil {
+			return "", err
+		}
+		bucket, err := client.Bucket(ossInfo.OSSBucketName)
+		if err != nil {
+			return "", err
+		}
+		err = bucket.PutObjectFromFile(objectKey, filePath)
+		if err != nil {
+			return "", err
+		}
+		return fmt.Sprintf("https://%s.%s/%s",
+			ossInfo.OSSBucketName,
+			ossInfo.OSSEndpoint,
+			objectKey,
+		), nil
+	}
+	return "", nil
+}
+
+func DelFile(objectKey string) error {
+	ossInfo := caches.GetOSSInfo()
+	client, err := oss.New(ossInfo.OSSEndpoint, ossInfo.OSSAccessKeyID, ossInfo.OSSAccessKeySecret)
 	if err != nil {
 		return err
 	}
-	bucket, err := client.Bucket(conf.Storage.BucketName)
+	bucket, err := client.Bucket(ossInfo.OSSBucketName)
 	if err != nil {
 		return err
 	}
-	return bucket.PutObjectFromFile(objectKey, filePath)
+	return bucket.DeleteObject(objectKey)
 }

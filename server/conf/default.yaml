@@ -24,15 +24,6 @@ LOG:
   # 日志输出等级 fatal,error,warn,info,debug
   LEVEL: debug
 
-# 存储配置
-STORAGE:
-  # 阿里云OSS服务
-  ENABLEOSS: false
-  BUCKETNAME:
-  OSSENDPOINT:
-  OSSACCESSKEYID:
-  OSSACCESSKEYSECRET:
-
 # mysql 配置（可选）
 # 配置内容参考: https://gorm.io/zh_CN/docs/connecting_to_the_database.html
 MYSQL:

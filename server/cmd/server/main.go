@@ -3,7 +3,6 @@ package main
 import (
 	"supersign/internal/server"
 	"supersign/pkg"
-	"supersign/pkg/ali"
 	"supersign/pkg/conf"
 	"supersign/pkg/log"
 	"supersign/pkg/sign"
@@ -22,7 +21,6 @@ func setup() {
 	log.Setup(conf.Log.Level)
 	validatorer.Setup()
 	sign.Setup(log.New("sign").L(), conf.Server.MaxJob)
-	ali.Setup()
 	conf.OnChange(func() {
 		if err := pkg.Reset(); err != nil {
 			return

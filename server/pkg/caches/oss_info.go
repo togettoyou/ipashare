@@ -12,6 +12,14 @@ type OSSInfo struct {
 	OSSAccessKeySecret string `json:"oss_access_key_secret"`
 }
 
+func (o *OSSInfo) Enable() bool {
+	return o.EnableOSS &&
+		o.OSSBucketName != "" &&
+		o.OSSEndpoint != "" &&
+		o.OSSAccessKeyID != "" &&
+		o.OSSAccessKeySecret != ""
+}
+
 func (o *OSSInfo) Marshal() string {
 	b, _ := json.Marshal(o)
 	return string(b)
