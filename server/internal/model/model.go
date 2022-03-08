@@ -10,6 +10,7 @@ type Store struct {
 	AppleDevice    AppleDeviceStore
 	AppleIPA       AppleIPAStore
 	User           UserStore
+	Conf           ConfStore
 }
 
 type Model struct {

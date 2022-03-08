@@ -4,7 +4,7 @@ import (
 	"time"
 
 	"supersign/internal/model"
-	"supersign/pkg/conf"
+	localConf "supersign/pkg/conf"
 	"supersign/pkg/log"
 
 	"gorm.io/driver/mysql"
@@ -34,6 +34,7 @@ func NewSqlite() (*model.Store, error) {
 		&model.AppleDevice{},
 		&model.AppleIPA{},
 		&model.User{},
+		&model.Conf{},
 	)
 	if err != nil {
 		return nil, err
@@ -44,6 +45,7 @@ func NewSqlite() (*model.Store, error) {
 		AppleDevice:    newAppleDevice(db),
 		AppleIPA:       newAppleIPA(db),
 		User:           newUser(db),
+		Conf:           newConf(db),
 	}, nil
 }
 
@@ -51,8 +53,7 @@ func NewSqlite() (*model.Store, error) {
 func NewMysql() (*model.Store, error) {
 	db, err := gorm.Open(
 		mysql.New(mysql.Config{
-			DSN:                       conf.Mysql.Dsn,
-			DefaultStringSize:         191,   // string 类型字段的默认长度
+			DSN:                       localConf.Mysql.Dsn,
 			DisableDatetimePrecision:  true,  // 禁用 datetime 精度，MySQL 5.6 之前的数据库不支持
 			DontSupportRenameIndex:    true,  // 重命名索引时采用删除并新建的方式，MySQL 5.7 之前的数据库和 MariaDB 不支持重命名索引
 			DontSupportRenameColumn:   true,  // 用 `change` 重命名列，MySQL 8 之前的数据库和 MariaDB 不支持重命名列
@@ -73,9 +74,9 @@ func NewMysql() (*model.Store, error) {
 	if err != nil {
 		return nil, err
 	}
-	sqlDB.SetMaxIdleConns(conf.Mysql.MaxIdle)
-	sqlDB.SetMaxOpenConns(conf.Mysql.MaxOpen)
-	sqlDB.SetConnMaxLifetime(time.Duration(conf.Mysql.MaxLifetime) * time.Minute)
+	sqlDB.SetMaxIdleConns(localConf.Mysql.MaxIdle)
+	sqlDB.SetMaxOpenConns(localConf.Mysql.MaxOpen)
+	sqlDB.SetConnMaxLifetime(time.Duration(localConf.Mysql.MaxLifetime) * time.Minute)
 	err = sqlDB.Ping()
 	if err != nil {
 		return nil, err
@@ -88,6 +89,7 @@ func NewMysql() (*model.Store, error) {
 			&model.AppleDevice{},
 			&model.AppleIPA{},
 			&model.User{},
+			&model.Conf{},
 		)
 	if err != nil {
 		return nil, err
@@ -98,5 +100,6 @@ func NewMysql() (*model.Store, error) {
 		AppleDevice:    newAppleDevice(db),
 		AppleIPA:       newAppleIPA(db),
 		User:           newUser(db),
+		Conf:           newConf(db),
 	}, nil
 }
