@@ -8,6 +8,19 @@ definitions:
       msg:
         type: string
     type: object
+  caches.OSSInfo:
+    properties:
+      enable_oss:
+        type: boolean
+      oss_access_key_id:
+        type: string
+      oss_access_key_secret:
+        type: string
+      oss_bucket_name:
+        type: string
+      oss_endpoint:
+        type: string
+    type: object
   req.IPABody:
     properties:
       summary:
@@ -181,6 +194,40 @@ paths:
       summary: APP 下载页面
       tags:
       - Appstore
+  /api/v1/conf/oss:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 查询OSS配置
+      tags:
+      - Conf
+    post:
+      parameters:
+      - description: 登录信息
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/caches.OSSInfo'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 修改OSS配置
+      tags:
+      - Conf
   /api/v1/download/icon/{uuid}:
     get:
       parameters:

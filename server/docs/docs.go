@@ -259,6 +259,63 @@ var doc = `{
                 }
             }
         },
+        "/api/v1/conf/oss": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Conf"
+                ],
+                "summary": "查询OSS配置",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Conf"
+                ],
+                "summary": "修改OSS配置",
+                "parameters": [
+                    {
+                        "description": "登录信息",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/caches.OSSInfo"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/download/icon/{uuid}": {
             "get": {
                 "produces": [
@@ -629,6 +686,26 @@ var doc = `{
                     "type": "object"
                 },
                 "msg": {
+                    "type": "string"
+                }
+            }
+        },
+        "caches.OSSInfo": {
+            "type": "object",
+            "properties": {
+                "enable_oss": {
+                    "type": "boolean"
+                },
+                "oss_access_key_id": {
+                    "type": "string"
+                },
+                "oss_access_key_secret": {
+                    "type": "string"
+                },
+                "oss_bucket_name": {
+                    "type": "string"
+                },
+                "oss_endpoint": {
                     "type": "string"
                 }
             }
