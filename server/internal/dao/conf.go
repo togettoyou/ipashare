@@ -1,7 +1,6 @@
 package dao
 
 import (
-	"fmt"
 	"supersign/internal/model"
 	"supersign/pkg/caches"
 
@@ -35,7 +34,6 @@ func (c *conf) QueryOSSInfo() (*caches.OSSInfo, error) {
 	}
 	cacheInfo := caches.GetOSSInfo()
 	if cacheInfo.Marshal() != conf.Value {
-		fmt.Println("更新缓存")
 		var ossInfo caches.OSSInfo
 		ossInfo.Unmarshal(conf.Value)
 		caches.SetOSSInfo(ossInfo)
