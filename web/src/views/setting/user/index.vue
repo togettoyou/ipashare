@@ -75,16 +75,27 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          changePW({
-            username: this.ruleForm.username,
-            password: MD5(this.ruleForm.password).toString()
-          }).then(res => {
-            console.log(res);
-            this.$message.success('更改成功！请重新登录')
-            this.logout()
-          }).catch(err => {
-            console.log(err);
-          })
+          this.$confirm('确认更改?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            changePW({
+              username: this.ruleForm.username,
+              password: MD5(this.ruleForm.password).toString()
+            }).then(res => {
+              console.log(res);
+              this.$message.success('更改成功！请重新登录')
+              this.logout()
+            }).catch(err => {
+              console.log(err);
+            })
+          }).catch(() => {
+            this.$message({
+              type: 'info',
+              message: '已取消更改'
+            });
+          });
         } else {
           console.log('error submit!!');
           return false;

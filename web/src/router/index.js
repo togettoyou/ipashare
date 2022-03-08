@@ -47,12 +47,20 @@ export const constantRoutes = [
   {
     path: "/setting",
     component: Layout,
+    redirect: '/setting/oss',
+    meta: {title: "系统管理", icon: "setting"},
     children: [
       {
+        path: "oss",
+        name: "OSS",
+        component: () => import("@/views/setting/oss/index"),
+        meta: {title: "下载设置", icon: "oss"},
+      },
+      {
         path: "user",
-        name: "Setting",
-        component: () => import("@/views/setting/index"),
-        meta: {title: "系统设置", icon: "setting"},
+        name: "User",
+        component: () => import("@/views/setting/user/index"),
+        meta: {title: "登录设置", icon: "pw"},
       },
     ],
   },

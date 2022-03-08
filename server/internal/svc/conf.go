@@ -15,8 +15,12 @@ func (f *Conf) QueryOSSConf() (*caches.OSSInfo, error) {
 	if err != nil {
 		return nil, e.NewWithStack(e.DBError, err)
 	}
-	ossInfo.OSSAccessKeyID = "********"
-	ossInfo.OSSAccessKeySecret = "********"
+	if ossInfo.OSSAccessKeyID != "" {
+		ossInfo.OSSAccessKeyID = "********"
+	}
+	if ossInfo.OSSAccessKeySecret != "" {
+		ossInfo.OSSAccessKeySecret = "********"
+	}
 	return ossInfo, nil
 }
 
