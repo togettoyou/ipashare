@@ -228,6 +228,20 @@ paths:
       summary: 修改OSS配置
       tags:
       - Conf
+  /api/v1/conf/oss/verify:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 校验OSS
+      tags:
+      - Conf
   /api/v1/download/icon/{uuid}:
     get:
       parameters:

@@ -316,6 +316,30 @@ var doc = `{
                 }
             }
         },
+        "/api/v1/conf/oss/verify": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Conf"
+                ],
+                "summary": "校验OSS",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/download/icon/{uuid}": {
             "get": {
                 "produces": [

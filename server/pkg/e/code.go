@@ -31,4 +31,6 @@ var (
 	ErrAppstoreAPI          = &errno{code: 20303, msg: "App Store Connect API 连接异常，详细信息请查看日志"}
 	ErrCertificateNotEnough = &errno{code: 20304, msg: "iOS Development certificate 数量已满，请删除一个"}
 	ErrSign                 = &errno{code: 20305, msg: "重签名失败"}
+
+	ErrOSSVerify = &errno{code: 20401, msg: "OSS校验失败，请检查配置"}
 )

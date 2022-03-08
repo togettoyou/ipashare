@@ -29,6 +29,22 @@ func (f Conf) QueryOSSConf(c *gin.Context) {
 	f.OK(ossConf)
 }
 
+// VerifyOSS
+// @Tags Conf
+// @Summary 校验OSS
+// @Security ApiKeyAuth
+// @Produce json
+// @Success 200 {object} api.Response
+// @Router /api/v1/conf/oss/verify [get]
+func (f Conf) VerifyOSS(c *gin.Context) {
+	var confSvc svc.Conf
+	f.MakeContext(c).MakeService(&confSvc.Service)
+	if f.HasErr(confSvc.Verify()) {
+		return
+	}
+	f.OK()
+}
+
 // UpdateOSSConf
 // @Tags Conf
 // @Summary 修改OSS配置
