@@ -6,6 +6,8 @@ services:
       - "8888:8888"
     volumes:
       - $PWD/data:/root/togettoyou/data
+      - /etc/timezone:/etc/timezone
+      - /etc/localtime:/etc/localtime
     environment:
       - SERVER_URL=https://一定要修改成你的域名
       - SERVER_MAXJOB=10
