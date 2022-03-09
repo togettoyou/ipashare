@@ -4,6 +4,7 @@ import (
 	"supersign/internal/api"
 	"supersign/internal/svc"
 	"supersign/pkg/caches"
+	"supersign/pkg/e"
 
 	"github.com/gin-gonic/gin"
 )
@@ -60,6 +61,12 @@ func (f Conf) UpdateOSSConf(c *gin.Context) {
 	)
 	if !f.MakeContext(c).MakeService(&confSvc.Service).ParseJSON(&body) {
 		return
+	}
+	if body.EnableOSS {
+		if !body.Enable() {
+			f.HasErr(e.ErrValidation)
+			return
+		}
 	}
 	if f.HasErr(confSvc.UpdateOSSConf(&body)) {
 		return

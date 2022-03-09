@@ -42,6 +42,13 @@ import {Loading} from 'element-ui';
 export default {
   name: 'Setting',
   data() {
+    var validateOSS = (rule, value, callback) => {
+      if (this.ruleForm.enable_oss === true && value === '') {
+        callback(new Error('请填写完整'));
+      } else {
+        callback();
+      }
+    };
     return {
       ruleForm: {
         enable_oss: false,
@@ -50,7 +57,12 @@ export default {
         oss_access_key_id: '',
         oss_access_key_secret: '',
       },
-      rules: {},
+      rules: {
+        oss_bucket_name: {required: true, validator: validateOSS, trigger: 'blur'},
+        oss_endpoint: {required: true, validator: validateOSS, trigger: 'blur'},
+        oss_access_key_id: {required: true, validator: validateOSS, trigger: 'blur'},
+        oss_access_key_secret: {required: true, validator: validateOSS, trigger: 'blur'},
+      },
     };
   },
   created() {
@@ -73,7 +85,7 @@ export default {
           }).then(() => {
             let loadingInstance = Loading.service({
               lock: true,
-              text: '更改中',
+              text: '更改中......',
               spinner: 'el-icon-loading',
               background: 'rgba(0, 0, 0, 0.7)'
             });
@@ -81,7 +93,9 @@ export default {
               this.$message.success('更改成功')
               this.getForm()
               loadingInstance.close()
+              this.verify()
             }).catch(err => {
+              this.getForm()
               loadingInstance.close()
             })
           }).catch(() => {

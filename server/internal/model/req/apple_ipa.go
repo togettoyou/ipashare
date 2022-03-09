@@ -4,7 +4,7 @@ import "mime/multipart"
 
 type IPAForm struct {
 	IPA     *multipart.FileHeader `form:"ipa" binding:"required"`
-	Summary string                `form:"summary"`
+	Summary string                `form:"summary" binding:"required,min=2,max=100"`
 }
 
 type IPAQuery struct {
@@ -13,5 +13,5 @@ type IPAQuery struct {
 
 type IPABody struct {
 	UUID    string `json:"uuid" binding:"required"`
-	Summary string `json:"summary"`
+	Summary string `json:"summary" binding:"required,min=2,max=100"`
 }
