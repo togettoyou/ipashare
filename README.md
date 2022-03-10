@@ -23,6 +23,10 @@ go、云原生技术、项目问题、单纯支持 ...... 来者不拒
 
 本项目仅作为给开发者分发合法合规的 APP 使用，严禁使用本项目进行任何盈利、损害官方利益、分发任何违法违规的 APP 等行为
 
+## 效果预览
+
+[https://supersign.up.railway.app/admin](https://supersign.up.railway.app/admin)
+
 ## 部署项目
 
 提供了多种部署方案，以供参考，不同方案的区别仅在于 `docker-compose.yml` 的配置不同，部署时根据实际情况选择其中任意一种即可
@@ -184,9 +188,26 @@ docker-compose restart
 docker-compose down -v
 ```
 
-## 效果预览
+启动成功后可通过 `域名/admin` 例如 `https://example.com/admin` 访问后台管理
 
-待更
+### 持久化
+
+项目启动后所有文件保存在 `data` 目录，请妥善保管
+
+- `apple_developer` : 苹果开发者账号相关证书
+- `temporary_file_path` : 临时文件存放路径（重签名后的 IPA）
+- `upload_file_path` : 文件上传路径（上传的 IPA）
+- `sqlite.db` : 默认的sqlite数据库文件
+
+数据库支持更换为 MySQL ，在 `docker-compose.yml` 加入以下环境变量 ：
+
+```yaml
+- MYSQL_ENABLE=true
+- MYSQL_DSN=root:123456@tcp(127.0.0.1:3306)/db_default?charset=utf8mb4&parseTime=True&loc=Local
+```
+
+更多环境变量可参考：[server/conf/default.yaml](server/conf/default.yaml) ，变量层级使用 `_` 连接，如 `MYSQL_MAXIDLE` 代表 mysql
+配置中的空闲连接池中连接的最大数量
 
 ## 喝杯奶茶
 

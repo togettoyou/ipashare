@@ -9,7 +9,8 @@ services:
       - /etc/timezone:/etc/timezone
       - /etc/localtime:/etc/localtime
     environment:
-      - SERVER_URL=https://一定要修改成你的域名
+      - SERVER_URL=https://example.com
+      - SERVER_HTTPPORT=8888
       - SERVER_MAXJOB=10
       - SERVER_RUNMODE=release
       - LOG_LEVEL=info
