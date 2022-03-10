@@ -737,6 +737,7 @@ var doc = `{
         "req.IPABody": {
             "type": "object",
             "required": [
+                "summary",
                 "uuid"
             ],
             "properties": {

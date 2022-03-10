@@ -28,6 +28,7 @@ definitions:
       uuid:
         type: string
     required:
+    - summary
     - uuid
     type: object
   req.UserPW:

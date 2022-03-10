@@ -719,6 +719,7 @@
         "req.IPABody": {
             "type": "object",
             "required": [
+                "summary",
                 "uuid"
             ],
             "properties": {

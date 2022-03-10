@@ -22,6 +22,8 @@ type server struct {
 	WriteTimeout int    `mapstructure:"WRITETIMEOUT"`
 	HttpPort     int    `mapstructure:"HTTPPORT"`
 	TLS          bool   `mapstructure:"TLS"`
+	AutoTLS      bool   `mapstructure:"AUTOTLS"`
+	ACMEEmail    string `mapstructure:"ACMEEMAIL"`
 	Crt          string `mapstructure:"CRT"`
 	Key          string `mapstructure:"KEY"`
 }
