@@ -27,6 +27,26 @@ go、云原生技术、项目问题、单纯支持 ...... 来者不拒
 
 [https://supersign.up.railway.app/admin](https://supersign.up.railway.app/admin)
 
+开发者账号管理
+
+![image](https://user-images.githubusercontent.com/55381228/157637112-9ea00b7b-9edb-441e-bed9-c70a8252db62.png)
+
+开发者账号的 iss、kid、P8 文件需要到 https://appstoreconnect.apple.com/access/api 生成
+
+![image](https://user-images.githubusercontent.com/55381228/157636136-b0705dfe-5887-40a5-a464-f736157f5335.png)
+
+应用管理
+
+![image](https://user-images.githubusercontent.com/55381228/157637583-6ecb301f-490d-48cb-93f7-eb53c6c7ba9a.png)
+
+支持阿里云OSS设置
+
+![image](https://user-images.githubusercontent.com/55381228/157637721-535976b5-9110-4334-905c-cab03fcd0402.png)
+
+用户名密码修改
+
+![image](https://user-images.githubusercontent.com/55381228/157637800-b40e80cd-eaf6-4603-a212-66fde299d07e.png)
+
 ## 部署项目
 
 提供了多种部署方案，以供参考，不同方案的区别仅在于 `docker-compose.yml` 的配置不同，部署时根据实际情况选择其中任意一种即可
