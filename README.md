@@ -43,7 +43,13 @@ go、云原生技术、项目问题、单纯支持 ...... 来者不拒
 
 ## 部署项目
 
-提供了多种部署方案，以供参考，不同方案的区别仅在于 `docker-compose.yml` 的配置不同，部署时根据实际情况选择其中任意一种即可
+Railway 平台一键部署（每月 5 美元的免费额度，本项目的预览环境就部署在 Railway）：
+
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template?code=xOgXXB&referralCode=FVN0mI)
+
+Docker 部署：
+
+提供了多种部署方案供参考，不同方案的区别仅在于 `docker-compose.yml` 的配置不同，部署时根据实际情况选择其中任意一种即可
 
 ### 配置 1
 
