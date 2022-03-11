@@ -47,6 +47,22 @@ go、云原生技术、项目问题、单纯支持 ...... 来者不拒
 
 ![image](https://user-images.githubusercontent.com/55381228/157637800-b40e80cd-eaf6-4603-a212-66fde299d07e.png)
 
+描述文件下载
+
+![image](https://user-images.githubusercontent.com/55381228/157784137-d9997c5c-632b-4973-b232-85535466eb84.jpg)
+
+安装描述文件获取 UDID
+
+![image](https://user-images.githubusercontent.com/55381228/157784940-b6b2abb5-6f7e-4091-88f8-e15ce42f9cf6.jpg)
+
+等待重签名
+
+![image](https://user-images.githubusercontent.com/55381228/157784268-1bbb93e2-a31f-4ea2-8d23-0243b3ee3434.jpg)
+
+安装 APP
+
+![image](https://user-images.githubusercontent.com/55381228/157784568-6157ac60-fbb5-4198-9ccf-4315c4f12800.jpg)
+
 ## 部署项目
 
 提供了多种部署方案，以供参考，不同方案的区别仅在于 `docker-compose.yml` 的配置不同，部署时根据实际情况选择其中任意一种即可
