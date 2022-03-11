@@ -32,9 +32,9 @@ go、云原生技术、项目问题、单纯支持 ...... 来者不拒
 |                        开发者账号管理                        |                           应用管理                           |
 | ![image](https://user-images.githubusercontent.com/55381228/157637721-535976b5-9110-4334-905c-cab03fcd0402.png) | ![image](https://user-images.githubusercontent.com/55381228/157637800-b40e80cd-eaf6-4603-a212-66fde299d07e.png) |
 |                        阿里云OSS设置                         |                        用户名密码修改                        |
-| ![image](https://user-images.githubusercontent.com/55381228/157784137-d9997c5c-632b-4973-b232-85535466eb84.jpg) | ![image](https://user-images.githubusercontent.com/55381228/157784940-b6b2abb5-6f7e-4091-88f8-e15ce42f9cf6.jpg) |
+| <img src="https://user-images.githubusercontent.com/55381228/157784137-d9997c5c-632b-4973-b232-85535466eb84.jpg" alt="image" style="zoom: 50%;" /> | <img src="https://user-images.githubusercontent.com/55381228/157784940-b6b2abb5-6f7e-4091-88f8-e15ce42f9cf6.jpg" alt="image" style="zoom:50%;" /> |
 |                         描述文件下载                         |                    安装描述文件获取 UDID                     |
-| ![image](https://user-images.githubusercontent.com/55381228/157784268-1bbb93e2-a31f-4ea2-8d23-0243b3ee3434.jpg) | ![image](https://user-images.githubusercontent.com/55381228/157784568-6157ac60-fbb5-4198-9ccf-4315c4f12800.jpg) |
+| <img src="https://user-images.githubusercontent.com/55381228/157784268-1bbb93e2-a31f-4ea2-8d23-0243b3ee3434.jpg" alt="image" style="zoom:50%;" /> | <img src="https://user-images.githubusercontent.com/55381228/157784568-6157ac60-fbb5-4198-9ccf-4315c4f12800.jpg" alt="image" style="zoom:50%;" /> |
 |                          等待重签名                          |                           安装 APP                           |
 
 注：开发者账号的 iss、kid、P8 文件在 https://appstoreconnect.apple.com/access/api 创建
