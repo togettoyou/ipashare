@@ -13,7 +13,9 @@
 
 本项目添加开发者账号后会占用账号的一个 iOS Development certificate 名额（每个账号最多只能创建两个），所以你可能得预留一个
 
-本项目仅作为给开发者分发合法合规的 APP 使用，严禁使用本项目进行任何盈利、损害官方利益、分发任何违法违规的 APP 等行为
+本项目仅作为给个人开发者分发合法合规的 APP 使用，严禁使用本项目进行任何商业盈利、损害官方利益、分发任何违法违规的 APP 等行为
+
+本项目开源免费，不再继续更新新功能
 
 ## 效果预览
 
@@ -33,7 +35,7 @@
 
 ## 部署项目
 
-Railway 平台一键部署（每月 5 美元的免费额度）：
+Railway 一键部署（每月 5 美元的免费额度可以白嫖）：
 
 [![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template?code=xOgXXB&referralCode=FVN0mI)
 
