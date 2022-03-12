@@ -13,7 +13,7 @@ RUN make
 FROM node:lts-alpine AS builder-web
 WORKDIR /app
 COPY web/package*.json ./
-RUN yarn install --registry=https://registry.npmmirror.com
+RUN yarn install
 COPY web/. .
 RUN yarn run build:prod
 
