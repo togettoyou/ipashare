@@ -1,6 +1,6 @@
 package sign
 
-import "supersign/pkg/tools"
+import "ipashare/pkg/tools"
 
 func run(pemPath, keyPath, mobileprovisionPath, outputIPAPath, inputIPAPath string) error {
 	return tools.CmdClient.Command("zsign",

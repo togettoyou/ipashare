@@ -7,10 +7,10 @@ import (
 	"strings"
 	"time"
 
-	"supersign/internal/dao"
-	"supersign/internal/model"
-	"supersign/internal/server/router"
-	"supersign/pkg/conf"
+	"ipashare/internal/dao"
+	"ipashare/internal/model"
+	"ipashare/internal/server/router"
+	"ipashare/pkg/conf"
 
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/acme/autocert"

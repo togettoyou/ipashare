@@ -1,6 +1,6 @@
 package model
 
-import "supersign/pkg/caches"
+import "ipashare/pkg/caches"
 
 // Conf 配置
 type Conf struct {

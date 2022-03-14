@@ -1,4 +1,4 @@
-module supersign
+module ipashare
 
 go 1.16
 

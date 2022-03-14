@@ -1,7 +1,7 @@
 package ali
 
 import (
-	"supersign/pkg/caches"
+	"ipashare/pkg/caches"
 	"testing"
 )
 

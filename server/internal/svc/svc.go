@@ -1,8 +1,8 @@
 package svc
 
 import (
-	"supersign/internal/model"
-	logpkg "supersign/pkg/log"
+	"ipashare/internal/model"
+	logpkg "ipashare/pkg/log"
 
 	"go.uber.org/zap"
 )

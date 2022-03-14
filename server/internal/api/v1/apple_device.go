@@ -3,13 +3,13 @@ package v1
 import (
 	"fmt"
 	"io/ioutil"
+	"ipashare/internal/api"
+	"ipashare/internal/model/req"
+	"ipashare/internal/svc"
+	"ipashare/pkg/conf"
+	"ipashare/pkg/e"
+	"ipashare/pkg/ipa"
 	"net/http"
-	"supersign/internal/api"
-	"supersign/internal/model/req"
-	"supersign/internal/svc"
-	"supersign/pkg/conf"
-	"supersign/pkg/e"
-	"supersign/pkg/ipa"
 
 	"github.com/gin-gonic/gin"
 )

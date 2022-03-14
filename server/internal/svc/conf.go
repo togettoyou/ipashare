@@ -1,9 +1,9 @@
 package svc
 
 import (
-	"supersign/pkg/ali"
-	"supersign/pkg/caches"
-	"supersign/pkg/e"
+	"ipashare/pkg/ali"
+	"ipashare/pkg/caches"
+	"ipashare/pkg/e"
 )
 
 type Conf struct {

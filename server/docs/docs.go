@@ -789,7 +789,7 @@ var SwaggerInfo = swaggerInfo{
 	Host:        "",
 	BasePath:    "",
 	Schemes:     []string{},
-	Title:       "supersign 后端服务接口文档",
+	Title:       "ipashare 后端服务接口文档",
 	Description: "",
 }
 

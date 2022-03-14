@@ -2,14 +2,14 @@ package svc
 
 import (
 	"io/ioutil"
+	"ipashare/internal/model"
+	"ipashare/pkg/appstore"
+	"ipashare/pkg/conf"
+	"ipashare/pkg/e"
+	"ipashare/pkg/openssl"
+	"ipashare/pkg/tools"
 	"os"
 	"path"
-	"supersign/internal/model"
-	"supersign/pkg/appstore"
-	"supersign/pkg/conf"
-	"supersign/pkg/e"
-	"supersign/pkg/openssl"
-	"supersign/pkg/tools"
 
 	"gorm.io/gorm"
 )

@@ -1,6 +1,6 @@
 import defaultSettings from '@/settings'
 
-const title = defaultSettings.title || 'supersign后台管理'
+const title = defaultSettings.title || 'ipashare后台管理'
 
 export default function getPageTitle(pageTitle) {
   if (pageTitle) {

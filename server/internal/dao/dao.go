@@ -3,9 +3,9 @@ package dao
 import (
 	"time"
 
-	"supersign/internal/model"
-	localConf "supersign/pkg/conf"
-	"supersign/pkg/log"
+	"ipashare/internal/model"
+	localConf "ipashare/pkg/conf"
+	"ipashare/pkg/log"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/driver/sqlite"

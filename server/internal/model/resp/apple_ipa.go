@@ -1,6 +1,6 @@
 package resp
 
-import "supersign/internal/model"
+import "ipashare/internal/model"
 
 type AppleIPA struct {
 	model.AppleIPA

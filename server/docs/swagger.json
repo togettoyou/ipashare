@@ -1,7 +1,7 @@
 {
     "swagger": "2.0",
     "info": {
-        "title": "supersign 后端服务接口文档",
+        "title": "ipashare 后端服务接口文档",
         "contact": {},
         "license": {},
         "version": "1.0"

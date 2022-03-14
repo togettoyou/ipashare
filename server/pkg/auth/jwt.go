@@ -8,7 +8,7 @@ import (
 	"github.com/google/uuid"
 )
 
-const subject = "supersign"
+const subject = "ipashare"
 
 var jwtSecret = uuid.New().String()
 

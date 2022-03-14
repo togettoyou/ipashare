@@ -1,10 +1,10 @@
 package v1
 
 import (
-	"supersign/internal/api"
-	"supersign/internal/model/req"
-	"supersign/internal/server/middleware/cache"
-	"supersign/internal/svc"
+	"ipashare/internal/api"
+	"ipashare/internal/model/req"
+	"ipashare/internal/server/middleware/cache"
+	"ipashare/internal/svc"
 
 	"github.com/gin-gonic/gin"
 )

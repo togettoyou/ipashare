@@ -1,6 +1,6 @@
 module.exports = {
 
-  title: 'supersign后台管理',
+  title: 'ipashare后台管理',
 
   /**
    * @type {boolean} true | false

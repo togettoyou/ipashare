@@ -1,9 +1,9 @@
 .PHONY: all docs linux linux-docs docker docker-docs run gotool clean help
 
 # 生成的二进制文件名
-BINARY_NAME="supersign"
+BINARY_NAME="ipashare"
 # 生成的镜像名:版本
-IMAGE_NAME="supersign:latest"
+IMAGE_NAME="ipashare:latest"
 # run 参数
 TARGET=$(out)
 

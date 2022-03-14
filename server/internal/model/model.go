@@ -1,7 +1,7 @@
 package model
 
 import (
-	"supersign/pkg/tools"
+	"ipashare/pkg/tools"
 )
 
 // Store 实体管理，所有DB操作

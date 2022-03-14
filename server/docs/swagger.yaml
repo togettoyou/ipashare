@@ -44,7 +44,7 @@ definitions:
 info:
   contact: {}
   license: {}
-  title: supersign 后端服务接口文档
+  title: ipashare 后端服务接口文档
   version: "1.0"
 paths:
   /api/v1/appleDeveloper:

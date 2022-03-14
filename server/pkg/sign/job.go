@@ -2,10 +2,10 @@ package sign
 
 import (
 	"fmt"
+	"ipashare/pkg/ali"
+	"ipashare/pkg/conf"
 	"os"
 	"path"
-	"supersign/pkg/ali"
-	"supersign/pkg/conf"
 	"sync"
 	"time"
 
@@ -72,14 +72,14 @@ func Push(stream *Stream) {
 				signJob.mu.Lock()
 				signJob.doneCache[stream.ProfileUUID] = &done{
 					Success: false,
-					Msg:     "重签名任务执行失败:" + err.Error(),
+					Msg:     "打包任务执行失败:" + err.Error(),
 				}
 				signJob.mu.Unlock()
-				signJob.logger.Error("重签名任务执行失败:" + err.Error())
+				signJob.logger.Error("打包任务执行失败:" + err.Error())
 			}
 			<-signJob.streamCh
 		}()
-		signJob.logger.Info("开始执行重签名任务......")
+		signJob.logger.Info("开始执行打包任务......")
 		err = run(
 			path.Join(conf.Apple.AppleDeveloperPath, stream.Iss, "pem.pem"),
 			path.Join(conf.Apple.AppleDeveloperPath, stream.Iss, "key.key"),
@@ -100,7 +100,7 @@ func Push(stream *Stream) {
 		signJob.mu.Lock()
 		signJob.doneCache[stream.ProfileUUID] = &done{
 			Success:          true,
-			Msg:              "重签名任务执行成功",
+			Msg:              "打包任务执行成功",
 			BundleIdentifier: stream.BundleIdentifier,
 			Version:          stream.Version,
 			Name:             stream.Name,
@@ -109,7 +109,7 @@ func Push(stream *Stream) {
 			IpaURL:           ipaURL,
 		}
 		signJob.mu.Unlock()
-		signJob.logger.Info("重签名任务执行成功")
+		signJob.logger.Info("打包任务执行成功")
 	}()
 }
 

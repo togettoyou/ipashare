@@ -1,8 +1,8 @@
 package pkg
 
 import (
-	"supersign/pkg/conf"
-	"supersign/pkg/log"
+	"ipashare/pkg/conf"
+	"ipashare/pkg/log"
 )
 
 // Reset all

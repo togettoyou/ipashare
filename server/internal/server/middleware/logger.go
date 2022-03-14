@@ -3,8 +3,8 @@ package middleware
 import (
 	"time"
 
-	"supersign/internal/server/middleware/cache"
-	"supersign/pkg/log"
+	"ipashare/internal/server/middleware/cache"
+	"ipashare/pkg/log"
 
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"

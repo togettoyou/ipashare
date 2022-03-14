@@ -1,16 +1,16 @@
 package v1
 
 import (
+	"ipashare/internal/api"
+	"ipashare/internal/model/req"
+	"ipashare/internal/model/resp"
+	"ipashare/internal/svc"
+	"ipashare/pkg/conf"
+	"ipashare/pkg/e"
+	"ipashare/pkg/tools"
 	"net/http"
 	"path"
 	"strings"
-	"supersign/internal/api"
-	"supersign/internal/model/req"
-	"supersign/internal/model/resp"
-	"supersign/internal/svc"
-	"supersign/pkg/conf"
-	"supersign/pkg/e"
-	"supersign/pkg/tools"
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"

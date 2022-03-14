@@ -5,8 +5,8 @@ import (
 	"html/template"
 	"net/http"
 
-	"supersign/internal/model"
-	"supersign/internal/server/middleware"
+	"ipashare/internal/model"
+	"ipashare/internal/server/middleware"
 
 	"github.com/gin-contrib/pprof"
 	"github.com/gin-gonic/gin"

@@ -3,12 +3,12 @@ package v1
 import (
 	"errors"
 	"fmt"
+	"ipashare/internal/api"
+	"ipashare/internal/model/req"
+	"ipashare/pkg/conf"
+	"ipashare/pkg/sign"
 	"net/http"
 	"path"
-	"supersign/internal/api"
-	"supersign/internal/model/req"
-	"supersign/pkg/conf"
-	"supersign/pkg/sign"
 	"text/template"
 
 	"github.com/gin-gonic/gin"
@@ -37,7 +37,7 @@ const (
             </array>
         </dict>
         <key>PayloadOrganization</key>
-        <string>supersign</string>
+        <string>ipashare</string>
         <key>PayloadDisplayName</key>
         <string>获取UDID</string>
         <key>PayloadVersion</key>
@@ -45,7 +45,7 @@ const (
         <key>PayloadUUID</key>
         <string>{{ .UUID }}</string>
         <key>PayloadIdentifier</key>
-        <string>github.togettoyou.supersign</string>
+        <string>github.togettoyou.ipashare</string>
         <key>PayloadDescription</key>
         <string>仅用于绑定设备UDID以便安装APP</string>
         <key>PayloadType</key>

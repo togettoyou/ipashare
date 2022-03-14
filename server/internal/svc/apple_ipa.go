@@ -2,13 +2,13 @@ package svc
 
 import (
 	"fmt"
+	"ipashare/internal/model"
+	"ipashare/internal/model/resp"
+	"ipashare/pkg/conf"
+	"ipashare/pkg/e"
+	"ipashare/pkg/ipa"
 	"os"
 	"path"
-	"supersign/internal/model"
-	"supersign/internal/model/resp"
-	"supersign/pkg/conf"
-	"supersign/pkg/e"
-	"supersign/pkg/ipa"
 )
 
 type AppleIPA struct {

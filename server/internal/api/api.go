@@ -4,12 +4,12 @@ import (
 	"fmt"
 	"net/http"
 
-	"supersign/internal/model"
-	"supersign/internal/server/middleware/cache"
-	"supersign/internal/svc"
-	"supersign/pkg/e"
-	logpkg "supersign/pkg/log"
-	"supersign/pkg/validatorer"
+	"ipashare/internal/model"
+	"ipashare/internal/server/middleware/cache"
+	"ipashare/internal/svc"
+	"ipashare/pkg/e"
+	logpkg "ipashare/pkg/log"
+	"ipashare/pkg/validatorer"
 
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"

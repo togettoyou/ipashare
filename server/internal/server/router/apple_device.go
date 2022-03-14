@@ -1,10 +1,10 @@
 package router
 
 import (
-	"supersign/internal/api"
-	v1 "supersign/internal/api/v1"
-	"supersign/internal/model"
-	"supersign/pkg/log"
+	"ipashare/internal/api"
+	v1 "ipashare/internal/api/v1"
+	"ipashare/internal/model"
+	"ipashare/pkg/log"
 
 	"github.com/gin-gonic/gin"
 )

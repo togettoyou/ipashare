@@ -21,9 +21,9 @@ FROM togettoyou/zsign:latest AS zsign
 
 FROM centos:7
 WORKDIR /root/togettoyou/
-COPY --from=builder-server /root/togettoyou/supersign ./
+COPY --from=builder-server /root/togettoyou/ipashare ./
 COPY --from=builder-server /root/togettoyou/conf/ ./conf/
 COPY --from=builder-web /app/dist/ ./dist/
 COPY --from=zsign /zsign/zsign /bin/zsign
 RUN yum install -y openssl openssl-devel unzip zip
-ENTRYPOINT ["./supersign"]
+ENTRYPOINT ["./ipashare"]

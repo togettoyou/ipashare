@@ -1,13 +1,13 @@
 package svc
 
 import (
+	"ipashare/internal/model"
+	"ipashare/pkg/appstore"
+	"ipashare/pkg/conf"
+	"ipashare/pkg/e"
+	"ipashare/pkg/sign"
+	"ipashare/pkg/tools"
 	"path"
-	"supersign/internal/model"
-	"supersign/pkg/appstore"
-	"supersign/pkg/conf"
-	"supersign/pkg/e"
-	"supersign/pkg/sign"
-	"supersign/pkg/tools"
 
 	"github.com/google/uuid"
 	"gorm.io/gorm"
@@ -53,7 +53,7 @@ func (a *AppleDevice) Sign(udid, uuid string) (string, error) {
 			if err != nil {
 				return "", e.NewWithStack(e.ErrAppstoreAPI, err)
 			}
-			// 重签名
+			// 打包
 			plistUUID, err := a.signature(device.DeviceID, appleDeveloper, appleIPA)
 			if err != nil {
 				return "", e.NewWithStack(e.ErrSign, err)
@@ -102,7 +102,7 @@ func (a *AppleDevice) bindingAppleDeveloper(udid string, appleIPA *model.AppleIP
 			if err != nil {
 				return "", err
 			}
-			// 重签名
+			// 打包
 			plistUUID, err := a.signature(devicesResponse.Data.ID, appleDeveloper, appleIPA)
 			if err != nil {
 				return "", e.NewWithStack(e.ErrSign, err)
@@ -139,7 +139,7 @@ func (a *AppleDevice) signature(deviceID string, appleDeveloper *model.AppleDeve
 	if err != nil {
 		return "", err
 	}
-	// 发布重签名任务
+	// 发布打包任务
 	go sign.Push(&sign.Stream{
 		ProfileUUID:         profileUUID,
 		Iss:                 appleDeveloper.Iss,

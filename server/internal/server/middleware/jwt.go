@@ -1,13 +1,13 @@
 package middleware
 
 import (
+	"ipashare/internal/api"
+	"ipashare/internal/server/middleware/cache"
+	"ipashare/pkg/auth"
+	"ipashare/pkg/e"
+	"ipashare/pkg/log"
 	"net/http"
 	"strings"
-	"supersign/internal/api"
-	"supersign/internal/server/middleware/cache"
-	"supersign/pkg/auth"
-	"supersign/pkg/e"
-	"supersign/pkg/log"
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"

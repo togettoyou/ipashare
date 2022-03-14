@@ -1,8 +1,8 @@
 package conf
 
 import (
+	"ipashare/pkg/tools"
 	"strings"
-	"supersign/pkg/tools"
 
 	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/viper"

@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie'
 
-const TokenKey = 'supersign_token'
+const TokenKey = 'ipashare_token'
 
 export function getToken() {
   return Cookies.get(TokenKey)

@@ -70,7 +70,7 @@ export const constantRoutes = [
     component: Layout,
     children: [
       {
-        path: "https://github.com/togettoyou/supersign",
+        path: "https://github.com/togettoyou/ipashare",
         meta: {title: "项目地址", icon: "github"},
       },
     ],

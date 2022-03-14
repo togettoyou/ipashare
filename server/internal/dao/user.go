@@ -1,8 +1,8 @@
 package dao
 
 import (
-	"supersign/internal/model"
-	"supersign/pkg/tools"
+	"ipashare/internal/model"
+	"ipashare/pkg/tools"
 
 	"github.com/google/uuid"
 	"gorm.io/gorm"

@@ -1,9 +1,9 @@
 package svc
 
 import (
-	"supersign/pkg/auth"
-	"supersign/pkg/e"
-	"supersign/pkg/tools"
+	"ipashare/pkg/auth"
+	"ipashare/pkg/e"
+	"ipashare/pkg/tools"
 )
 
 type User struct {

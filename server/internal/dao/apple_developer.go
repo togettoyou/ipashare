@@ -1,7 +1,7 @@
 package dao
 
 import (
-	"supersign/internal/model"
+	"ipashare/internal/model"
 
 	"gorm.io/gorm"
 )

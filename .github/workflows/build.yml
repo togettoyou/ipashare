@@ -23,9 +23,9 @@ jobs:
           context: https://github.com/zhlynn/zsign.git
           push: true
           tags: togettoyou/zsign:latest
-      - name: Build and push supersign
+      - name: Build and push ipashare
         uses: docker/build-push-action@v2
         with:
           context: .
           push: true
-          tags: togettoyou/supersign:latest
+          tags: togettoyou/ipashare:latest

@@ -1,6 +1,6 @@
 ## 微信公众号：SuperGopher
 
-go、云原生技术 ...... 来者不拒
+go、云原生技术 ...... 来者不拒，欢迎关注
 <div align="center" style="width: 50%">
 
 ![微信公众号.png](https://user-images.githubusercontent.com/55381228/155444889-eacc0104-cd85-45c9-b7b7-9036e0c2334c.jpg)
@@ -8,11 +8,11 @@ go、云原生技术 ...... 来者不拒
 
 ## 起源
 
-每个客户端开发者都会想独立开发一款自己的 APP 。 但 iOS 不像 Android 那样可以自由分发应用 （Android 只要把 apk 甩出去就行了）
+每个客户端开发者都会想独立开发一款自己的 APP 。 但 iOS 不像 Android 那样可以自由的分享应用给其他人安装 （Android 只要把 apk 甩出去就行了）
 
 对于 iOS 开发者来说，苹果开发者账号几乎人手必备（这里只讨论个人账号）， 而苹果公司允许我们添加 100 台设备（udid）绑定到账号上，这 100 台设备可以自由安装由账号签名且使用 Ad Hoc 方式打包出的 `.ipa`
 
-本项目就是利用这个规则，来简化 iOS APP 的分发流程。当你开发一款 APP 的过程中，想要给身边的小伙伴体验一下，只需要使用本项目生成一个二维码链接，扫一扫，即可全程自动绑定设备并签名安装 APP
+本项目就是利用这个规则，来简化 iOS APP 的分享流程。当你开发一款 APP 的过程中，想要给身边的小伙伴体验一下，只需要使用本项目上传你的 IPA 并生成一个二维码链接，扫一扫，即可全程自动绑定设备并签名安装 APP
 
 ## 注意事项
 
@@ -21,21 +21,13 @@ go、云原生技术 ...... 来者不拒
 
 本项目添加开发者账号后会占用账号的一个 iOS Development certificate 名额（每个账号最多只能创建两个），所以你可能得预留一个
 
-本项目仅作为给个人开发者分发合法合规的 APP 使用，严禁使用本项目进行任何商业盈利、损害官方利益、分发任何违法违规的 APP 等行为
+本项目仅作为给个人开发者分享自己的合法合规的 APP 使用，严禁使用本项目进行任何商业盈利、损害官方利益、分享任何违法违规的 APP 等行为
 
-本项目开源免费，纯技术分享，不提供平台支持，不再继续更新新功能，不做定制开发（勿扰）
+本项目开源免费，纯技术分享，不提供任何平台支持，不基于此项目做任何定制开发（请勿扰）
+
+本项目若有 bug 可提交 issue ，会抽空维护，但是不再继续增加新的功能
 
 ## 效果预览
-
-| ![](https://user-images.githubusercontent.com/55381228/157637112-9ea00b7b-9edb-441e-bed9-c70a8252db62.png) | ![](https://user-images.githubusercontent.com/55381228/157637583-6ecb301f-490d-48cb-93f7-eb53c6c7ba9a.png) |
-| :----------------------------------------------------------: | :----------------------------------------------------------: |
-|                        开发者账号管理                        |                           应用管理                           |
-| ![](https://user-images.githubusercontent.com/55381228/157637721-535976b5-9110-4334-905c-cab03fcd0402.png) | ![](https://user-images.githubusercontent.com/55381228/157637800-b40e80cd-eaf6-4603-a212-66fde299d07e.png) |
-|                        阿里云OSS设置                         |                        用户名密码修改                        |
-| ![](https://user-images.githubusercontent.com/55381228/157784137-d9997c5c-632b-4973-b232-85535466eb84.jpg) | ![](https://user-images.githubusercontent.com/55381228/157784940-b6b2abb5-6f7e-4091-88f8-e15ce42f9cf6.jpg) |
-|                         描述文件下载                         |                    安装描述文件获取 UDID                     |
-| ![](https://user-images.githubusercontent.com/55381228/157784268-1bbb93e2-a31f-4ea2-8d23-0243b3ee3434.jpg) | ![](https://user-images.githubusercontent.com/55381228/157784568-6157ac60-fbb5-4198-9ccf-4315c4f12800.jpg) |
-|                          等待重签名                          |                           安装 APP                           |
 
 注：开发者账号的 iss、kid、P8 文件在 https://appstoreconnect.apple.com/access/api 创建
 
@@ -43,7 +35,7 @@ go、云原生技术 ...... 来者不拒
 
 ## 部署项目
 
-Railway 一键部署（每月 5 美元的免费额度可以白嫖）：
+Railway 一键部署（每月有 5 美元的免费额度可以白嫖）：
 
 [![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template?code=xOgXXB&referralCode=FVN0mI)
 
@@ -65,7 +57,7 @@ Docker 部署：
 version: '3'
 services:
   server:
-    image: togettoyou/supersign:latest
+    image: togettoyou/ipashare:latest
     ports:
       - "80:80"
       - "443:443"
@@ -101,7 +93,7 @@ services:
 version: '3'
 services:
   server:
-    image: togettoyou/supersign:latest
+    image: togettoyou/ipashare:latest
     ports:
       - "80:80"
       - "443:443"
@@ -140,7 +132,7 @@ services:
 version: '3'
 services:
   server:
-    image: togettoyou/supersign:latest
+    image: togettoyou/ipashare:latest
     ports:
       - "8888:8888"
     volumes:
@@ -215,7 +207,7 @@ docker-compose down -v
 项目启动后所有文件保存在 `data` 目录，请妥善保管
 
 - `apple_developer` : 苹果开发者账号相关证书
-- `temporary_file_path` : 临时文件存放路径（重签名后的 IPA）
+- `temporary_file_path` : 临时文件存放路径（打包后的 IPA，1小时后会自动删除）
 - `upload_file_path` : 文件上传路径（上传的 IPA）
 - `sqlite.db` : 默认的sqlite数据库文件
 

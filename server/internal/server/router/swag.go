@@ -4,7 +4,7 @@
 package router
 
 import (
-	_ "supersign/docs"
+	_ "ipashare/docs"
 
 	swagger "github.com/swaggo/gin-swagger"
 	"github.com/swaggo/gin-swagger/swaggerFiles"

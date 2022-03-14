@@ -1,12 +1,12 @@
 package main
 
 import (
-	"supersign/internal/server"
-	"supersign/pkg"
-	"supersign/pkg/conf"
-	"supersign/pkg/log"
-	"supersign/pkg/sign"
-	"supersign/pkg/validatorer"
+	"ipashare/internal/server"
+	"ipashare/pkg"
+	"ipashare/pkg/conf"
+	"ipashare/pkg/log"
+	"ipashare/pkg/sign"
+	"ipashare/pkg/validatorer"
 
 	"github.com/spf13/pflag"
 )
@@ -30,7 +30,7 @@ func setup() {
 	})
 }
 
-// @title supersign 后端服务接口文档
+// @title ipashare 后端服务接口文档
 // @version 1.0
 // @securityDefinitions.apikey ApiKeyAuth
 // @in header

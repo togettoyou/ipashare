@@ -2,11 +2,11 @@ package v1
 
 import (
 	"fmt"
+	"ipashare/internal/api"
+	"ipashare/internal/model/req"
+	"ipashare/pkg/conf"
+	"ipashare/pkg/sign"
 	"net/http"
-	"supersign/internal/api"
-	"supersign/internal/model/req"
-	"supersign/pkg/conf"
-	"supersign/pkg/sign"
 
 	"github.com/gin-gonic/gin"
 )

@@ -2,7 +2,7 @@ package ali
 
 import (
 	"fmt"
-	"supersign/pkg/caches"
+	"ipashare/pkg/caches"
 
 	"github.com/aliyun/aliyun-oss-go-sdk/oss"
 )

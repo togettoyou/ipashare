@@ -24,7 +24,7 @@ export default {
   },
   data() {
     return {
-      title: 'supersign后台管理',
+      title: 'ipashare后台管理',
       logo: 'https://apps.apple.com/assets/images/icons/apps-02daf211a48ed1f493ea452fb3e1ca38.png'
     }
   }

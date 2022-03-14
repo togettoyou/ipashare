@@ -3,7 +3,7 @@ package cache
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"supersign/pkg/auth"
+	"ipashare/pkg/auth"
 )
 
 const (

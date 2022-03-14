@@ -1,8 +1,8 @@
 package dao
 
 import (
-	"supersign/internal/model"
-	"supersign/pkg/caches"
+	"ipashare/internal/model"
+	"ipashare/pkg/caches"
 
 	"gorm.io/gorm"
 )

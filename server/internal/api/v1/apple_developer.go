@@ -2,13 +2,13 @@ package v1
 
 import (
 	"io/ioutil"
+	"ipashare/internal/api"
+	"ipashare/internal/model/req"
+	"ipashare/internal/model/resp"
+	"ipashare/internal/svc"
+	"ipashare/pkg/e"
 	"net/http"
 	"strings"
-	"supersign/internal/api"
-	"supersign/internal/model/req"
-	"supersign/internal/model/resp"
-	"supersign/internal/svc"
-	"supersign/pkg/e"
 
 	"github.com/gin-gonic/gin"
 )

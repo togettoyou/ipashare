@@ -2,7 +2,7 @@ package openssl
 
 import (
 	"fmt"
-	"supersign/pkg/tools"
+	"ipashare/pkg/tools"
 )
 
 const (
