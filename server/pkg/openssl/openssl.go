@@ -24,8 +24,8 @@ distinguished_name = req_distinguished
 
 [ req_distinguished ]
 C = CN
-O = SuperSign Company
-CN = SuperSign`, keyAndReqCSRConfPath)
+O = ipaShare Company
+CN = ipaShare`, keyAndReqCSRConfPath)
 		if err != nil {
 			return err
 		}
