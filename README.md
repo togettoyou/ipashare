@@ -29,14 +29,15 @@ go、云原生技术 ...... 来者不拒，欢迎关注
 
 ## 效果预览
 
-![login](https://user-images.githubusercontent.com/55381228/158097900-df769ac7-0918-4d10-a26d-202a46e234fc.png)
-![developer](https://user-images.githubusercontent.com/55381228/158097904-17098d6b-77c8-466f-b290-926cf413929c.png)
-![ipalist](https://user-images.githubusercontent.com/55381228/158097907-6a031a39-22db-48f7-838d-746e84d72c55.png)
-![qrcode](https://user-images.githubusercontent.com/55381228/158097913-3bc643a1-c373-4a57-9638-705786ac3dad.png)
-![oss](https://user-images.githubusercontent.com/55381228/158097916-b16bf570-7abc-44be-8779-004eb98face3.png)
-![pw](https://user-images.githubusercontent.com/55381228/158097919-898f7cdb-0e55-47ea-95d5-26896a612f2a.png)
-![htdb](https://user-images.githubusercontent.com/55381228/158097922-49d90c7b-8809-4137-9947-306e6dac6760.png)
-![install](https://user-images.githubusercontent.com/55381228/158097928-9b996028-2532-4b47-a1ce-c597f13a1014.png)
+| ![login](https://user-images.githubusercontent.com/55381228/158097900-df769ac7-0918-4d10-a26d-202a46e234fc.png) | ![developer](https://user-images.githubusercontent.com/55381228/158097904-17098d6b-77c8-466f-b290-926cf413929c.png) |
+| :----------------------------------------------------------: | :----------------------------------------------------------: |
+|                         后台管理登录                         |                        开发者账号管理                        |
+| ![ipalist](https://user-images.githubusercontent.com/55381228/158097907-6a031a39-22db-48f7-838d-746e84d72c55.png) | ![qrcode](https://user-images.githubusercontent.com/55381228/158097913-3bc643a1-c373-4a57-9638-705786ac3dad.png) |
+|                           应用管理                           |                         扫码安装应用                         |
+| ![oss](https://user-images.githubusercontent.com/55381228/158097916-b16bf570-7abc-44be-8779-004eb98face3.png) | ![pw](https://user-images.githubusercontent.com/55381228/158097919-898f7cdb-0e55-47ea-95d5-26896a612f2a.png) |
+|                       阿里云 OSS 设置                        |                        更改用户名密码                        |
+| ![htdb](https://user-images.githubusercontent.com/55381228/158097922-49d90c7b-8809-4137-9947-306e6dac6760.png) | ![install](https://user-images.githubusercontent.com/55381228/158097928-9b996028-2532-4b47-a1ce-c597f13a1014.png) |
+|                       等待 APP 打包中                        |                         开始安装 APP                         |
 
 注：开发者账号的 iss、kid、P8 文件在 https://appstoreconnect.apple.com/access/api 创建
 
