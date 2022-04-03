@@ -231,8 +231,50 @@ docker-compose down -v
 更多环境变量可参考：[server/conf/default.yaml](server/conf/default.yaml) ，变量层级使用 `_` 连接，如 `MYSQL_MAXIDLE` 代表 mysql
 配置中的空闲连接池中连接的最大数量
 
+## 宝塔部署
+
+使用宝塔部署，本质上还是使用 Docker + Nginx，即上述的配置 3 方式，区别只是在于提供了一种可视化的操作。
+
+### 软件商店搜索安装 Docker管理器
+
+![image](https://user-images.githubusercontent.com/55381228/161419444-57d3436d-fd82-4444-a86f-552f92025ad2.png)
+
+### 进入 Docker管理器-镜像管理-获取镜像 `togettoyou/ipashare:latest`
+
+![image](https://user-images.githubusercontent.com/55381228/161420567-267719d0-6f82-41e6-b4d1-b242fe1cfbc3.png)
+
+如果下载较慢，可以试试镜像加速
+
+### 进入 Docker管理器-容器列表-创建容器
+
+![image](https://user-images.githubusercontent.com/55381228/161420970-2afe5ce5-162a-443e-a290-7b1594e71074.png)
+
+其中具体的配置可以参考配置 3
+
+### 配置反向代理以及 SSL 证书
+
+网站-添加站点-纯静态即可
+
+![image](https://user-images.githubusercontent.com/55381228/161420997-f0be2d35-5ba3-4856-9e12-797a8a2bc210.png)
+
+创建反向代理
+
+![image](https://user-images.githubusercontent.com/55381228/161421292-04c6bdd0-fadb-466e-8fad-48182244acdd.png)
+
+开启 SSL ，根据自己需求申请，需要开启强制 HTTPS
+
+![image](https://user-images.githubusercontent.com/55381228/161421227-c85ad4a7-c3a3-4b68-987e-b008009575d5.png)
+
 ## JetBrains 开源证书支持
 
 本项目使用 GoLand 开发，感谢 JetBrains 提供的免费授权
 
 <a href="https://www.jetbrains.com/?from=togettoyou" target="_blank"><img src="https://user-images.githubusercontent.com/55381228/127271051-14879011-41dd-4d1b-88a2-1591925b51de.png" width="250" align="middle"/></a>
+
+## 喝杯奶茶
+
+如有帮助，可以打赏支持，一分也是爱！
+
+|  ![微信打赏](https://user-images.githubusercontent.com/55381228/155450359-0ce92911-fd3f-4d6b-9878-e40a17b34652.jpg)   | ![支付宝打赏](https://user-images.githubusercontent.com/55381228/155450383-509d0475-5497-4983-8583-137946b4d78e.jpg)  |
+|  ----  | ----  |
+| 微信  | 支付宝 |
