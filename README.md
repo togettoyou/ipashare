@@ -265,6 +265,8 @@ docker-compose down -v
 
 ![image](https://user-images.githubusercontent.com/55381228/161421227-c85ad4a7-c3a3-4b68-987e-b008009575d5.png)
 
+启动成功后同样通过 `域名/admin` 例如 `https://example.com/admin` 访问后台管理
+
 ## JetBrains 开源证书支持
 
 本项目使用 GoLand 开发，感谢 JetBrains 提供的免费授权
