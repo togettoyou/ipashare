@@ -53,13 +53,16 @@ func UploadFile(objectKey, filePath string) (string, error) {
 
 func DelFile(objectKey string) error {
 	ossInfo := caches.GetOSSInfo()
-	client, err := oss.New(ossInfo.OSSEndpoint, ossInfo.OSSAccessKeyID, ossInfo.OSSAccessKeySecret)
-	if err != nil {
-		return err
+	if ossInfo.Enable() {
+		client, err := oss.New(ossInfo.OSSEndpoint, ossInfo.OSSAccessKeyID, ossInfo.OSSAccessKeySecret)
+		if err != nil {
+			return err
+		}
+		bucket, err := client.Bucket(ossInfo.OSSBucketName)
+		if err != nil {
+			return err
+		}
+		return bucket.DeleteObject(objectKey)
 	}
-	bucket, err := client.Bucket(ossInfo.OSSBucketName)
-	if err != nil {
-		return err
-	}
-	return bucket.DeleteObject(objectKey)
+	return nil
 }
