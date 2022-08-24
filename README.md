@@ -27,6 +27,10 @@ go、云原生技术 ...... 来者不拒，欢迎关注
 
 本项目若有 bug 可提交 issue ，会抽空维护，但是不再继续增加新的功能
 
+其中添加开发者账号所需的 iss、kid、P8 文件需要在 https://appstoreconnect.apple.com/access/api 创建
+
+![image](https://user-images.githubusercontent.com/55381228/157636136-b0705dfe-5887-40a5-a464-f736157f5335.png)
+
 ## 效果预览
 
 | ![login](https://user-images.githubusercontent.com/55381228/158097900-df769ac7-0918-4d10-a26d-202a46e234fc.png) | ![developer](https://user-images.githubusercontent.com/55381228/158097904-17098d6b-77c8-466f-b290-926cf413929c.png) |
@@ -39,17 +43,14 @@ go、云原生技术 ...... 来者不拒，欢迎关注
 | ![htdb](https://user-images.githubusercontent.com/55381228/158097922-49d90c7b-8809-4137-9947-306e6dac6760.png) | ![install](https://user-images.githubusercontent.com/55381228/158097928-9b996028-2532-4b47-a1ce-c597f13a1014.png) |
 |                       等待 APP 打包中                        |                         开始安装 APP                         |
 
-注：开发者账号的 iss、kid、P8 文件在 https://appstoreconnect.apple.com/access/api 创建
 
-![image](https://user-images.githubusercontent.com/55381228/157636136-b0705dfe-5887-40a5-a464-f736157f5335.png)
+## Railway 部署
 
-## 部署项目
-
-Railway 一键部署（每月有 5 美元的免费额度可以白嫖）：
+使用 Railway 一键部署，每月有 5 美元的免费额度可以白嫖：
 
 [![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template?code=xOgXXB&referralCode=FVN0mI)
 
-Docker 部署：
+## Docker 部署：
 
 提供了多种部署方案供参考，不同方案的区别仅在于 `docker-compose.yml` 的配置不同，部署时根据实际情况选择其中任意一种即可
 
@@ -233,7 +234,7 @@ docker-compose down -v
 
 ## 宝塔部署
 
-使用宝塔部署，本质上还是使用 Docker + Nginx，即上述的配置 3 方式，区别只是在于提供了一种可视化的操作。
+使用宝塔部署，本质上是使用 Docker + Nginx，即 Docker 部署中的配置 3 方式，区别只是在于提供了一种可视化的操作。
 
 ### 软件商店搜索安装 Docker管理器
 
