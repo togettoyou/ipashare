@@ -210,12 +210,9 @@ const (
 func (auth *Authorize) GetAvailableDevices() (*DevicesResponseList, error) {
 	// TODO: 暂时通过多次请求解决403问题
 	for i := 0; i < 15; i++ {
-		resp, err := auth.httpRequest("GET", devicesUrl, nil)
+		resp, err := auth.httpRequest("GET", devicesUrl+"?limit=200", nil)
 		if err != nil {
 			return nil, err
-		}
-		if resp.StatusCode() != 200 && resp.StatusCode() != 403 {
-			return nil, errors.New(fmt.Sprintf("%s", resp.Body()))
 		}
 		if resp.StatusCode() == 200 {
 			var devicesResponseList DevicesResponseList
@@ -226,10 +223,14 @@ func (auth *Authorize) GetAvailableDevices() (*DevicesResponseList, error) {
 			fasthttp.ReleaseResponse(resp)
 			return &devicesResponseList, nil
 		}
+		if resp.StatusCode() != 403 {
+			fasthttp.ReleaseResponse(resp)
+			return nil, errors.New(fmt.Sprintf("%s", resp.Body()))
+		}
 		fasthttp.ReleaseResponse(resp)
 	}
 	// 15次请求还是403后 再来一次还是403就直接报错
-	resp, err := auth.httpRequest("GET", devicesUrl, nil)
+	resp, err := auth.httpRequest("GET", devicesUrl+"?limit=200", nil)
 	defer fasthttp.ReleaseResponse(resp)
 	if err != nil {
 		return nil, err
@@ -243,6 +244,27 @@ func (auth *Authorize) GetAvailableDevices() (*DevicesResponseList, error) {
 		return nil, err
 	}
 	return &devicesResponseList, nil
+}
+
+// GetAvailableDevice 获取账号指定测试设备
+func (auth *Authorize) GetAvailableDevice(udid string) (*DevicesResponse, bool, error) {
+	resp, err := auth.httpRequest("GET", devicesUrl+"/"+udid, nil)
+	defer fasthttp.ReleaseResponse(resp)
+	if err != nil {
+		return nil, false, err
+	}
+	if resp.StatusCode() == 404 {
+		return nil, false, nil
+	}
+	if resp.StatusCode() == 200 {
+		var devicesResponse DevicesResponse
+		err = json.Unmarshal(resp.Body(), &devicesResponse)
+		if err != nil {
+			return nil, false, err
+		}
+		return &devicesResponse, true, nil
+	}
+	return nil, false, errors.New(fmt.Sprintf("%s", resp.Body()))
 }
 
 // AddAvailableDevice 添加测试设备

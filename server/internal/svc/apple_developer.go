@@ -42,7 +42,7 @@ func (a *AppleDeveloper) Add(iss, kid, p8 string) (num int, err error) {
 	if appleDeveloper != nil {
 		return 0, e.ErrIssExist
 	}
-	// 验证账号合法性
+	// 获取所有设备列表
 	devices, err := authorize.GetAvailableDevices()
 	if err != nil {
 		return 0, e.NewWithStack(e.ErrAppstoreAPI, err)

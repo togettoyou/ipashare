@@ -49,9 +49,9 @@ func (a *AppleDevice) Sign(udid, uuid string) (string, error) {
 				Iss: appleDeveloper.Iss,
 				Kid: appleDeveloper.Kid,
 			}
-			_, err = authorize.GetAvailableDevices()
-			if err != nil {
-				return "", e.NewWithStack(e.ErrAppstoreAPI, err)
+			_, ok, _ := authorize.GetAvailableDevice(udid)
+			if !ok {
+				continue
 			}
 			// 打包
 			plistUUID, err := a.signature(device.DeviceID, appleDeveloper, appleIPA)
@@ -82,16 +82,33 @@ func (a *AppleDevice) bindingAppleDeveloper(udid string, appleIPA *model.AppleIP
 			Iss: appleDeveloper.Iss,
 			Kid: appleDeveloper.Kid,
 		}
-		devicesResponseList, err := authorize.GetAvailableDevices()
+		devicesResponse, ok, err := authorize.GetAvailableDevice(udid)
 		if err != nil {
-			return "", err
-		}
-		if devicesResponseList.Meta.Paging.Total < 100 {
-			// 账号满足要求
-			// 将udid添加到对应的开发者账号中心
-			devicesResponse, err := authorize.AddAvailableDevice(udid)
+			// 账号不可用
+			err := a.store.AppleDeveloper.UpdateSetup(
+				appleDeveloper.Iss,
+				appleDeveloper.Limit,
+				false,
+			)
 			if err != nil {
 				return "", err
+			}
+			continue
+		}
+		if !ok {
+			// 将udid添加到对应的开发者账号中心
+			devicesResponse, err = authorize.AddAvailableDevice(udid)
+			if err != nil {
+				// 账号不可用
+				err := a.store.AppleDeveloper.UpdateSetup(
+					appleDeveloper.Iss,
+					appleDeveloper.Limit,
+					false,
+				)
+				if err != nil {
+					return "", err
+				}
+				continue
 			}
 			// 将udid记录到数据库
 			err = a.store.AppleDevice.Create(&model.AppleDevice{
@@ -102,23 +119,13 @@ func (a *AppleDevice) bindingAppleDeveloper(udid string, appleIPA *model.AppleIP
 			if err != nil {
 				return "", err
 			}
-			// 打包
-			plistUUID, err := a.signature(devicesResponse.Data.ID, appleDeveloper, appleIPA)
-			if err != nil {
-				return "", e.NewWithStack(e.ErrSign, err)
-			}
-			return plistUUID, nil
-		} else {
-			// 更新账号已绑定设备量
-			err := a.store.AppleDeveloper.UpdateCount(
-				appleDeveloper.Iss,
-				devicesResponseList.Meta.Paging.Total,
-			)
-			if err != nil {
-				return "", err
-			}
-			continue
 		}
+		// 打包
+		plistUUID, err := a.signature(devicesResponse.Data.ID, appleDeveloper, appleIPA)
+		if err != nil {
+			return "", e.NewWithStack(e.ErrSign, err)
+		}
+		return plistUUID, nil
 	}
 }
 
