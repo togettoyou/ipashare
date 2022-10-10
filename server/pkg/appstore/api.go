@@ -246,9 +246,9 @@ func (auth *Authorize) GetAvailableDevices() (*DevicesResponseList, error) {
 	return &devicesResponseList, nil
 }
 
-// GetAvailableDevice 获取账号指定测试设备
-func (auth *Authorize) GetAvailableDevice(udid string) (*DevicesResponse, bool, error) {
-	resp, err := auth.httpRequest("GET", devicesUrl+"/"+udid, nil)
+// GetAvailableDevice 通过 deviceID 获取账号指定测试设备
+func (auth *Authorize) GetAvailableDevice(deviceID string) (*DevicesResponse, bool, error) {
+	resp, err := auth.httpRequest("GET", devicesUrl+"/"+deviceID, nil)
 	defer fasthttp.ReleaseResponse(resp)
 	if err != nil {
 		return nil, false, err
@@ -265,6 +265,30 @@ func (auth *Authorize) GetAvailableDevice(udid string) (*DevicesResponse, bool, 
 		return &devicesResponse, true, nil
 	}
 	return nil, false, errors.New(fmt.Sprintf("%s", resp.Body()))
+}
+
+// GetAvailableDeviceByUDID 通过 udid 获取账号指定测试设备
+func (auth *Authorize) GetAvailableDeviceByUDID(udid string) (*DevicesResponse, bool, error) {
+	resp, err := auth.httpRequest("GET", devicesUrl+"?limit=200&filter[udid]="+udid, nil)
+	defer fasthttp.ReleaseResponse(resp)
+	if err != nil {
+		return nil, false, err
+	}
+	if resp.StatusCode() != 200 {
+		return nil, false, errors.New(fmt.Sprintf("%s", resp.Body()))
+	}
+	var devicesResponseList DevicesResponseList
+	err = json.Unmarshal(resp.Body(), &devicesResponseList)
+	if err != nil {
+		return nil, false, err
+	}
+	if len(devicesResponseList.Data) != 1 {
+		return nil, false, nil
+	}
+	return &DevicesResponse{
+		Data:  devicesResponseList.Data[0],
+		Links: devicesResponseList.Links,
+	}, true, nil
 }
 
 // AddAvailableDevice 添加测试设备

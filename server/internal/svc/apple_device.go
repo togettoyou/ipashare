@@ -49,7 +49,7 @@ func (a *AppleDevice) Sign(udid, uuid string) (string, error) {
 				Iss: appleDeveloper.Iss,
 				Kid: appleDeveloper.Kid,
 			}
-			_, ok, _ := authorize.GetAvailableDevice(udid)
+			_, ok, _ := authorize.GetAvailableDevice(device.DeviceID)
 			if !ok {
 				continue
 			}
@@ -82,7 +82,7 @@ func (a *AppleDevice) bindingAppleDeveloper(udid string, appleIPA *model.AppleIP
 			Iss: appleDeveloper.Iss,
 			Kid: appleDeveloper.Kid,
 		}
-		devicesResponse, ok, err := authorize.GetAvailableDevice(udid)
+		devicesResponse, ok, err := authorize.GetAvailableDeviceByUDID(udid)
 		if err != nil {
 			// 账号不可用
 			err := a.store.AppleDeveloper.UpdateSetup(
