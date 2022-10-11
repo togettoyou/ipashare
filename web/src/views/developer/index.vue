@@ -20,6 +20,11 @@
       <el-table-column prop="kid" label="kid" align="center" header-align="center"></el-table-column>
       <el-table-column prop="count" label="已使用设备量" align="center" header-align="center"></el-table-column>
       <el-table-column prop="created_at" label="添加时间" align="center" header-align="center"></el-table-column>
+      <el-table-column label="已绑定设备列表" align="center" width="150">
+        <template slot-scope="scope">
+          <el-button type="text" @click="getDevices(scope.row.iss)" size="small">查看</el-button>
+        </template>
+      </el-table-column>
       <el-table-column label="最大限制量" align="center" width="100">
         <template scope="scope">
           <el-input size="small" v-model="scope.row.limit" placeholder="最大限制量"
@@ -63,6 +68,25 @@
       :total="total">
     </el-pagination>
 
+    <el-dialog :title="'iss['+devicesIss+'] 已绑定设备列表'" :visible.sync="devicesDialog"
+               :show-close="false"
+               :close-on-click-modal="false"
+               :close-on-press-escape="false"
+               :destroy-on-close="true"
+    >
+      <el-table :data="devicesList" height="350" style="width: 100%;" stripe highlight-current-row border
+                :header-cell-style="{background:'#f8f8f9',color: '#606266','font-weight':'bold'}">
+        <el-table-column width="50" type="index" label="序号" align="center" header-align="center"></el-table-column>
+        <el-table-column prop="device_id" label="设备 ID" align="center" header-align="center"></el-table-column>
+        <el-table-column prop="udid" label="设备 UDID" align="center" header-align="center"></el-table-column>
+      </el-table>
+
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="clearDevices">关 闭</el-button>
+        <el-button type="primary" :loading="devicesUploading" @click="updateDevices">从苹果后台同步最新设备</el-button>
+      </div>
+    </el-dialog>
+
     <el-dialog title="上传开发者账号" :visible.sync="dialogFormVisible"
                :show-close="false"
                :close-on-click-modal="false"
@@ -104,6 +128,7 @@
 
 <script>
 import {del, list, update, upload} from "@/api/developer";
+import {deviceList, updateDevice} from "@/api/device";
 import {Loading} from 'element-ui';
 import axios from "axios";
 
@@ -131,6 +156,10 @@ export default {
       uploading: false,
       uploadCancel: null,
       dialogQrcode: false,
+      devicesIss: '',
+      devicesDialog: false,
+      devicesUploading: false,
+      devicesList: [],
     }
   },
   created() {
@@ -226,6 +255,59 @@ export default {
     },
     handleRemove() {
       this.fileList = []
+    },
+    getDevices(iss) {
+      this.devicesIss = iss
+      this.devicesDialog = true
+      deviceList(iss).then(res => {
+        console.log(res);
+        if (res.code === 0) {
+          this.devicesList = res.data
+        } else {
+          this.$message.info(res.msg)
+        }
+      }).catch(err => {
+        console.log(err);
+      })
+    },
+    clearDevices() {
+      this.devicesIss = ''
+      this.devicesDialog = false
+      this.devicesList = []
+    },
+    updateDevices() {
+      if (this.devicesIss !== '') {
+        this.$confirm('此操作将从苹果后台同步最新的设备列表, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          updateDevice(this.devicesIss).then(res => {
+            console.log(res);
+            if (res.code === 0) {
+              this.$message.error("同步成功")
+              deviceList(this.devicesIss).then(res => {
+                if (res.code === 0) {
+                  this.devicesList = res.data
+                } else {
+                  this.$message.info(res.msg)
+                }
+              }).catch(err => {
+                console.log(err);
+              })
+            } else {
+              this.$message.error("同步失败" + res.msg)
+            }
+          }).catch(err => {
+            this.$message.error("同步失败" + err)
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消同步'
+          });
+        });
+      }
     },
     del(iss) {
       this.$confirm('此操作将永久删除该账号, 是否继续?', '提示', {
