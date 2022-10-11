@@ -33,4 +33,5 @@ var (
 	ErrSign                 = &errno{code: 20305, msg: "打包失败，详细信息请查看日志"}
 
 	ErrOSSVerify = &errno{code: 20401, msg: "OSS校验失败，请检查配置，详细信息请查看日志"}
+	ErrOSSEnable = &errno{code: 20402, msg: "OSS未启用"}
 )

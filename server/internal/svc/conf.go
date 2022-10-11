@@ -15,12 +15,6 @@ func (f *Conf) QueryOSSConf() (*caches.OSSInfo, error) {
 	if err != nil {
 		return nil, e.NewWithStack(e.DBError, err)
 	}
-	if ossInfo.OSSAccessKeyID != "" {
-		ossInfo.OSSAccessKeyID = "********"
-	}
-	if ossInfo.OSSAccessKeySecret != "" {
-		ossInfo.OSSAccessKeySecret = "********"
-	}
 	return ossInfo, nil
 }
 
@@ -33,9 +27,12 @@ func (f *Conf) UpdateOSSConf(info *caches.OSSInfo) error {
 }
 
 func (f *Conf) Verify() error {
-	_, err := f.store.Conf.QueryOSSInfo()
+	ossInfo, err := f.store.Conf.QueryOSSInfo()
 	if err != nil {
 		return e.NewWithStack(e.DBError, err)
+	}
+	if !ossInfo.EnableOSS {
+		return e.NewWithStack(e.ErrOSSEnable, nil)
 	}
 	err = ali.Verify()
 	if err != nil {
