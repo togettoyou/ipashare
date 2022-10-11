@@ -4,6 +4,7 @@ import (
 	"ipashare/internal/api"
 	v1 "ipashare/internal/api/v1"
 	"ipashare/internal/model"
+	"ipashare/internal/server/middleware"
 	"ipashare/pkg/log"
 
 	"github.com/gin-gonic/gin"
@@ -16,6 +17,8 @@ func registerAppleDeviceRouter(store *model.Store, r *gin.RouterGroup) {
 	appleDeviceR := r.Group("/appleDevice")
 
 	{
+		appleDeviceR.GET("", middleware.JWT(), appleDevice.List)
+		appleDeviceR.POST("", middleware.JWT(), appleDevice.Update)
 		appleDeviceR.POST("udid/:uuid", appleDevice.UDID)
 	}
 }

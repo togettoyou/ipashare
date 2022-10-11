@@ -173,6 +173,70 @@
                 }
             }
         },
+        "/api/v1/appleDevice": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "AppleDevice"
+                ],
+                "summary": "获取苹果开发者账号绑定的设备列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "iss",
+                        "name": "iss",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "AppleDevice"
+                ],
+                "summary": "更新苹果开发者账号绑定的设备列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "iss",
+                        "name": "iss",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/appleDevice/udid/{uuid}": {
             "post": {
                 "consumes": [

@@ -17,6 +17,44 @@ type AppleDevice struct {
 	Service
 }
 
+func (a *AppleDevice) List(iss string) ([]model.AppleDevice, error) {
+	appleDevices, err := a.store.AppleDevice.List(iss)
+	if err != nil {
+		return nil, e.NewWithStack(e.DBError, err)
+	}
+	return appleDevices, nil
+}
+
+func (a *AppleDevice) Update(iss string) error {
+	appleDeveloper, err := a.store.AppleDeveloper.Query(iss)
+	if err != nil {
+		return e.NewWithStack(e.DBError, err)
+	}
+	authorize := appstore.Authorize{
+		P8:  appleDeveloper.P8,
+		Iss: iss,
+		Kid: appleDeveloper.Kid,
+	}
+	// 获取所有设备列表
+	devices, err := authorize.GetAvailableDevices()
+	if err != nil {
+		return e.NewWithStack(e.ErrAppstoreAPI, err)
+	}
+	appleDevices := make([]model.AppleDevice, 0)
+	for _, datum := range devices.Data {
+		appleDevices = append(appleDevices, model.AppleDevice{
+			UDID:     datum.Attributes.Udid,
+			Iss:      iss,
+			DeviceID: datum.ID,
+		})
+	}
+	err = a.store.AppleDevice.Update(iss, devices.Meta.Paging.Total, appleDevices)
+	if err != nil {
+		return e.NewWithStack(e.DBError, err)
+	}
+	return nil
+}
+
 func (a *AppleDevice) Sign(udid, uuid string) (string, error) {
 	// 判断 IPA 是否存在
 	appleIPA, err := a.store.AppleIPA.Query(uuid)

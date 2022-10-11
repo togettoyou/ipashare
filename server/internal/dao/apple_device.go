@@ -40,3 +40,31 @@ func (a *appleDevice) Find(udid string) ([]model.AppleDevice, error) {
 	}
 	return appleDevices, nil
 }
+
+func (a *appleDevice) List(iss string) ([]model.AppleDevice, error) {
+	var appleDevices []model.AppleDevice
+	err := a.db.Where("iss = ?", iss).Find(&appleDevices).Error
+	if err != nil {
+		return nil, err
+	}
+	return appleDevices, nil
+}
+
+func (a *appleDevice) Update(iss string, count int, appleDevices []model.AppleDevice) error {
+	if iss == "" || appleDevices == nil || len(appleDevices) == 0 {
+		return nil
+	}
+	return a.db.Transaction(func(tx *gorm.DB) error {
+		err := tx.Where("iss = ?", iss).Delete(&model.AppleDevice{}).Error
+		if err != nil {
+			return err
+		}
+		err = tx.Create(appleDevices).Error
+		if err != nil {
+			return err
+		}
+		return tx.Model(&model.AppleDeveloper{}).
+			Where("iss = ?", iss).
+			UpdateColumn("count", count).Error
+	})
+}

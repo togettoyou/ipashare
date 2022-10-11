@@ -18,6 +18,51 @@ type AppleDevice struct {
 	api.Base
 }
 
+// List
+// @Tags AppleDevice
+// @Summary 获取苹果开发者账号绑定的设备列表
+// @Security ApiKeyAuth
+// @Produce json
+// @Param iss query string true "iss"
+// @Success 200 {object} api.Response
+// @Router /api/v1/appleDevice [get]
+func (a AppleDevice) List(c *gin.Context) {
+	var (
+		appleDeviceSvc svc.AppleDevice
+		args           req.AppleDeviceList
+	)
+	if !a.MakeContext(c).MakeService(&appleDeviceSvc.Service).ParseQuery(&args) {
+		return
+	}
+	appleDevices, err := appleDeviceSvc.List(args.Iss)
+	if a.HasErr(err) {
+		return
+	}
+	a.OK(appleDevices)
+}
+
+// Update
+// @Tags AppleDevice
+// @Summary 更新苹果开发者账号绑定的设备列表
+// @Security ApiKeyAuth
+// @Produce json
+// @Param iss query string true "iss"
+// @Success 200 {object} api.Response
+// @Router /api/v1/appleDevice [post]
+func (a AppleDevice) Update(c *gin.Context) {
+	var (
+		appleDeviceSvc svc.AppleDevice
+		args           req.AppleDeviceList
+	)
+	if !a.MakeContext(c).MakeService(&appleDeviceSvc.Service).ParseQuery(&args) {
+		return
+	}
+	if a.HasErr(appleDeviceSvc.Update(args.Iss)) {
+		return
+	}
+	a.OK()
+}
+
 // UDID
 // @Tags AppleDevice
 // @Summary 获取 UDID（苹果服务器回调）

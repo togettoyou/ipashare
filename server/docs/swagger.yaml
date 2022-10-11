@@ -151,6 +151,45 @@ paths:
       summary: 上传苹果开发者账号
       tags:
       - AppleDeveloper
+  /api/v1/appleDevice:
+    get:
+      parameters:
+      - description: iss
+        in: query
+        name: iss
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取苹果开发者账号绑定的设备列表
+      tags:
+      - AppleDevice
+    post:
+      parameters:
+      - description: iss
+        in: query
+        name: iss
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 更新苹果开发者账号绑定的设备列表
+      tags:
+      - AppleDevice
   /api/v1/appleDevice/udid/{uuid}:
     post:
       consumes:

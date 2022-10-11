@@ -12,4 +12,6 @@ type AppleDeviceStore interface {
 	Create(appleDevice *AppleDevice) error
 	Del(udid, iss string) error
 	Find(udid string) ([]AppleDevice, error)
+	List(iss string) ([]AppleDevice, error)
+	Update(iss string, count int, appleDevices []AppleDevice) error
 }
