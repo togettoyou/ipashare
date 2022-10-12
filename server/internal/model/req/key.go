@@ -1,7 +1,7 @@
 package req
 
 type KeyQuery struct {
-	Username string `json:"username" binding:"required,min=4,max=16"`
+	Username string `form:"username" binding:"required,min=4,max=16"`
 }
 
 type KeyCr struct {

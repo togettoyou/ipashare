@@ -45,6 +45,19 @@ export const constantRoutes = [
   },
 
   {
+    path: "/key",
+    component: Layout,
+    children: [
+      {
+        path: "list",
+        name: "Key",
+        component: () => import("@/views/key/index"),
+        meta: {title: "密钥管理", icon: "key"},
+      },
+    ],
+  },
+
+  {
     path: "/setting",
     component: Layout,
     redirect: '/setting/oss',
