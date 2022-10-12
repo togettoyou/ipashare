@@ -103,7 +103,8 @@ func (d Download) MobileConfig(c *gin.Context) {
 	}
 	c.Header("Content-Type", "application/octet-stream")
 	c.Header("Content-Disposition", "attachment; filename="+args.UUID+".mobileconfig")
-	url := fmt.Sprintf("%s/api/v1/appleDevice/udid/%s", conf.Server.URL, args.UUID)
+	authKey, _ := c.Get("authKey")
+	url := fmt.Sprintf("%s/api/v1/appleDevice/udid/%s?authKey=%s", conf.Server.URL, args.UUID, authKey)
 	if d.HasErr(tmpl.Execute(c.Writer, map[string]string{"URL": url, "UUID": args.UUID})) {
 		return
 	}

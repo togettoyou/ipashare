@@ -12,4 +12,6 @@ type Conf struct {
 type ConfStore interface {
 	QueryOSSInfo() (*caches.OSSInfo, error)
 	UpdateOSSInfo(ossInfo *caches.OSSInfo) error
+	QueryKeyInfo() (*caches.KeyInfo, error)
+	UpdateKeyInfo(keyInfo *caches.KeyInfo) error
 }

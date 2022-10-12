@@ -13,6 +13,45 @@ type Conf struct {
 	api.Base
 }
 
+// QueryKeyConf
+// @Tags Conf
+// @Summary 查询Key配置
+// @Security ApiKeyAuth
+// @Produce json
+// @Success 200 {object} api.Response
+// @Router /api/v1/conf/key [get]
+func (f Conf) QueryKeyConf(c *gin.Context) {
+	var confSvc svc.Conf
+	f.MakeContext(c).MakeService(&confSvc.Service)
+	keyConf, err := confSvc.QueryKeyConf()
+	if f.HasErr(err) {
+		return
+	}
+	f.OK(keyConf)
+}
+
+// UpdateKeyConf
+// @Tags Conf
+// @Summary 修改Key配置
+// @Security ApiKeyAuth
+// @Produce json
+// @Param data body caches.KeyInfo true "登录信息"
+// @Success 200 {object} api.Response
+// @Router /api/v1/conf/key [post]
+func (f Conf) UpdateKeyConf(c *gin.Context) {
+	var (
+		body    caches.KeyInfo
+		confSvc svc.Conf
+	)
+	if !f.MakeContext(c).MakeService(&confSvc.Service).ParseJSON(&body) {
+		return
+	}
+	if f.HasErr(confSvc.UpdateKeyConf(&body)) {
+		return
+	}
+	f.OK()
+}
+
 // QueryOSSConf
 // @Tags Conf
 // @Summary 查询OSS配置

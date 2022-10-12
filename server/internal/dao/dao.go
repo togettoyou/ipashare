@@ -34,6 +34,7 @@ func NewSqlite() (*model.Store, error) {
 		&model.AppleDevice{},
 		&model.AppleIPA{},
 		&model.User{},
+		&model.Key{},
 		&model.Conf{},
 	)
 	if err != nil {
@@ -45,6 +46,7 @@ func NewSqlite() (*model.Store, error) {
 		AppleDevice:    newAppleDevice(db),
 		AppleIPA:       newAppleIPA(db),
 		User:           newUser(db),
+		Key:            newKey(db),
 		Conf:           newConf(db),
 	}, nil
 }
@@ -89,6 +91,7 @@ func NewMysql() (*model.Store, error) {
 			&model.AppleDevice{},
 			&model.AppleIPA{},
 			&model.User{},
+			&model.Key{},
 			&model.Conf{},
 		)
 	if err != nil {
@@ -100,6 +103,7 @@ func NewMysql() (*model.Store, error) {
 		AppleDevice:    newAppleDevice(db),
 		AppleIPA:       newAppleIPA(db),
 		User:           newUser(db),
+		Key:            newKey(db),
 		Conf:           newConf(db),
 	}, nil
 }

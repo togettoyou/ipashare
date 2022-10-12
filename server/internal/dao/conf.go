@@ -17,6 +17,14 @@ func newConf(db *gorm.DB) *conf {
 			Value: info.Marshal(),
 		})
 	}
+	_, err = c.QueryKeyInfo()
+	if err == gorm.ErrRecordNotFound {
+		info := caches.KeyInfo{}
+		c.db.Create(&model.Conf{
+			Key:   caches.KeyInfoK,
+			Value: info.Marshal(),
+		})
+	}
 	return c
 }
 
@@ -50,6 +58,34 @@ func (c *conf) UpdateOSSInfo(ossInfo *caches.OSSInfo) error {
 			return err
 		}
 		caches.SetOSSInfo(*ossInfo)
+	}
+	return nil
+}
+
+func (c *conf) QueryKeyInfo() (*caches.KeyInfo, error) {
+	var conf model.Conf
+	err := c.db.Where("`key` = ?", caches.KeyInfoK).Take(&conf).Error
+	if err != nil {
+		return nil, err
+	}
+	cacheInfo := caches.GetKeyInfo()
+	if cacheInfo.Marshal() != conf.Value {
+		var keyInfo caches.KeyInfo
+		keyInfo.Unmarshal(conf.Value)
+		caches.SetKeyInfo(keyInfo)
+		return &keyInfo, nil
+	}
+	return &cacheInfo, nil
+}
+
+func (c *conf) UpdateKeyInfo(keyInfo *caches.KeyInfo) error {
+	if keyInfo != nil {
+		err := c.db.Model(&model.Conf{}).Where("`key` = ?", caches.KeyInfoK).
+			Update("value", keyInfo.Marshal()).Error
+		if err != nil {
+			return err
+		}
+		caches.SetKeyInfo(*keyInfo)
 	}
 	return nil
 }

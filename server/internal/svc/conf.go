@@ -10,6 +10,22 @@ type Conf struct {
 	Service
 }
 
+func (f *Conf) QueryKeyConf() (*caches.KeyInfo, error) {
+	keyInfo, err := f.store.Conf.QueryKeyInfo()
+	if err != nil {
+		return nil, e.NewWithStack(e.DBError, err)
+	}
+	return keyInfo, nil
+}
+
+func (f *Conf) UpdateKeyConf(info *caches.KeyInfo) error {
+	err := f.store.Conf.UpdateKeyInfo(info)
+	if err != nil {
+		return e.NewWithStack(e.DBError, err)
+	}
+	return nil
+}
+
 func (f *Conf) QueryOSSConf() (*caches.OSSInfo, error) {
 	ossInfo, err := f.store.Conf.QueryOSSInfo()
 	if err != nil {

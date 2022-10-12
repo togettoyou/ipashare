@@ -17,6 +17,8 @@ func registerConfRouter(store *model.Store, r *gin.RouterGroup) {
 	confR := r.Group("/conf", middleware.JWT())
 
 	{
+		confR.GET("key", conf.QueryKeyConf)
+		confR.POST("key", conf.UpdateKeyConf)
 		confR.GET("oss", conf.QueryOSSConf)
 		confR.POST("oss", conf.UpdateOSSConf)
 		confR.GET("oss/verify", conf.VerifyOSS)

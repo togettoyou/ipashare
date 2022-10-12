@@ -10,6 +10,7 @@ type Store struct {
 	AppleDevice    AppleDeviceStore
 	AppleIPA       AppleIPAStore
 	User           UserStore
+	Key            KeyStore
 	Conf           ConfStore
 }
 

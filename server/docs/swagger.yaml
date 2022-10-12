@@ -8,6 +8,11 @@ definitions:
       msg:
         type: string
     type: object
+  caches.KeyInfo:
+    properties:
+      enable_key:
+        type: boolean
+    type: object
   caches.OSSInfo:
     properties:
       enable_oss:
@@ -30,6 +35,27 @@ definitions:
     required:
     - summary
     - uuid
+    type: object
+  req.KeyCr:
+    properties:
+      num:
+        type: integer
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  req.KeyUp:
+    properties:
+      num:
+        type: integer
+      username:
+        type: string
+    required:
+    - username
     type: object
   req.UserPW:
     properties:
@@ -234,6 +260,40 @@ paths:
       summary: APP 下载页面
       tags:
       - Appstore
+  /api/v1/conf/key:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 查询Key配置
+      tags:
+      - Conf
+    post:
+      parameters:
+      - description: 登录信息
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/caches.KeyInfo'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 修改Key配置
+      tags:
+      - Conf
   /api/v1/conf/oss:
     get:
       produces:
@@ -465,6 +525,93 @@ paths:
       summary: 上传 IPA
       tags:
       - IPA
+  /api/v1/key:
+    delete:
+      parameters:
+      - description: username
+        in: query
+        name: username
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 删除指定Key
+      tags:
+      - Key
+    get:
+      parameters:
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 页面大小
+        in: query
+        name: page_size
+        type: integer
+      - description: 搜索内容
+        in: query
+        name: content
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 获取 Key 列表
+      tags:
+      - Key
+    post:
+      parameters:
+      - description: Key信息
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/req.KeyCr'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 创建 Key
+      tags:
+      - Key
+  /api/v1/key/changenum:
+    post:
+      parameters:
+      - description: Key 信息
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/req.KeyUp'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 修改 Key Num
+      tags:
+      - Key
   /api/v1/user/changepw:
     post:
       parameters:

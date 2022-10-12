@@ -17,7 +17,7 @@ func registerDownloadRouter(store *model.Store, r *gin.RouterGroup) {
 	downloadR := r.Group("/download")
 
 	{
-		downloadR.GET("mobileConfig/:uuid", download.MobileConfig)
+		downloadR.GET("mobileConfig/:uuid", middleware.Key(store), download.MobileConfig)
 		downloadR.GET("plist/:uuid", download.Plist)
 		downloadR.GET("ipa/:uuid", middleware.JWT(), download.IPA)
 		downloadR.GET("tempipa/:uuid", download.TempIPA)
