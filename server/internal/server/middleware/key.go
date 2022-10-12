@@ -10,7 +10,7 @@ import (
 )
 
 var (
-	authKeyMu = make(map[string]sync.Mutex)
+	authKeyMu = make(map[string]*sync.Mutex)
 	mu        sync.Mutex
 )
 
@@ -20,8 +20,9 @@ func lockAuthKey(authKey string) {
 	if am, ok := authKeyMu[authKey]; ok {
 		am.Lock()
 	} else {
-		authKeyMu[authKey] = sync.Mutex{}
-		am.Lock()
+		m := sync.Mutex{}
+		authKeyMu[authKey] = &m
+		m.Lock()
 	}
 }
 
@@ -41,15 +42,8 @@ func Key(store *model.Store) gin.HandlerFunc {
 		}
 		authKey := c.Request.Header.Get("Authorization")
 		key, err := store.Key.Query(authKey)
-		if err != nil || key == nil {
+		if err != nil || key == nil || key.Num <= 0 {
 			c.Header("WWW-Authenticate", "Basic realm="+strconv.Quote("Authorization Required"))
-			c.Writer.Write([]byte("密钥验证失败"))
-			c.AbortWithStatus(http.StatusUnauthorized)
-			return
-		}
-		if key.Num <= 0 {
-			c.Header("WWW-Authenticate", "Basic realm="+strconv.Quote("Authorization Required"))
-			c.Writer.Write([]byte("密钥可用次数不足"))
 			c.AbortWithStatus(http.StatusUnauthorized)
 			return
 		}
