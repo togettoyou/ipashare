@@ -82,11 +82,11 @@
       <el-form ref="form" :model="form" id="dialogForm" label-position="right" label-width="120px">
         <el-form-item label="用户名" prop="username">
           <el-input v-model="form.username"
-                    placeholder="请输入用户名"></el-input>
+                    placeholder="请输入用户名" minlength="4" maxlength="50" show-word-limit></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="password">
           <el-input v-model="form.password"
-                    placeholder="请输入密码"></el-input>
+                    placeholder="请输入密码" minlength="4" maxlength="50" show-word-limit></el-input>
         </el-form-item>
         <el-form-item label="可使用个数" prop="num">
           <el-input-number v-model="form.num" :min="0"></el-input-number>
@@ -94,6 +94,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="clearForm">取 消</el-button>
+        <el-button type="primary" @click="uuidKey" :loading="uploading">使用安全级别密钥填充（建议）</el-button>
         <el-button type="primary" @click="createKey" :loading="uploading">确 定</el-button>
       </div>
     </el-dialog>
@@ -104,6 +105,7 @@
 import {addKey, delKey, keyList, updateKey} from "@/api/key";
 import {getKeyConf, setKeyConf} from "@/api/conf";
 import {Loading} from 'element-ui';
+import {v4 as uuidv4} from 'uuid';
 
 export default {
   name: 'Key',
@@ -204,6 +206,13 @@ export default {
     clearSearch() {
       this.$refs.searchRef.resetFields()
       this.getListFilter()
+    },
+    uuidKey() {
+      this.form = {
+        username: uuidv4(),
+        password: uuidv4(),
+        num: this.form.num,
+      }
     },
     createKey() {
       this.$refs.form.validate((valid) => {
