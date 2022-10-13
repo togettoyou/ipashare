@@ -72,6 +72,7 @@
     <el-dialog title="扫码安装" :visible.sync="dialogQrcode" center>
       <div id="qrcode"></div>
       <h2 id="name"></h2>
+      <h2 id="install_url"></h2>
     </el-dialog>
 
     <el-dialog title="修改IPA简介" :visible.sync="updateDialogFormVisible"
@@ -297,6 +298,7 @@ export default {
       this.$nextTick(function () {
         document.getElementById("qrcode").innerHTML = "";
         document.getElementById("name").innerHTML = row.name + " V" + row.version;
+        document.getElementById("install_url").innerHTML = "对应链接：" + row.install_url;
         new QRCode("qrcode", {
           width: 150,
           height: 150,
