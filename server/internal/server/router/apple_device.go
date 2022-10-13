@@ -19,6 +19,6 @@ func registerAppleDeviceRouter(store *model.Store, r *gin.RouterGroup) {
 	{
 		appleDeviceR.GET("", middleware.JWT(), appleDevice.List)
 		appleDeviceR.POST("", middleware.JWT(), appleDevice.Update)
-		appleDeviceR.POST("udid/:uuid", middleware.VerifyKey(store), appleDevice.UDID)
+		appleDeviceR.POST("udid/:uuid/:authKey", middleware.VerifyKey(store), appleDevice.UDID)
 	}
 }

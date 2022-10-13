@@ -5,6 +5,7 @@ import (
 	"ipashare/internal/model"
 	"ipashare/pkg/caches"
 	"net/http"
+	"net/url"
 	"strconv"
 	"sync"
 )
@@ -57,7 +58,19 @@ func VerifyKey(store *model.Store) gin.HandlerFunc {
 			c.Next()
 			return
 		}
-		authKey := c.Query("authKey")
+		args := struct {
+			AuthKey string `uri:"authKey" binding:"required"`
+		}{}
+		err := c.ShouldBindUri(&args)
+		if err != nil {
+			c.AbortWithStatus(http.StatusBadRequest)
+			return
+		}
+		authKey, err := url.QueryUnescape(args.AuthKey)
+		if err != nil {
+			c.AbortWithStatus(http.StatusBadRequest)
+			return
+		}
 		lockAuthKey(authKey)
 		defer unLockAuthKey(authKey)
 		key, err := store.Key.Query(authKey)

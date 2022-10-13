@@ -8,6 +8,7 @@ import (
 	"ipashare/pkg/conf"
 	"ipashare/pkg/sign"
 	"net/http"
+	"net/url"
 	"path"
 	"text/template"
 
@@ -103,9 +104,12 @@ func (d Download) MobileConfig(c *gin.Context) {
 	}
 	c.Header("Content-Type", "application/octet-stream")
 	c.Header("Content-Disposition", "attachment; filename="+args.UUID+".mobileconfig")
-	authKey, _ := c.Get("authKey")
-	url := fmt.Sprintf("%s/api/v1/appleDevice/udid/%s?authKey=%s", conf.Server.URL, args.UUID, authKey)
-	if d.HasErr(tmpl.Execute(c.Writer, map[string]string{"URL": url, "UUID": args.UUID})) {
+	authKey, ok := c.Get("authKey")
+	if !ok || authKey == nil || authKey == "" {
+		authKey = "noAuthKey"
+	}
+	reqUrl := fmt.Sprintf("%s/api/v1/appleDevice/udid/%s/%s", conf.Server.URL, args.UUID, url.QueryEscape(authKey.(string)))
+	if d.HasErr(tmpl.Execute(c.Writer, map[string]string{"URL": reqUrl, "UUID": args.UUID})) {
 		return
 	}
 }
