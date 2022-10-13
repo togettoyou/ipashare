@@ -73,12 +73,19 @@
                :close-on-click-modal="false"
                :close-on-press-escape="false"
                :destroy-on-close="true"
+               width="80%"
     >
       <el-table :data="devicesList" height="350" style="width: 100%;" stripe highlight-current-row border
                 :header-cell-style="{background:'#f8f8f9',color: '#606266','font-weight':'bold'}">
         <el-table-column width="50" type="index" label="序号" align="center" header-align="center"></el-table-column>
         <el-table-column prop="device_id" label="设备 ID" align="center" header-align="center"></el-table-column>
         <el-table-column prop="udid" label="设备 UDID" align="center" header-align="center"></el-table-column>
+        <el-table-column prop="addedDate" label="添加时间" align="center" header-align="center"></el-table-column>
+        <el-table-column prop="name" label="名称" align="center" header-align="center"></el-table-column>
+        <el-table-column prop="deviceClass" label="类型" align="center" header-align="center"></el-table-column>
+        <el-table-column prop="deviceModel" label="型号" align="center" header-align="center"></el-table-column>
+        <el-table-column prop="platform" label="平台" align="center" header-align="center"></el-table-column>
+        <el-table-column prop="status" label="状态" align="center" header-align="center"></el-table-column>
       </el-table>
 
       <div slot="footer" class="dialog-footer">
@@ -274,6 +281,7 @@ export default {
       this.devicesIss = ''
       this.devicesDialog = false
       this.devicesList = []
+      this.devicesUploading = false
     },
     updateDevices() {
       if (this.devicesIss !== '') {
@@ -282,24 +290,27 @@ export default {
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
+          this.devicesUploading = true
+          let loading = Loading.service({
+            target: "#dialogForm",
+            fullscreen: true,
+            text: '正在同步'
+          })
           updateDevice(this.devicesIss).then(res => {
             console.log(res);
             if (res.code === 0) {
-              this.$message.error("同步成功")
-              deviceList(this.devicesIss).then(res => {
-                if (res.code === 0) {
-                  this.devicesList = res.data
-                } else {
-                  this.$message.info(res.msg)
-                }
-              }).catch(err => {
-                console.log(err);
-              })
+              this.$message.success("同步成功")
+              loading.close()
+              this.clearDevices()
             } else {
               this.$message.error("同步失败" + res.msg)
+              loading.close()
+              this.devicesUploading = false
             }
           }).catch(err => {
             this.$message.error("同步失败" + err)
+            loading.close()
+            this.devicesUploading = false
           })
         }).catch(() => {
           this.$message({

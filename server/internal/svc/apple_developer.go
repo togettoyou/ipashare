@@ -106,9 +106,15 @@ func (a *AppleDeveloper) Add(iss, kid, p8 string) (num int, err error) {
 	appleDevices := make([]model.AppleDevice, 0)
 	for _, datum := range devices.Data {
 		appleDevices = append(appleDevices, model.AppleDevice{
-			UDID:     datum.Attributes.Udid,
-			Iss:      iss,
-			DeviceID: datum.ID,
+			UDID:        datum.Attributes.Udid,
+			Iss:         iss,
+			DeviceID:    datum.ID,
+			AddedDate:   datum.Attributes.AddedDate,
+			Name:        datum.Attributes.Name,
+			DeviceClass: datum.Attributes.DeviceClass,
+			DeviceModel: datum.Attributes.Model,
+			Platform:    datum.Attributes.Platform,
+			Status:      datum.Attributes.Status,
 		})
 	}
 	err = a.store.AppleDeveloper.Create(&model.AppleDeveloper{

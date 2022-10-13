@@ -43,9 +43,15 @@ func (a *AppleDevice) Update(iss string) error {
 	appleDevices := make([]model.AppleDevice, 0)
 	for _, datum := range devices.Data {
 		appleDevices = append(appleDevices, model.AppleDevice{
-			UDID:     datum.Attributes.Udid,
-			Iss:      iss,
-			DeviceID: datum.ID,
+			UDID:        datum.Attributes.Udid,
+			Iss:         iss,
+			DeviceID:    datum.ID,
+			AddedDate:   datum.Attributes.AddedDate,
+			Name:        datum.Attributes.Name,
+			DeviceClass: datum.Attributes.DeviceClass,
+			DeviceModel: datum.Attributes.Model,
+			Platform:    datum.Attributes.Platform,
+			Status:      datum.Attributes.Status,
 		})
 	}
 	err = a.store.AppleDevice.Update(iss, devices.Meta.Paging.Total, appleDevices)
@@ -150,9 +156,15 @@ func (a *AppleDevice) bindingAppleDeveloper(udid string, appleIPA *model.AppleIP
 			}
 			// 将udid记录到数据库
 			err = a.store.AppleDevice.Create(&model.AppleDevice{
-				UDID:     udid,
-				Iss:      appleDeveloper.Iss,
-				DeviceID: devicesResponse.Data.ID,
+				UDID:        udid,
+				Iss:         appleDeveloper.Iss,
+				DeviceID:    devicesResponse.Data.ID,
+				AddedDate:   devicesResponse.Data.Attributes.AddedDate,
+				Name:        devicesResponse.Data.Attributes.Name,
+				DeviceClass: devicesResponse.Data.Attributes.DeviceClass,
+				DeviceModel: devicesResponse.Data.Attributes.Model,
+				Platform:    devicesResponse.Data.Attributes.Platform,
+				Status:      devicesResponse.Data.Attributes.Status,
 			})
 			if err != nil {
 				return "", err
