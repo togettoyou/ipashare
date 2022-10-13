@@ -19,13 +19,9 @@ go、云原生技术 ...... 来者不拒，欢迎关注
 本项目核心功能调用 [zsign](https://github.com/zhlynn/zsign)
 和 [App Store Connect API](https://developer.apple.com/documentation/appstoreconnectapi) 实现
 
+本项目开源免费，纯技术分享，不提供任何平台支持，仅作为给个人开发者分享自己的测试 APP 使用，严禁使用本项目进行任何商业盈利、损害官方利益、分享任何违法违规的 APP 等行为
+
 本项目添加开发者账号后会占用账号的一个 iOS Development certificate 名额（每个账号最多只能创建两个），所以你可能得预留一个
-
-本项目仅作为给个人开发者分享自己的测试 APP 使用，严禁使用本项目进行任何商业盈利、损害官方利益、分享任何违法违规的 APP 等行为
-
-本项目开源免费，纯技术分享，不提供任何平台支持
-
-本项目若有 bug 可提交 issue ，会抽空维护
 
 其中添加开发者账号所需的 iss、kid、P8 文件需要在 https://appstoreconnect.apple.com/access/api 创建
 
@@ -33,12 +29,12 @@ go、云原生技术 ...... 来者不拒，欢迎关注
 
 ## 效果预览
 
-| ![login](https://user-images.githubusercontent.com/55381228/158097900-df769ac7-0918-4d10-a26d-202a46e234fc.png) | ![developer](https://user-images.githubusercontent.com/55381228/158097904-17098d6b-77c8-466f-b290-926cf413929c.png) |
+| ![login](https://user-images.githubusercontent.com/55381228/195557740-3b65e5c9-b86e-42ba-929e-273b0e110d23.png) | ![developer](https://user-images.githubusercontent.com/55381228/195557833-ec3d4db8-76ee-4d60-9915-ee35f06f2efe.png) |
 | :----------------------------------------------------------: | :----------------------------------------------------------: |
 |                         后台管理登录                         |                        开发者账号管理                        |
-| ![ipalist](https://user-images.githubusercontent.com/55381228/158097907-6a031a39-22db-48f7-838d-746e84d72c55.png) | ![qrcode](https://user-images.githubusercontent.com/55381228/158097913-3bc643a1-c373-4a57-9638-705786ac3dad.png) |
-|                           应用管理                           |                         扫码安装应用                         |
-| ![oss](https://user-images.githubusercontent.com/55381228/158097916-b16bf570-7abc-44be-8779-004eb98face3.png) | ![pw](https://user-images.githubusercontent.com/55381228/158097919-898f7cdb-0e55-47ea-95d5-26896a612f2a.png) |
+| ![ipalist](https://user-images.githubusercontent.com/55381228/195557932-54b8ca9b-081d-4ddf-bbd7-5b6004664720.png) | ![keylist](https://user-images.githubusercontent.com/55381228/195558156-7b7dea93-d9d6-4aac-b0a9-3bf9751828d2.png) |
+|                           应用管理                           |                         密钥管理                         |
+| ![oss](https://user-images.githubusercontent.com/55381228/195558287-a4bf8399-ccff-4515-b5c6-542f5bb216ce.png) | ![pw](https://user-images.githubusercontent.com/55381228/195558331-01b663f0-ccb2-42aa-9ba3-c38a785e242f.png) |
 |                       阿里云 OSS 设置                        |                        更改用户名密码                        |
 | ![htdb](https://user-images.githubusercontent.com/55381228/158097922-49d90c7b-8809-4137-9947-306e6dac6760.png) | ![install](https://user-images.githubusercontent.com/55381228/158097928-9b996028-2532-4b47-a1ce-c597f13a1014.png) |
 |                       等待 APP 打包中                        |                         开始安装 APP                         |
