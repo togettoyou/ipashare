@@ -1,9 +1,9 @@
-## 微信公众号：SuperGopher
+## 微信公众号：gopher云原生
 
 go、云原生技术 ...... 来者不拒，欢迎关注
 <div align="center" style="width: 50%">
 
-![微信公众号.png](https://user-images.githubusercontent.com/55381228/155444889-eacc0104-cd85-45c9-b7b7-9036e0c2334c.jpg)
+![gopher云原生](https://user-images.githubusercontent.com/55381228/221747734-13783ce6-1969-4c10-acd6-833f5046aa85.png)
 </div>
 
 ## 起源
