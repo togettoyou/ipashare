@@ -10,7 +10,7 @@ WORKDIR /root/togettoyou/
 COPY server/. .
 RUN make
 
-FROM node:lts-alpine AS builder-web
+FROM node:16.17.1-alpine AS builder-web
 WORKDIR /app
 COPY web/package*.json ./
 RUN yarn install
