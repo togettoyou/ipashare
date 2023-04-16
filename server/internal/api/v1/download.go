@@ -1,6 +1,7 @@
 package v1
 
 import (
+	"bytes"
 	"errors"
 	"fmt"
 	"ipashare/internal/api"
@@ -109,7 +110,16 @@ func (d Download) MobileConfig(c *gin.Context) {
 		authKey = "noAuthKey"
 	}
 	reqUrl := fmt.Sprintf("%s/api/v1/appleDevice/udid/%s/%s", conf.Server.URL, args.UUID, url.QueryEscape(authKey.(string)))
-	if d.HasErr(tmpl.Execute(c.Writer, map[string]string{"URL": reqUrl, "UUID": args.UUID})) {
+	buf := bytes.NewBuffer([]byte{})
+	if d.HasErr(tmpl.Execute(buf, map[string]string{"URL": reqUrl, "UUID": args.UUID})) {
+		return
+	}
+	mobileConfig, err := sign.MobileConfig(buf.Bytes())
+	if d.HasErr(err) {
+		return
+	}
+	_, err = c.Writer.Write(mobileConfig)
+	if d.HasErr(err) {
 		return
 	}
 }
