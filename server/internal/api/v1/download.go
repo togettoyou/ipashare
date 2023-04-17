@@ -114,11 +114,7 @@ func (d Download) MobileConfig(c *gin.Context) {
 	if d.HasErr(tmpl.Execute(buf, map[string]string{"URL": reqUrl, "UUID": args.UUID})) {
 		return
 	}
-	mobileConfig, err := sign.MobileConfig(buf.Bytes())
-	if d.HasErr(err) {
-		return
-	}
-	_, err = c.Writer.Write(mobileConfig)
+	_, err = c.Writer.Write(sign.MobileConfig(buf.Bytes()))
 	if d.HasErr(err) {
 		return
 	}

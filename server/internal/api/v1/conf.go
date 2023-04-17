@@ -5,6 +5,7 @@ import (
 	"ipashare/internal/svc"
 	"ipashare/pkg/caches"
 	"ipashare/pkg/e"
+	"ipashare/pkg/sign"
 
 	"github.com/gin-gonic/gin"
 )
@@ -108,6 +109,40 @@ func (f Conf) UpdateOSSConf(c *gin.Context) {
 		}
 	}
 	if f.HasErr(confSvc.UpdateOSSConf(&body)) {
+		return
+	}
+	f.OK()
+}
+
+// QueryMobileConfig
+// @Tags Conf
+// @Summary 查询MobileConfig配置
+// @Security ApiKeyAuth
+// @Produce json
+// @Success 200 {object} api.Response
+// @Router /api/v1/conf/mobileconfig [get]
+func (f Conf) QueryMobileConfig(c *gin.Context) {
+	f.MakeContext(c)
+	data := sign.GetCrtAndKey()
+	f.OK(data)
+}
+
+// UpdateMobileConfig
+// @Tags Conf
+// @Summary 修改MobileConfig配置
+// @Security ApiKeyAuth
+// @Produce json
+// @Param data body sign.CrtAndKeyInfo true "证书信息"
+// @Success 200 {object} api.Response
+// @Router /api/v1/conf/mobileconfig [post]
+func (f Conf) UpdateMobileConfig(c *gin.Context) {
+	var (
+		body sign.CrtAndKeyInfo
+	)
+	if !f.MakeContext(c).ParseJSON(&body) {
+		return
+	}
+	if f.HasErr(sign.SetCrtAndKey(&body)) {
 		return
 	}
 	f.OK()

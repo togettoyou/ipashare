@@ -380,6 +380,63 @@ var doc = `{
                 }
             }
         },
+        "/api/v1/conf/mobileconfig": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Conf"
+                ],
+                "summary": "查询MobileConfig配置",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Conf"
+                ],
+                "summary": "修改MobileConfig配置",
+                "parameters": [
+                    {
+                        "description": "证书信息",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/sign.CrtAndKeyInfo"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/conf/oss": {
             "get": {
                 "security": [
@@ -1064,6 +1121,20 @@ var doc = `{
                     "type": "string"
                 },
                 "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "sign.CrtAndKeyInfo": {
+            "type": "object",
+            "properties": {
+                "cert_chain_crt_content": {
+                    "type": "string"
+                },
+                "server_crt_content": {
+                    "type": "string"
+                },
+                "server_key_content": {
                     "type": "string"
                 }
             }

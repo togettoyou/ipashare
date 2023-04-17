@@ -67,6 +67,15 @@ definitions:
     - password
     - username
     type: object
+  sign.CrtAndKeyInfo:
+    properties:
+      cert_chain_crt_content:
+        type: string
+      server_crt_content:
+        type: string
+      server_key_content:
+        type: string
+    type: object
 info:
   contact: {}
   license: {}
@@ -292,6 +301,40 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: 修改Key配置
+      tags:
+      - Conf
+  /api/v1/conf/mobileconfig:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 查询MobileConfig配置
+      tags:
+      - Conf
+    post:
+      parameters:
+      - description: 证书信息
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/sign.CrtAndKeyInfo'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Response'
+      security:
+      - ApiKeyAuth: []
+      summary: 修改MobileConfig配置
       tags:
       - Conf
   /api/v1/conf/oss:

@@ -22,5 +22,7 @@ func registerConfRouter(store *model.Store, r *gin.RouterGroup) {
 		confR.GET("oss", conf.QueryOSSConf)
 		confR.POST("oss", conf.UpdateOSSConf)
 		confR.GET("oss/verify", conf.VerifyOSS)
+		confR.GET("mobileconfig", conf.QueryMobileConfig)
+		confR.POST("mobileconfig", conf.UpdateMobileConfig)
 	}
 }
