@@ -29,3 +29,16 @@ export function verify() {
     url: "conf/oss/verify", method: "get"
   });
 }
+
+
+export function getMobileConfig() {
+  return request({
+    url: "conf/mobileconfig", method: "get",
+  });
+}
+
+export function setMobileConfig(data) {
+  return request({
+    url: "conf/mobileconfig", method: "post", data,
+  });
+}

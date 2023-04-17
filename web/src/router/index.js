@@ -70,6 +70,12 @@ export const constantRoutes = [
         meta: {title: "下载设置", icon: "oss"},
       },
       {
+        path: "mobileconfig",
+        name: "Mobileconfig",
+        component: () => import("@/views/setting/mobileconfig/index"),
+        meta: {title: "描述文件签名设置", icon: "form"},
+      },
+      {
         path: "user",
         name: "User",
         component: () => import("@/views/setting/user/index"),
