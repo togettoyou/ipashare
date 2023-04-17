@@ -34,11 +34,12 @@ go、云原生技术 ...... 来者不拒，欢迎关注
 |                         后台管理登录                         |                        开发者账号管理                        |
 | ![ipalist](https://user-images.githubusercontent.com/55381228/195557932-54b8ca9b-081d-4ddf-bbd7-5b6004664720.png) | ![keylist](https://user-images.githubusercontent.com/55381228/195558156-7b7dea93-d9d6-4aac-b0a9-3bf9751828d2.png) |
 |                           应用管理                           |                         密钥管理                         |
-| ![oss](https://user-images.githubusercontent.com/55381228/195558287-a4bf8399-ccff-4515-b5c6-542f5bb216ce.png) | ![pw](https://user-images.githubusercontent.com/55381228/195558331-01b663f0-ccb2-42aa-9ba3-c38a785e242f.png) |
-|                       阿里云 OSS 设置                        |                        更改用户名密码                        |
+| ![oss](https://user-images.githubusercontent.com/55381228/232420912-0a74a4d6-7d62-4b53-9749-623c57a23e61.png) | ![mobileconfig](https://user-images.githubusercontent.com/55381228/232421233-b41de68d-5d78-4412-a1f7-cf69db356cdf.png) |
+|                       阿里云 OSS 设置                        |                        描述文件签名                        |
+| ![pw](https://user-images.githubusercontent.com/55381228/232421631-16c7b41d-1749-4c0f-b096-b894bf750416.png) |  |
+|                       更改用户名密码                        |                                                |
 | ![htdb](https://user-images.githubusercontent.com/55381228/158097922-49d90c7b-8809-4137-9947-306e6dac6760.png) | ![install](https://user-images.githubusercontent.com/55381228/158097928-9b996028-2532-4b47-a1ce-c597f13a1014.png) |
 |                       等待 APP 打包中                        |                         开始安装 APP                         |
-
 
 ## Railway 部署
 
