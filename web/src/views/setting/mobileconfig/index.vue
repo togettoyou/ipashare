@@ -1,9 +1,6 @@
 <template>
   <div class="app-container">
-    <el-alert
-      title="保存后请验证是否可用"
-      type="warning">
-    </el-alert>
+    <el-alert title="可选。为空时描述文件默认显示未签名但不影响使用，配置后可显示为已签名。"/>
     <br>
     <el-form :model="ruleForm" status-icon ref="ruleForm" class="changeForm">
       <el-form-item label="域名证书（*.crt文件）" prop="server_crt_content">
