@@ -54,7 +54,11 @@ func Setup(logger *zap.Logger, maxJob int) {
 func Push(stream *Stream) {
 	signJob.streamCh <- struct{}{}
 	go func() {
-		time.Sleep(1 * time.Hour)
+		cleanOldData := 1
+		if conf.Server.CleanOldData > 1 {
+			cleanOldData = conf.Server.CleanOldData
+		}
+		time.Sleep(time.Duration(cleanOldData) * time.Hour)
 		signJob.mu.Lock()
 		delete(signJob.doneCache, stream.ProfileUUID)
 		signJob.mu.Unlock()

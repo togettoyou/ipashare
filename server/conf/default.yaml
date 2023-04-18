@@ -4,6 +4,8 @@ SERVER:
   URL: https://example.com
   # 签名任务并发量
   MAXJOB: 10
+  # 清理旧数据倒计时（小时）
+  CLEANOLDDATA: 2
   # 开发模式 debug,release,test
   RUNMODE: debug
   # 读超时/s

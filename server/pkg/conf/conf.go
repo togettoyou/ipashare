@@ -17,6 +17,7 @@ type config struct {
 type server struct {
 	URL          string `mapstructure:"URL"`
 	MaxJob       int    `mapstructure:"MAXJOB"`
+	CleanOldData int    `mapstructure:"CLEANOLDDATA"`
 	RunMode      string `mapstructure:"RUNMODE"`
 	ReadTimeout  int    `mapstructure:"READTIMEOUT"`
 	WriteTimeout int    `mapstructure:"WRITETIMEOUT"`
