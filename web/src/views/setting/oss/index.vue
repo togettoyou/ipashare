@@ -17,8 +17,11 @@
       <el-form-item label="存储空间（Bucket）" prop="oss_bucket_name">
         <el-input v-model="ruleForm.oss_bucket_name"></el-input>
       </el-form-item>
-      <el-form-item label="访问域名（Endpoint）" prop="oss_endpoint">
+      <el-form-item label="外网访问域名（Endpoint）" prop="oss_endpoint">
         <el-input v-model="ruleForm.oss_endpoint"></el-input>
+      </el-form-item>
+      <el-form-item label="内网上传域名（Endpoint）（可选）" prop="oss_lan_endpoint">
+        <el-input v-model="ruleForm.oss_lan_endpoint"></el-input>
       </el-form-item>
       <el-form-item label="访问密钥（AccessKeyId）" prop="oss_access_key_id">
         <el-input v-model="ruleForm.oss_access_key_id"></el-input>
@@ -54,6 +57,7 @@ export default {
         enable_oss: false,
         oss_bucket_name: '',
         oss_endpoint: '',
+        oss_lan_endpoint: '',
         oss_access_key_id: '',
         oss_access_key_secret: '',
       },

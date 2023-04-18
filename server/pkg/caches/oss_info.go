@@ -8,6 +8,7 @@ type OSSInfo struct {
 	EnableOSS          bool   `json:"enable_oss"`
 	OSSBucketName      string `json:"oss_bucket_name"`
 	OSSEndpoint        string `json:"oss_endpoint"`
+	OSSLANEndpoint     string `json:"oss_lan_endpoint"` // 内网地址，可选
 	OSSAccessKeyID     string `json:"oss_access_key_id"`
 	OSSAccessKeySecret string `json:"oss_access_key_secret"`
 }

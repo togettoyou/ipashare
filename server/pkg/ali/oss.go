@@ -10,7 +10,11 @@ import (
 func Verify() error {
 	ossInfo := caches.GetOSSInfo()
 	if ossInfo.Enable() {
-		client, err := oss.New(ossInfo.OSSEndpoint, ossInfo.OSSAccessKeyID, ossInfo.OSSAccessKeySecret)
+		endpoint := ossInfo.OSSEndpoint
+		if ossInfo.OSSLANEndpoint != "" {
+			endpoint = ossInfo.OSSLANEndpoint
+		}
+		client, err := oss.New(endpoint, ossInfo.OSSAccessKeyID, ossInfo.OSSAccessKeySecret)
 		if err != nil {
 			return err
 		}
@@ -30,7 +34,11 @@ func Verify() error {
 func UploadFile(objectKey, filePath string) (string, error) {
 	ossInfo := caches.GetOSSInfo()
 	if ossInfo.Enable() {
-		client, err := oss.New(ossInfo.OSSEndpoint, ossInfo.OSSAccessKeyID, ossInfo.OSSAccessKeySecret)
+		endpoint := ossInfo.OSSEndpoint
+		if ossInfo.OSSLANEndpoint != "" {
+			endpoint = ossInfo.OSSLANEndpoint
+		}
+		client, err := oss.New(endpoint, ossInfo.OSSAccessKeyID, ossInfo.OSSAccessKeySecret)
 		if err != nil {
 			return "", err
 		}
