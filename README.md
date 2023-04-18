@@ -27,7 +27,7 @@ go、云原生技术 ...... 来者不拒，欢迎关注
 
 ![image](https://user-images.githubusercontent.com/55381228/157636136-b0705dfe-5887-40a5-a464-f736157f5335.png)
 
-## 效果预览
+## 部分效果预览
 
 | ![login](https://user-images.githubusercontent.com/55381228/195557740-3b65e5c9-b86e-42ba-929e-273b0e110d23.png) | ![developer](https://user-images.githubusercontent.com/55381228/195557833-ec3d4db8-76ee-4d60-9915-ee35f06f2efe.png) |
 | :----------------------------------------------------------: | :----------------------------------------------------------: |
@@ -36,10 +36,8 @@ go、云原生技术 ...... 来者不拒，欢迎关注
 |                           应用管理                           |                         密钥管理                         |
 | ![oss](https://user-images.githubusercontent.com/55381228/232664237-13e74612-23cd-4dea-aac9-8b9b92c2cf2e.png) | ![mobileconfig](https://user-images.githubusercontent.com/55381228/232421233-b41de68d-5d78-4412-a1f7-cf69db356cdf.png) |
 |                       阿里云 OSS 设置                        |                        描述文件签名                        |
-| ![pw](https://user-images.githubusercontent.com/55381228/232421631-16c7b41d-1749-4c0f-b096-b894bf750416.png) |  |
-|                       更改用户名密码                        |                                                |
-| ![htdb](https://user-images.githubusercontent.com/55381228/158097922-49d90c7b-8809-4137-9947-306e6dac6760.png) | ![install](https://user-images.githubusercontent.com/55381228/158097928-9b996028-2532-4b47-a1ce-c597f13a1014.png) |
-|                       等待 APP 打包中                        |                         开始安装 APP                         |
+| ![pw](https://user-images.githubusercontent.com/55381228/232421631-16c7b41d-1749-4c0f-b096-b894bf750416.png) | ![image](https://user-images.githubusercontent.com/55381228/232664767-3d50b491-e25d-46d6-8d19-6c5d302d7bab.png) |
+|                       更改用户名密码                        |                           安装 APP                     |
 
 ## Railway 部署
 
