@@ -20,27 +20,13 @@ go、云原生技术 ...... 来者不拒，欢迎关注
 
 ## 注意事项
 
-本项目开源免费，纯技术分享，不提供任何平台支持，仅作为给个人开发者分享自己的测试 APP 使用，严禁使用本项目进行任何商业盈利、损害官方利益、分享任何违法违规的 APP 等行为
+本项目完全开源免费，纯技术分享，不提供任何平台支持，仅作为给个人开发者分享自己的测试 APP 使用，严禁使用本项目进行任何商业盈利、损害官方利益、分享任何违法违规的 APP 等行为
 
 ## 个人开发者账号
 
 本项目添加开发者账号后会占用账号的一个 iOS Development certificate 名额（每个账号最多只能创建两个），所以你可能得预留一个
 
-其中添加开发者账号所需的 iss、kid、P8 文件需要在 https://appstoreconnect.apple.com/access/api 创建
-
-![image](https://github.com/togettoyou/ipashare/assets/55381228/d8f7587d-4a15-4f3c-8a8a-a6b390bba8d1)
-
-## 部分效果预览
-
-| ![login](https://user-images.githubusercontent.com/55381228/195557740-3b65e5c9-b86e-42ba-929e-273b0e110d23.png) | ![developer](https://user-images.githubusercontent.com/55381228/195557833-ec3d4db8-76ee-4d60-9915-ee35f06f2efe.png) |
-| :----------------------------------------------------------: | :----------------------------------------------------------: |
-|                         后台管理登录                         |                        开发者账号管理                        |
-| ![ipalist](https://user-images.githubusercontent.com/55381228/195557932-54b8ca9b-081d-4ddf-bbd7-5b6004664720.png) | ![keylist](https://user-images.githubusercontent.com/55381228/195558156-7b7dea93-d9d6-4aac-b0a9-3bf9751828d2.png) |
-|                           应用管理                           |                         密钥管理                         |
-| ![oss](https://user-images.githubusercontent.com/55381228/232664237-13e74612-23cd-4dea-aac9-8b9b92c2cf2e.png) | ![mobileconfig](https://user-images.githubusercontent.com/55381228/232421233-b41de68d-5d78-4412-a1f7-cf69db356cdf.png) |
-|                       阿里云 OSS 设置                        |                        描述文件签名                        |
-| ![pw](https://user-images.githubusercontent.com/55381228/232421631-16c7b41d-1749-4c0f-b096-b894bf750416.png) | ![image](https://user-images.githubusercontent.com/55381228/232664767-3d50b491-e25d-46d6-8d19-6c5d302d7bab.png) |
-|                       更改用户名密码                        |                           安装 APP                     |
+其中添加开发者账号所需的 iss（Issuer ID）、kid（密钥 ID）、P8 文件（API 密钥）需要在 https://appstoreconnect.apple.com/access/api 创建后获取
 
 ## Railway 部署
 
@@ -114,3 +100,16 @@ docker-compose down -v
 本项目使用 GoLand 开发，感谢 JetBrains 提供的免费授权
 
 <a href="https://www.jetbrains.com/?from=togettoyou" target="_blank"><img src="https://user-images.githubusercontent.com/55381228/127271051-14879011-41dd-4d1b-88a2-1591925b51de.png" width="250" align="middle"/></a>
+
+## 部分效果预览
+
+| ![login](https://user-images.githubusercontent.com/55381228/195557740-3b65e5c9-b86e-42ba-929e-273b0e110d23.png) | ![developer](https://user-images.githubusercontent.com/55381228/195557833-ec3d4db8-76ee-4d60-9915-ee35f06f2efe.png) |
+| :----------------------------------------------------------: | :----------------------------------------------------------: |
+|                         后台管理登录                         |                        开发者账号管理                        |
+| ![ipalist](https://user-images.githubusercontent.com/55381228/195557932-54b8ca9b-081d-4ddf-bbd7-5b6004664720.png) | ![keylist](https://user-images.githubusercontent.com/55381228/195558156-7b7dea93-d9d6-4aac-b0a9-3bf9751828d2.png) |
+|                           应用管理                           |                         密钥管理                         |
+| ![oss](https://user-images.githubusercontent.com/55381228/232664237-13e74612-23cd-4dea-aac9-8b9b92c2cf2e.png) | ![mobileconfig](https://user-images.githubusercontent.com/55381228/232421233-b41de68d-5d78-4412-a1f7-cf69db356cdf.png) |
+|                       阿里云 OSS 设置                        |                        描述文件签名                        |
+| ![pw](https://user-images.githubusercontent.com/55381228/232421631-16c7b41d-1749-4c0f-b096-b894bf750416.png) | ![image](https://user-images.githubusercontent.com/55381228/232664767-3d50b491-e25d-46d6-8d19-6c5d302d7bab.png) |
+|                       更改用户名密码                        |                           安装 APP                     |
+
