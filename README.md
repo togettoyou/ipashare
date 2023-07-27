@@ -1,31 +1,34 @@
 ## 微信公众号：gopher云原生
 
 go、云原生技术 ...... 来者不拒，欢迎关注
-<div align="center" style="width: 50%">
 
-![gopher云原生](https://user-images.githubusercontent.com/55381228/221747734-13783ce6-1969-4c10-acd6-833f5046aa85.png)
-</div>
+<img src="https://user-images.githubusercontent.com/55381228/221747734-13783ce6-1969-4c10-acd6-833f5046aa85.png" width="300px">
 
 ## 起源
 
-每个客户端开发者都会想独立开发一款自己的 APP 。 但 iOS 不像 Android 那样可以自由的分享应用给其他人安装 （Android 只要把 apk 甩出去就行了）
+每个客户端开发者都会想独立开发一款自己的 APP 。 但在开发过程中， iOS 不像 Android 那样可以自由的分享应用给其他人安装体验 （Android 只要把 `.apk` 发过去就行了）
 
-对于 iOS 开发者来说，苹果开发者账号几乎人手必备（这里只讨论个人账号）， 而苹果公司允许我们添加 100 台设备（udid）绑定到账号上，这 100 台设备可以自由安装由账号签名且使用 Ad Hoc 方式打包出的 `.ipa`
+对于 iOS 开发者来说， Apple 的个人开发者账号几乎是必备的， 而 Apple 公司允许我们添加 100 台设备绑定到账号上，这 100 台设备可以自由安装由该账号签名且使用 Ad Hoc 方式打包出的 `.ipa`
 
-本项目就是利用这个规则，来简化 iOS APP 的分享流程。当你开发一款 APP 的过程中，想要给身边的小伙伴体验一下，只需要使用本项目上传你的 IPA 并生成一个二维码链接，扫一扫，即可全程自动绑定设备并签名安装 APP
+本项目就是利用这个官方的规则，来简化 iOS APP 的分享流程。当你开发一款 APP 的过程中，想要给身边的小伙伴体验一下，只需要部署本项目，然后上传你的个人开发者账号和 `.ipa` 就可以生成一个二维码，扫一扫即可全程自动绑定设备并签名安装 APP
+
+## 原理
+
+设备绑定账号调用 [App Store Connect API](https://developer.apple.com/documentation/appstoreconnectapi) 实现
+
+`.ipa` 签名调用 [zsign](https://github.com/zhlynn/zsign) 实现
 
 ## 注意事项
 
-本项目核心功能调用 [zsign](https://github.com/zhlynn/zsign)
-和 [App Store Connect API](https://developer.apple.com/documentation/appstoreconnectapi) 实现
-
 本项目开源免费，纯技术分享，不提供任何平台支持，仅作为给个人开发者分享自己的测试 APP 使用，严禁使用本项目进行任何商业盈利、损害官方利益、分享任何违法违规的 APP 等行为
+
+## 个人开发者账号
 
 本项目添加开发者账号后会占用账号的一个 iOS Development certificate 名额（每个账号最多只能创建两个），所以你可能得预留一个
 
 其中添加开发者账号所需的 iss、kid、P8 文件需要在 https://appstoreconnect.apple.com/access/api 创建
 
-![image](https://user-images.githubusercontent.com/55381228/157636136-b0705dfe-5887-40a5-a464-f736157f5335.png)
+![image](https://github.com/togettoyou/ipashare/assets/55381228/d8f7587d-4a15-4f3c-8a8a-a6b390bba8d1)
 
 ## 部分效果预览
 
