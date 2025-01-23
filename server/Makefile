@@ -9,10 +9,10 @@ TARGET=$(out)
 
 # 执行make命令时所执行的所有命令
 all: clean
-	go build -v -o ${BINARY_NAME} -mod=vendor cmd/server/main.go
+	go build -ldflags '-extldflags "-static"' -v -o ${BINARY_NAME} -mod=vendor cmd/server/main.go
 
 docs: clean
-	go build -tags "docs" -v -o ${BINARY_NAME} -mod=vendor cmd/server/main.go
+	go build -ldflags '-extldflags "-static"' -tags "docs" -v -o ${BINARY_NAME} -mod=vendor cmd/server/main.go
 
 # 交叉编译linux amd64版本
 linux: clean
