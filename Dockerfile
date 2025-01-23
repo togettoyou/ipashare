@@ -13,6 +13,7 @@ RUN yarn run build:prod
 FROM togettoyou/zsign:latest AS zsign
 
 FROM centos:7
+WORKDIR /root/togettoyou/
 COPY --from=builder-server /root/togettoyou/ipashare ./
 COPY --from=builder-server /root/togettoyou/conf/ ./conf/
 COPY --from=builder-web /app/dist/ ./dist/
@@ -22,5 +23,4 @@ RUN sed -i 's|mirrorlist=http://mirrorlist.centos.org|#mirrorlist=http://mirrorl
     yum clean all && \
     yum makecache
 RUN yum install -y openssl openssl-devel unzip zip
-WORKDIR /root/togettoyou/
 ENTRYPOINT ["./ipashare"]
