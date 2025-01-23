@@ -17,7 +17,7 @@ RUN yarn run build:prod
 
 FROM togettoyou/zsign:latest AS zsign
 
-FROM centos:7
+FROM centos:8
 WORKDIR /root/togettoyou/
 COPY --from=builder-server /root/togettoyou/ipashare ./
 COPY --from=builder-server /root/togettoyou/conf/ ./conf/

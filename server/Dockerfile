@@ -10,7 +10,7 @@ RUN make
 
 FROM togettoyou/zsign:latest AS zsign
 
-FROM centos:7
+FROM centos:8
 COPY --from=builder /root/togettoyou/ipashare /root/togettoyou/
 COPY --from=builder /root/togettoyou/conf/ /root/togettoyou/conf/
 COPY --from=zsign /zsign/zsign /bin/zsign
