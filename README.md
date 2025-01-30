@@ -34,12 +34,6 @@ APP
 其中添加开发者账号所需的 iss（Issuer ID）、kid（密钥 ID）、P8 文件（API
 密钥）需要在 https://appstoreconnect.apple.com/access/api 创建后获取
 
-## Railway 部署
-
-使用 Railway 一键部署，每月有 5 美元的免费额度：
-
-[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template?code=xOgXXB&referralCode=FVN0mI)
-
 ## Docker 部署
 
 创建 `docker-compose.yml` ，内容如下：
